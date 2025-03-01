@@ -33,7 +33,6 @@ body {
 body {
   min-height: 100vh;
   background-color: var(--white);
-  backdrop-filter: blur(30px);
   color: var(--text-primary-color);
   margin: 0;
   font-family: var(--text);
@@ -44,6 +43,22 @@ body {
 
 main {
   flex: 1;
+}
+
+.limited-container {
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.text-container {
+  width: 85%;
+  margin: 0 auto;
+}
+
+.main-title {
+  margin: 5% auto;
+  text-align: center;
 }
 
 .gradient {
