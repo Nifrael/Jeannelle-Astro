@@ -1,10 +1,24 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
 import "../styles/global.scss";
 import WelcomePhotos from "../components/Index/WelcomePhotos.astro";
+import Actualites from "../components/Index/Actualités.astro";
+import SwiperCards from "../components/Index/SwiperCards.astro";
 ---
 
 <Layout>
   <WelcomePhotos />
-  Bonjour
+  <Actualites />
+  <div class="text-container main-title">
+    <h1>Jeannelle, un centre de thérapeutes...</h1>
+    <p>À votre écoute, au cœur du village de Millas.</p>
+    <p>
+      Un endroit cosy où l’on peut se poser et être entendu dans ses mots… et
+      ses maux.
+    </p>
+    <p>Un centre pour vous accompagner.</p>
+    <h1>...Plusieurs thérapies y sont proposées...</h1>
+  </div>
+  <SwiperCards />
 </Layout>
