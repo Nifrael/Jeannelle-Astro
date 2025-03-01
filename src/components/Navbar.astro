@@ -1,0 +1,130 @@
+---
+import { Image } from "astro:assets";
+import Logo from "../assets/images/Jeannelle.png";
+import Menu from "../assets/menu.svg";
+---
+
+<header>
+  <nav>
+    <ul>
+      <Image src={Menu} alt="Menu" id="menu" />
+      <li><a href="/" class="menu-left">Accueil</a></li>
+      <li><Image src={Logo} alt="Logo Jeannelle" id="logo" /></li>
+      <li><a href="a-propos.html" class="menu-right">A propos</a></li>
+      <div class="menu-titles">
+        <li><a href="/">Accueil</a></li>
+        <li><a href="a-propos.html">A propos</a></li>
+      </div>
+    </ul>
+  </nav>
+  <div class="gradient"></div>
+</header>
+
+<script>
+  const menuToggle = document.querySelector("#menu");
+  const menuTitles = document.querySelector(".menu-titles");
+
+  menuToggle.addEventListener("click", () => {
+    menuTitles.classList.toggle("show");
+  });
+</script>
+
+<style>
+  header {
+    width: 100%;
+    background-color: white;
+  }
+
+  nav {
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+    a {
+      text-decoration: none;
+      font-size: 1.4rem;
+      transition: 0.5s ease-in-out;
+      font-weight: 600;
+      color: var(--text-primary-color);
+    }
+    a:visited {
+      color: var(--text-primary-color);
+    }
+    a:hover {
+      color: var(--important-color);
+      transition: 0.5s ease-in-out;
+    }
+    ul {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      list-style-type: none;
+      align-items: center;
+      margin: 0 auto;
+      padding: 0;
+    }
+    img {
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      width: 370px;
+      height: 90px;
+    }
+    li {
+      font-size: 1.1rem;
+    }
+  }
+
+  #menu {
+    width: 20px;
+    height: 20px;
+    display: none;
+  }
+
+  .menu-titles {
+    display: none;
+  }
+
+  @media (width < 768px) {
+    nav {
+      width: 100%;
+      ul img {
+        left: 20px;
+        width: 250px;
+        height: 70px;
+      }
+      ul {
+        justify-content: flex-start;
+        gap: 0;
+      }
+    }
+
+    #menu {
+      display: block;
+      position: absolute;
+      right: 20px;
+      margin-left: auto;
+    }
+
+    .menu-left,
+    .menu-right {
+      display: none;
+    }
+
+    .menu-titles {
+      display: none;
+    }
+
+    .menu-titles.show {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+      top: 7rem;
+      background-color: var(--white);
+      padding: 10px;
+      z-index: 10;
+    }
+  }
+</style>
