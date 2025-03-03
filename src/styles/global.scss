@@ -23,6 +23,8 @@
   --h1: calc(var(--h2) * var(--scale));
   --small-text: calc(var(--base-size) / var(--scale));
   --swiper-navigation-size: 35px !important;
+  --swiper-theme-color: var(--important-color) !important;
+  --swiper-pagination-bottom: 25px;
 }
 
 html,
