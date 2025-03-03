@@ -1,17 +1,17 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
+import { EffectCoverflow } from "swiper/modules";
 import "swiper/scss";
 import "swiper/scss/navigation";
 import "swiper/scss/pagination";
+import "swiper/scss/effect-coverflow";
 import styles from "./SwiperComponent.module.scss";
 
 export default () => {
   return (
     <Swiper
-      modules={[Navigation, Pagination]}
-      spaceBetween={30}
-      slidesPerView={1.3}
+      modules={[Navigation, Pagination, EffectCoverflow]}
       effect="coverflow"
       coverflowEffect={{
         rotate: 50,
@@ -21,6 +21,9 @@ export default () => {
         slideShadows: false,
       }}
       navigation
+      pagination={{
+        dynamicBullets: true,
+      }}
       breakpoints={{
         320: {
           slidesPerView: 1.27,
@@ -34,7 +37,11 @@ export default () => {
     >
       <SwiperSlide className={styles.swiper}>
         <div className={styles.card}>
-          {/* <img src="assets/images/Plant.svg" alt="" id="therapeutic-icon" /> */}
+          <img
+            src="src/assets/images/Swiper/Plant.svg"
+            alt="Plante"
+            className={styles["therapeutic-icon"]}
+          />
           <div>
             <h2>Naturopathie</h2>
             <h2>Nutritionniste / Micronutritionniste</h2>
@@ -53,7 +60,11 @@ export default () => {
       </SwiperSlide>
       <SwiperSlide>
         <div className={styles.card}>
-          {/* <img src="assets/images/Feet.svg" alt="" id="therapeutic-icon" /> */}
+          <img
+            src="src/assets/images/Swiper/Feet.svg"
+            alt="Feet"
+            className={styles["therapeutic-icon"]}
+          />
           <div>
             <h2>Réflexologie plantaire</h2>
             <h2>Energétique chinoise</h2>
@@ -72,7 +83,11 @@ export default () => {
       </SwiperSlide>
       <SwiperSlide>
         <div className={styles.card}>
-          {/* <img src="assets/images/Brain.svg" alt="" id="therapeutic-icon" /> */}
+          <img
+            src="src/assets/images/Swiper/Brain.svg"
+            alt="Brain"
+            className={styles["therapeutic-icon"]}
+          />
           <div>
             <h2>Psychopraticienne</h2>
           </div>
@@ -92,7 +107,11 @@ export default () => {
       </SwiperSlide>
       <SwiperSlide>
         <div className={styles.card}>
-          {/* <img src="assets/images/Yin.svg" alt="" id="therapeutic-icon" /> */}
+          <img
+            src="src/assets/images/Swiper/Yin.svg"
+            alt="Yin Yoga"
+            className={styles["therapeutic-icon"]}
+          />
           <div>
             <h2>Yin Yoga</h2>
           </div>

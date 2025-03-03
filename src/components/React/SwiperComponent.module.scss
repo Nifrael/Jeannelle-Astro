@@ -2,25 +2,7 @@
   position: relative;
   width: 100%;
   max-width: 1000px;
-  margin: 3% auto;
   overflow: hidden;
-}
-
-.swiper-button-prev,
-.swiper-button-next {
-  color: var(--important-color) !important;
-}
-
-.swiper-button-next {
-  padding-left: 5%;
-}
-
-.swiper-button-prev {
-  padding-right: 5%;
-}
-
-.swiper-pagination {
-  padding-top: 5%;
 }
 
 .swiper-pagination-bullet-active {
@@ -35,11 +17,11 @@
   justify-content: space-around;
   align-items: center;
   text-align: center;
-  width: 100%;
+  width: 98%;
   height: 500px;
   max-height: 90dvh;
   margin: 2% auto;
-  padding: 3%;
+  padding: 5%;
   box-shadow: 0px -1px 6px 6px rgba(207, 154, 113, 0.249);
   border-radius: 5px;
 }
@@ -48,6 +30,6 @@
   font-size: var(--small-text);
 }
 
-#therapeutic-icon {
+.therapeutic-icon {
   width: 70px;
 }
