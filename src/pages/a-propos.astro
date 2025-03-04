@@ -1,0 +1,49 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <div class="about-photo">
+    <cite>
+      <h3>"Préparez votre temps, pour vous j'ai tout le mien."</h3>
+    </cite>
+  </div>
+</Layout>
+
+<style>
+  .about-photo {
+    background-image: url(../assets/images/About/AboutDesktop.jpg);
+    background-color: rgba(41, 41, 41, 0.313);
+    background-blend-mode: overlay;
+    width: 100%;
+    height: 700px;
+    background-position: 0% 80%;
+    background-size: cover;
+    position: relative;
+  }
+
+  cite {
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    color: var(--main-color);
+  }
+
+  cite h3 {
+    margin: 0;
+  }
+
+  @media (width < 768px) {
+    .about-photo {
+      background-image: url(../assets/images/About/AboutMobile.jpg);
+      height: 600px;
+      background-size: cover;
+      background-position: bottom;
+    }
+
+    cite h3 {
+      margin-left: 2%;
+      font-size: var(--h5);
+    }
+  }
+</style>
