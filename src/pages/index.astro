@@ -3,20 +3,48 @@ import Layout from "../layouts/Layout.astro";
 import WelcomePhotos from "../components/Index/WelcomePhotos.astro";
 import Actualites from "../components/Index/Actualités.astro";
 import SwiperCards from "../components/Index/SwiperCards.astro";
+import TherapistCard from "../components/Index/TherapistCard.astro";
 ---
 
 <Layout>
   <WelcomePhotos />
-  <Actualites />
-  <div class="text-container main-title">
-    <h1>Jeannelle, un centre de thérapeutes...</h1>
-    <p>À votre écoute, au cœur du village de Millas.</p>
-    <p>
-      Un endroit cosy où l’on peut se poser et être entendu dans ses mots… et
-      ses maux.
-    </p>
-    <p>Un centre pour vous accompagner.</p>
-    <h1>...Plusieurs thérapies y sont proposées...</h1>
+  <div class="limited-container">
+    <Actualites />
+    <div class="text-container main-title">
+      <h1>Jeannelle, un centre de thérapeutes...</h1>
+      <p>À votre écoute, au cœur du village de Millas.</p>
+      <p>
+        Un endroit cosy où l’on peut se poser et être entendu dans ses mots… et
+        ses maux.
+      </p>
+      <p>Un centre pour vous accompagner.</p>
+      <h1>...Plusieurs thérapies y sont proposées...</h1>
+    </div>
+    <SwiperCards />
+    <div class="text-container main-title">
+      <h1>...Mais pas seulement</h1>
+      <div class="text-container paragraph">
+        <p>
+          <dt>
+            Si vous êtes thérapeute, j'ai à coeur de partager ce lieu avec vous
+            :
+          </dt>
+        </p>
+        <p>
+          <dd>
+            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Un cabinet pour
+            un(e) ostéopathe est disponible en location mensuelle.
+          </dd>
+        </p>
+        <p>
+          <dd>
+            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Un autre cabinet
+            est disponible : une ou deux journées fixes par semaine est possible
+            pour d'autres thérapeutes.
+          </dd>
+        </p>
+      </div>
+    </div>
+    <TherapistCard />
   </div>
-  <SwiperCards />
 </Layout>
