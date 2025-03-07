@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Image from "astro/components/Image.astro";
 import Avatar from "../assets/images/About/KM-avatar.jpg";
+import Candle from "../assets/images/About/candle.svg";
 ---
 
 <Layout>
@@ -119,7 +120,7 @@ import Avatar from "../assets/images/About/KM-avatar.jpg";
           subtiles m'aident...
         </p>
         <p>Merci d'être là, à mes côtés, sur mon épaule et dans mon coeur.</p>
-        <p><img src="assets/images/candle.svg" alt="" /></p>
+        <p><Image src={Candle} alt="Bougie" /></p>
         <h2>...Jeannelle, c'est vous.</h2>
       </div>
     </div>
@@ -240,6 +241,7 @@ import Avatar from "../assets/images/About/KM-avatar.jpg";
 
   #km-photo {
     width: 65%;
+    height: 100%;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 50px;
   }
