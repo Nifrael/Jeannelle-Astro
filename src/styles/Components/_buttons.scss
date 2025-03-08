@@ -1,0 +1,18 @@
+.button-container {
+  text-align: center;
+  margin: 2% auto;
+}
+
+.button {
+  border-radius: 15px;
+  text-decoration: none;
+  background-color: var(--important-color);
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  transition: 0.7s ease-in-out;
+  &:hover {
+    background-color: var(--white);
+    color: var(--important-color);
+    transition: 0.7s ease-in-out;
+  }
+}
