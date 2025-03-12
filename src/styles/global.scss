@@ -1,6 +1,7 @@
+@use "sass:meta";
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Playwrite+GB+S:ital,wght@0,300;1,300&display=swap");
-@import "Components/buttons";
+@include meta.load-css("Components/buttons");
 
 *,
 *::before,
