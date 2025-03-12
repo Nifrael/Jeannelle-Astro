@@ -1,17 +1,24 @@
 ---
 import { Image } from "astro:assets";
 import YinYoga from "../../assets/images/Planning/YinYoga.jpg";
+import NewsSwiper from "../React/NewsSwiper";
 ---
 
 <div class="limited-container">
-  <div class="main-title planning-container">
+  <!-- <div class="main-title planning-container">
     <h1>Actualités</h1>
     <Image src={YinYoga} alt="Actualités YinYoga" />
     <h1>Planning</h1>
+  </div> -->
+  <div class="news-swiper">
+    <NewsSwiper client:load />
   </div>
 </div>
 
 <style>
+  .news-swiper {
+    margin: 5% auto;
+  }
   .planning-container {
     width: 60%;
     box-shadow: 0px -1px 6px 6px rgba(207, 154, 113, 0.249);
