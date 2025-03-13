@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/navigation";
-import "swiper/css/thumbs";
+import "swiper/scss";
+import "swiper/scss/free-mode";
+import "swiper/scss/navigation";
+import "swiper/scss/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import swiperStyles from "./NewsSwiper.module.scss";
 
@@ -15,7 +15,7 @@ export default () => {
       <Swiper
         onSwiper={setThumbsSwiper}
         loop={true}
-        spaceBetween={15}
+        spaceBetween={5}
         slidesPerView={3}
         freeMode={true}
         watchSlidesProgress={true}
@@ -39,10 +39,6 @@ export default () => {
         </SwiperSlide>
       </Swiper>
       <Swiper
-        style={{
-          "--swiper-navigation-color": "#fff",
-          "--swiper-pagination-color": "#fff",
-        }}
         loop={true}
         spaceBetween={10}
         navigation={true}
@@ -53,10 +49,10 @@ export default () => {
         <SwiperSlide className={swiperStyles.slideNews}>
           <img src="src/assets/images/Planning/YinYoga.jpg" />
         </SwiperSlide>
-        <SwiperSlide>
+        <SwiperSlide className={swiperStyles.slideNews}>
           <img src="src/assets/images/Planning/YinYoga.jpg" />
         </SwiperSlide>
-        <SwiperSlide>
+        <SwiperSlide className={swiperStyles.slideNews}>
           <img src="src/assets/images/Planning/YinYoga.jpg" />
         </SwiperSlide>
       </Swiper>
