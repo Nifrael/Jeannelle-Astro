@@ -21,18 +21,18 @@
     border-radius: 10px;
     margin: 1rem;
   }
-  .swiper-slide {
-    opacity: 0.4;
-  }
-  .swiper-slide-thumb-active {
-    opacity: 1;
-  }
+
   h4 {
     margin: 2px;
     // text-decoration: underline;
     cursor: pointer;
   }
-  h4:target {
-    text-decoration: underline;
-  }
+}
+
+.swiper-slide {
+  border: 1px red solid;
+  opacity: 0.4;
+}
+.swiper-slide-thumb-active {
+  opacity: 1;
 }
