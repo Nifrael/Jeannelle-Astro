@@ -27,12 +27,8 @@
     // text-decoration: underline;
     cursor: pointer;
   }
-}
 
-.swiper-slide {
-  border: 1px red solid;
-  opacity: 0.4;
-}
-.swiper-slide-thumb-active {
-  opacity: 1;
+  .swiper-slide .cardText {
+    opacity: 0.4;
+  }
 }
