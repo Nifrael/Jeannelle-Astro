@@ -24,11 +24,13 @@
 
   h4 {
     margin: 2px;
-    // text-decoration: underline;
     cursor: pointer;
   }
-
-  .swiper-slide .cardText {
+  .swiperSlide {
     opacity: 0.4;
   }
+}
+
+.activeThumb {
+  opacity: 1 !important;
 }

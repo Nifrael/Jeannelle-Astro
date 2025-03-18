@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import "swiper/scss";
@@ -7,38 +7,59 @@ import "swiper/scss/navigation";
 import "swiper/scss/thumbs";
 import swiperStyles from "./NewsSwiper.module.scss";
 
-export default () => {
+const NewsSwiper = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [mainSwiper, setMainSwiper] = useState(null);
+  const [activeThumbIndex, setActiveThumbIndex] = useState(0);
+
+  const handleMainSwiper = (swiper) => {
+    setMainSwiper(swiper);
+  };
+
+  useEffect(() => {
+    if (mainSwiper) {
+      const updateIndex = () => {
+        setActiveThumbIndex(mainSwiper.activeIndex);
+      };
+
+      updateIndex();
+
+      mainSwiper.on("activeIndexChange", updateIndex);
+
+      return () => {
+        mainSwiper.off("activeIndexChange", updateIndex);
+      };
+    }
+  }, [mainSwiper]);
 
   return (
     <>
       <Swiper
         onSwiper={setThumbsSwiper}
-        loop={false}
+        loop={true}
         spaceBetween={5}
         slidesPerView={3}
-        freeMode={false}
+        freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
         className={swiperStyles.newsSwiperText}
+        onSlideChange={(swiper) => setActiveThumbIndex(swiper.activeIndex)}
       >
-        <SwiperSlide>
-          <div className={swiperStyles.cardText}>
-            <h4>Actualité</h4>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className={swiperStyles.cardText}>
-            <h4>Planning</h4>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className={swiperStyles.cardText}>
-            <h4>Conférences</h4>
-          </div>
-        </SwiperSlide>
+        {["Actualité", "Planning", "Conférences"].map((title, index) => (
+          <SwiperSlide
+            key={index}
+            className={`${swiperStyles.swiperSlide} ${
+              index === activeThumbIndex ? swiperStyles.activeThumb : ""
+            }`}
+          >
+            <div className={swiperStyles.cardText}>
+              <h4>{title}</h4>
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
       <Swiper
+        onSwiper={handleMainSwiper}
         loop={true}
         spaceBetween={10}
         navigation={true}
@@ -59,3 +80,5 @@ export default () => {
     </>
   );
 };
+
+export default NewsSwiper;
