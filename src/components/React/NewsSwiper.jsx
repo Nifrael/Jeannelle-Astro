@@ -71,10 +71,10 @@ const NewsSwiper = () => {
           <img src="src/assets/images/Planning/YinYoga.jpg" />
         </SwiperSlide>
         <SwiperSlide className={swiperStyles.slideNews}>
-          <img src="src/assets/images/Planning/YinYoga.jpg" />
+          <img src="src/assets/images/Planning/PlanningYY.jpg" />
         </SwiperSlide>
         <SwiperSlide className={swiperStyles.slideNews}>
-          <img src="src/assets/images/Planning/YinYoga.jpg" />
+          <img src="src/assets/images/Planning/Conference.png" />
         </SwiperSlide>
       </Swiper>
     </>
