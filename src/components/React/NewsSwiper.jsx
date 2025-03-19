@@ -36,7 +36,7 @@ const NewsSwiper = () => {
     <>
       <Swiper
         onSwiper={setThumbsSwiper}
-        loop={true}
+        loop={false}
         spaceBetween={5}
         slidesPerView={3}
         freeMode={true}
@@ -60,7 +60,7 @@ const NewsSwiper = () => {
       </Swiper>
       <Swiper
         onSwiper={handleMainSwiper}
-        loop={true}
+        loop={false}
         spaceBetween={10}
         navigation={true}
         thumbs={{ swiper: thumbsSwiper }}

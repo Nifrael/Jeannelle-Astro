@@ -1,9 +1,9 @@
 .newsSwiper {
   height: auto;
-  width: 80%;
+  width: 100%;
   img {
     margin: 0 auto;
-    max-width: 55%;
+    max-width: 100%;
     border-radius: 10px;
   }
   .slideNews {
@@ -13,18 +13,17 @@
 }
 
 .newsSwiperText {
-  width: 60%;
-  padding: 0.5rem;
+  width: 100%;
+  padding: 1rem;
   .cardText {
     justify-items: center;
-    padding: 10px;
-    border-radius: 10px;
-    margin: 1rem;
+    padding: 0.2rem;
   }
 
   h4 {
     margin: 2px;
     cursor: pointer;
+    scale: 0.7;
   }
 
   .swiperSlide {
@@ -35,5 +34,50 @@
   }
   .activeThumb h4 {
     text-decoration: underline;
+  }
+}
+
+@media (width >= 576px) {
+  .newsSwiperText {
+    padding-right: 0;
+    width: 80%;
+    .cardText {
+      justify-content: center;
+    }
+    h4 {
+      scale: 0.9;
+    }
+  }
+  .newsSwiper img {
+    width: 60%;
+  }
+}
+
+@media (width >= 768px) {
+  .newsSwiperText {
+    width: 80%;
+    padding-right: 1rem;
+    h4 {
+      scale: 1;
+    }
+  }
+
+  .newsSwiper img {
+    width: 70%;
+  }
+}
+
+@media (width >= 992px) {
+  .newsSwiperText {
+    width: 70%;
+  }
+  .newsSwiper img {
+    width: 50%;
+  }
+}
+
+@media (width >= 1300px) {
+  .newsSwiper img {
+    width: 55%;
   }
 }
