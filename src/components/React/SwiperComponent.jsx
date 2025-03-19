@@ -38,7 +38,7 @@ export default () => {
       <SwiperSlide className={styles.swiper}>
         <div className={styles.card}>
           <img
-            src="public/Swiper/Plant.svg"
+            src="Swiper/Plant.svg"
             alt="Plante"
             className={styles["therapeutic-icon"]}
           />
@@ -61,7 +61,7 @@ export default () => {
       <SwiperSlide>
         <div className={styles.card}>
           <img
-            src="public/Swiper/Feet.svg"
+            src="Swiper/Feet.svg"
             alt="Feet"
             className={styles["therapeutic-icon"]}
           />
@@ -84,7 +84,7 @@ export default () => {
       <SwiperSlide>
         <div className={styles.card}>
           <img
-            src="public/Swiper/Brain.svg"
+            src="Swiper/Brain.svg"
             alt="Brain"
             className={styles["therapeutic-icon"]}
           />
@@ -108,7 +108,7 @@ export default () => {
       <SwiperSlide>
         <div className={styles.card}>
           <img
-            src="public/Swiper/Yin.svg"
+            src="Swiper/Yin.svg"
             alt="Yin Yoga"
             className={styles["therapeutic-icon"]}
           />
