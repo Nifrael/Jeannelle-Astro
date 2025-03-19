@@ -26,11 +26,14 @@
     margin: 2px;
     cursor: pointer;
   }
+
   .swiperSlide {
     opacity: 0.4;
   }
-}
-
-.activeThumb {
-  opacity: 1 !important;
+  .activeThumb {
+    opacity: 1 !important;
+  }
+  .activeThumb h4 {
+    text-decoration: underline;
+  }
 }
