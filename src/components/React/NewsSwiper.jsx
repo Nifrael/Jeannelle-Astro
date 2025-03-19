@@ -68,13 +68,13 @@ const NewsSwiper = () => {
         className={swiperStyles.newsSwiper}
       >
         <SwiperSlide className={swiperStyles.slideNews}>
-          <img src="src/assets/images/Planning/YinYoga.jpg" />
+          <img src="public/Planning/YinYoga.jpg" />
         </SwiperSlide>
         <SwiperSlide className={swiperStyles.slideNews}>
-          <img src="src/assets/images/Planning/PlanningYY.jpg" />
+          <img src="public/Planning/PlanningYY.jpg" />
         </SwiperSlide>
         <SwiperSlide className={swiperStyles.slideNews}>
-          <img src="src/assets/images/Planning/Conference.png" />
+          <img src="public/Planning/Conference.png" />
         </SwiperSlide>
       </Swiper>
     </>
