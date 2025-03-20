@@ -1,1 +1,0 @@
-const e="_newsSwiper_z4qp2_1",s="_slideNews_z4qp2_10",i="_newsSwiperText_z4qp2_15",_="_cardText_z4qp2_19",t="_swiperSlide_z4qp2_28",c="_activeThumb_z4qp2_31",w={newsSwiper:e,slideNews:s,newsSwiperText:i,cardText:_,swiperSlide:t,activeThumb:c},p="_swiper_vij1x_1",r="_card_vij1x_12",n={swiper:p,card:r,"therapeutic-icon":"_therapeutic-icon_vij1x_33"};export{n as a,w as s};
