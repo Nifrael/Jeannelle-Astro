@@ -1,0 +1,1 @@
+const e="_newsSwiper_cn9nj_1",s="_slideNews_cn9nj_12",n="_newsSwiperText_cn9nj_17",c="_cardText_cn9nj_22",_="_swiperSlide_cn9nj_31",i="_activeThumb_cn9nj_34",r={newsSwiper:e,slideNews:s,newsSwiperText:n,cardText:c,swiperSlide:_,activeThumb:i},t="_swiper_v6wh3_1",w="_card_v6wh3_12",p={swiper:t,card:w,"therapeutic-icon":"_therapeutic-icon_v6wh3_33"};export{p as a,r as s};
