@@ -2,6 +2,7 @@
 import Navbar from "./Navbar.astro";
 import Footer from "./Footer.astro";
 import "../styles/global.scss";
+import { ClientRouter } from "astro:transitions";
 ---
 
 <!doctype html>
@@ -15,6 +16,7 @@ import "../styles/global.scss";
       crossorigin="anonymous"></script>
     <meta name="generator" content={Astro.generator} />
     <title>Jeannelle</title>
+    <ClientRouter />
   </head>
   <body>
     <Navbar />

@@ -25,12 +25,22 @@ import Plant from "../../public/Plant.svg";
 </header>
 
 <script>
-  const menuToggle = document.querySelector("#menu");
-  const menuTitles = document.querySelector(".menu-titles");
+  function listenMenu() {
+    const menuToggle = document.querySelector("#menu");
+    const menuTitles = document.querySelector(".menu-titles");
+    const body = document.querySelector("body");
 
-  menuToggle.addEventListener("click", () => {
-    menuTitles.classList.toggle("show");
-  });
+    const toggleMenu = () => {
+      menuTitles?.classList.toggle("show");
+      body?.classList.toggle("opened-menu");
+    };
+
+    menuToggle?.addEventListener("click", toggleMenu);
+    menuTitles?.addEventListener("click", toggleMenu);
+  }
+
+  document.addEventListener("DOMContentLoaded", listenMenu);
+  document.addEventListener("astro:after-swap", listenMenu);
 </script>
 
 <style lang="scss">

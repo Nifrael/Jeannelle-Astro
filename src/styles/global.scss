@@ -29,11 +29,6 @@
   --swiper-pagination-bottom: 25px;
 }
 
-html,
-body {
-  overflow: auto;
-}
-
 body {
   min-height: 100vh;
   background-color: var(--white);
@@ -43,6 +38,10 @@ body {
   font-size: var(--base-size);
   display: flex;
   flex-direction: column;
+}
+
+.opened-menu {
+  overflow: hidden;
 }
 
 main {
