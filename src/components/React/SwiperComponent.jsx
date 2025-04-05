@@ -157,8 +157,8 @@ export default () => {
               Technique manuelle de massage sur personne habillée et assise.
             </p>
             <p>
-              Selon vos souhaits: dos, bras, mains ainsi que les jambes, les
-              pieds et le crâne.
+              Dos, bras et mains, nuque et crâne, et si vous le souhaitez,
+              cuisses, jambes et pieds.
             </p>
             <p>
               Un massage qui travaille d'un point de vue musculaire et
