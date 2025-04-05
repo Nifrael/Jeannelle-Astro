@@ -56,6 +56,8 @@ export default () => {
               nous signale.
             </p>
           </div>
+          <p>Durée de la séance : 1 heure.</p>
+          <span className={styles["price"]}>65 €</span>
         </div>
       </SwiperSlide>
       <SwiperSlide>
@@ -79,6 +81,8 @@ export default () => {
               circulation dans les méridiens.
             </p>
           </div>
+          <p>Durée de la séance : 45 minutes.</p>
+          <span className={styles["price"]}>50 €</span>
         </div>
       </SwiperSlide>
       <SwiperSlide>
@@ -103,6 +107,8 @@ export default () => {
             </p>
             <p>Chaleureuse rencontre avec soi-même.</p>
           </div>
+          <p>Durée de la séance : 1 heure à 1h30.</p>
+          <span className={styles["price"]}>65 €</span>
         </div>
       </SwiperSlide>
       <SwiperSlide>
@@ -119,21 +125,48 @@ export default () => {
             <p>
               Revenir à soi, dans des postures non engageantes, ne nécessitant
               ni force, ni équilibre ou souplesse particulière.
-            </p>
-            <p>
-              Le premier ennemi du mental est le mental lui-même : offrons-lui
-              pause et silence.
+              {/* Le premier
+              ennemi du mental est le mental lui-même : offrons-lui pause et
+              silence. */}
             </p>
             <p>
               Cette pratique introspective permet de se poser dans le moment
-              présent, de relâcher les tensions et de réduire le stress.
-            </p>
-            <p>
-              Agir sur les méridiens et les fascias favorise la santé des
-              organes internes, améliore la digestion, le sommeil, soulage les
-              douleurs et ramène de la clarté et de l'apaisement à l'esprit.
+              présent, de relâcher les tensions et de réduire le stress. Agir
+              sur les méridiens et les fascias favorise la santé des organes
+              internes, améliore la digestion, le sommeil, soulage les douleurs
+              et ramène de la clarté et de l'apaisement à l'esprit.
             </p>
           </div>
+          <p>Cours collectif d'une heure.</p>
+          <span className={styles["price"]}>13 €</span>
+        </div>
+      </SwiperSlide>
+      <SwiperSlide>
+        <div className={styles.card}>
+          <img
+            src="Swiper/Chair.svg"
+            alt="Massage assis"
+            className={styles["therapeutic-icon"]}
+          />
+          <div>
+            <h2>Massage Amma</h2>
+          </div>
+          <div>
+            <p>"Apaiser avec les mains."</p>
+            <p>
+              Technique manuelle de massage sur personne habillée et assise.
+            </p>
+            <p>
+              Selon vos souhaits: dos, bras, mains ainsi que les jambes, les
+              pieds et le crâne.
+            </p>
+            <p>
+              Un massage qui travaille d'un point de vue musculaire et
+              énergétique par de nombreuses pressions et acupressions.
+            </p>
+          </div>
+          <p>Durée de la séance : 30 minutes.</p>
+          <span className={styles["price"]}>30 €</span>
         </div>
       </SwiperSlide>
     </Swiper>
