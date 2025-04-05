@@ -56,7 +56,7 @@ export default () => {
               nous signale.
             </p>
           </div>
-          <p>Durée de la séance : 1 heure.</p>
+          <p>Durée de la séance : 1h à 1h15.</p>
           <span className={styles["price"]}>65 €</span>
         </div>
       </SwiperSlide>
@@ -107,7 +107,7 @@ export default () => {
             </p>
             <p>Chaleureuse rencontre avec soi-même.</p>
           </div>
-          <p>Durée de la séance : 1 heure à 1h30.</p>
+          <p>Durée de la séance : 1h à 1h30.</p>
           <span className={styles["price"]}>65 €</span>
         </div>
       </SwiperSlide>
