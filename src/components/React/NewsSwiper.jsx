@@ -38,25 +38,27 @@ const NewsSwiper = () => {
         onSwiper={setThumbsSwiper}
         loop={false}
         spaceBetween={5}
-        slidesPerView={3}
+        slidesPerView={4}
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
         className={swiperStyles.newsSwiperText}
         onSlideChange={(swiper) => setActiveThumbIndex(swiper.activeIndex)}
       >
-        {["Actualité", "Planning", "Conférences"].map((title, index) => (
-          <SwiperSlide
-            key={index}
-            className={`${swiperStyles.swiperSlide} ${
-              index === activeThumbIndex ? swiperStyles.activeThumb : ""
-            }`}
-          >
-            <div className={swiperStyles.cardText}>
-              <h4>{title}</h4>
-            </div>
-          </SwiperSlide>
-        ))}
+        {["Actualité", "Planning", "Conférences", "Nouveautés"].map(
+          (title, index) => (
+            <SwiperSlide
+              key={index}
+              className={`${swiperStyles.swiperSlide} ${
+                index === activeThumbIndex ? swiperStyles.activeThumb : ""
+              }`}
+            >
+              <div className={swiperStyles.cardText}>
+                <h4>{title}</h4>
+              </div>
+            </SwiperSlide>
+          )
+        )}
       </Swiper>
       <Swiper
         onSwiper={handleMainSwiper}
@@ -68,13 +70,26 @@ const NewsSwiper = () => {
         className={swiperStyles.newsSwiper}
       >
         <SwiperSlide className={swiperStyles.slideNews}>
-          <img src="Planning/YinYoga.jpg" />
+          <div className={swiperStyles.containerImage}>
+            <img src="Planning/YinYoga.jpg" />
+          </div>
         </SwiperSlide>
         <SwiperSlide className={swiperStyles.slideNews}>
-          <img src="Planning/Planning_Mois.jpg" />
+          <div className={swiperStyles.containerImage}>
+            <img src="Planning/Planning_Mois.jpg" />
+          </div>
         </SwiperSlide>
         <SwiperSlide className={swiperStyles.slideNews}>
-          <img src="Planning/Conference.png" />
+          <div className={swiperStyles.containerImage}>
+            <div className={swiperStyles.titleSlide}>Passée</div>
+            <img src="Planning/Conference.png" />
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className={swiperStyles.slideNews}>
+          <div className={swiperStyles.containerImage}>
+            <div className={swiperStyles.titleSlide}>Massage Amma</div>
+            <img src="Planning/Chair.jpg" />
+          </div>
         </SwiperSlide>
       </Swiper>
     </>
