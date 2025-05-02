@@ -45,7 +45,7 @@ const NewsSwiper = () => {
         className={swiperStyles.newsSwiperText}
         onSlideChange={(swiper) => setActiveThumbIndex(swiper.activeIndex)}
       >
-        {["Actualité", "Planning", "Conférences", "Nouveautés"].map(
+        {["Planning", "Nouveautés", "Actualité", "Conférences"].map(
           (title, index) => (
             <SwiperSlide
               key={index}
@@ -73,10 +73,17 @@ const NewsSwiper = () => {
           <div className={swiperStyles.containerImage}>
             <img src="Planning/YinYoga.png" />
           </div>
+        </SwiperSlide>        
+        <SwiperSlide className={swiperStyles.slideNews}>
+          <div className={swiperStyles.containerImage}>
+            <div className={swiperStyles.titleSlide}>Massage Amma</div>
+            <img src="Planning/Chair.jpg" />
+          </div>
         </SwiperSlide>
         <SwiperSlide className={swiperStyles.slideNews}>
           <div className={swiperStyles.containerImage}>
-            <img src="Planning/Planning_Mois.jpg" />
+            <div className={swiperStyles.titleSlide}>A venir...</div>
+            <img src="Icon/Plant.svg" />
           </div>
         </SwiperSlide>
         <SwiperSlide className={swiperStyles.slideNews}>
@@ -85,12 +92,7 @@ const NewsSwiper = () => {
             <img src="Planning/Conference.png" />
           </div>
         </SwiperSlide>
-        <SwiperSlide className={swiperStyles.slideNews}>
-          <div className={swiperStyles.containerImage}>
-            <div className={swiperStyles.titleSlide}>Massage Amma</div>
-            <img src="Planning/Chair.jpg" />
-          </div>
-        </SwiperSlide>
+
       </Swiper>
     </>
   );
