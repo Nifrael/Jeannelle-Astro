@@ -32,7 +32,7 @@ import Plant from "../../public//Icon/Plant.svg";
 
     const toggleMenu = () => {
       menuTitles?.classList.toggle("show");
-      body?.classList.toggle("opened-menu");
+      body?.classList.toggle("no-scroll");
     };
 
     menuToggle?.addEventListener("click", toggleMenu);
@@ -93,9 +93,9 @@ import Plant from "../../public//Icon/Plant.svg";
     display: none;
   }
 
-  .menu-titles {
-    display: none;
-  }
+  // .menu-titles {
+  //   display: none;
+  // }
 
   @media (width < 768px) {
     nav {
@@ -123,14 +123,10 @@ import Plant from "../../public//Icon/Plant.svg";
       display: none;
     }
 
-    .menu-titles {
-      display: none;
-    }
-
-    .menu-titles.show {
+    .menu-tiles {
       position: absolute;
       width: 100vw;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -138,6 +134,15 @@ import Plant from "../../public//Icon/Plant.svg";
       top: 85px;
       background-color: var(--white);
       padding: 5rem 0;
+      z-index: -3;
+      transition: 0.5s ease;
+      opacity: 0;
+      overflow: auto;
+    }
+
+    .show {
+      opacity: 1;
+      transition: 0.5s ease;
       z-index: 10;
     }
   }
