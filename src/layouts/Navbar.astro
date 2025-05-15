@@ -1,42 +1,46 @@
 ---
 import { Image } from "astro:assets";
 import Logo from "../assets/images/Jeannelle.png";
-import Menu from "../assets/menu.svg";
-import Plant from "../../public//Icon/Plant.svg";
+import Plant from "../../public/Swiper/Plant.svg";
 ---
 
 <header>
   <nav>
-    <ul>
-      <Image src={Menu} alt="Menu" id="menu" />
-      <li><a href="/" class="menu-left">Accueil</a></li>
-      <li>
-        <a href="/"><Image src={Logo} alt="Logo Jeannelle" id="logo" /></a>
-      </li>
-      <li><a href="/a-propos" class="menu-right">A propos</a></li>
-      <div class="menu-titles">
-        <li><a href="/">Accueil</a></li>
-        <li><a href="/a-propos">A propos</a></li>
-        <li><Image src={Plant} alt="Plant" /></li>
+      <Image src={Logo} alt="Logo Jeannelle" id="logo" />
+      <div class="desktop-menu">
+        <a href="/">Accueil</a>
+        <a href="/a-propos">A Propos</a>
       </div>
-    </ul>
+      <div class="mobile-menu">
+        <button class="menu-button">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="menu">
+          <a href="/">Accueil</a>
+          <a href="/a-propos">A Propos</a>
+          <Image src={Plant} alt="Plant" id="plant" />
+        </div>
+      </div>
   </nav>
   <div class="gradient"></div>
 </header>
 
 <script>
   function listenMenu() {
-    const menuToggle = document.querySelector("#menu");
-    const menuTitles = document.querySelector(".menu-titles");
+    const buttonMenu = document.querySelector('.menu-button')
+    const menuTitles = document.querySelector(".menu");
     const body = document.querySelector("body");
 
     const toggleMenu = () => {
       menuTitles?.classList.toggle("show");
-      body?.classList.toggle("opened-menu");
+      buttonMenu?.classList.toggle("active");
+      body?.classList.toggle("no-scroll");
     };
 
-    menuToggle?.addEventListener("click", toggleMenu);
     menuTitles?.addEventListener("click", toggleMenu);
+    buttonMenu?.addEventListener("click", toggleMenu)
   }
 
   document.addEventListener("DOMContentLoaded", listenMenu);
@@ -46,11 +50,14 @@ import Plant from "../../public//Icon/Plant.svg";
 <style lang="scss">
   header {
     width: 100%;
+    position: relative;
     background-color: white;
   }
 
   nav {
-    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 90%;
     margin: 0 auto;
     a {
@@ -67,78 +74,108 @@ import Plant from "../../public//Icon/Plant.svg";
       color: var(--important-color);
       transition: 0.5s ease-in-out;
     }
-    ul {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      list-style-type: none;
-      align-items: center;
-      margin: 0 auto;
-      padding: 0;
-    }
-    img {
-      margin-top: 0.5rem;
-      margin-bottom: 0.5rem;
-      width: 370px;
-      height: 90px;
-    }
-    li {
-      font-size: 1.1rem;
-    }
   }
 
-  #menu {
-    width: 20px;
-    height: 20px;
-    display: none;
+  #logo {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    width: 70%;
+    height: auto;
   }
 
-  .menu-titles {
-    display: none;
-  }
-
-  @media (width < 768px) {
-    nav {
+  .menu-button {
+    height: 30px;
+    width: 30px;
+    position: relative;
+    background-color: transparent;
+    border: none;
+    span {
+      height: 3px;
       width: 100%;
-      ul img {
-        left: 20px;
-        width: 250px;
-        height: 70px;
-      }
-      ul {
-        justify-content: flex-start;
-        gap: 0;
-      }
-    }
-
-    #menu {
-      display: block;
+      background-color: black;
+      border-radius: 25px;
       position: absolute;
-      right: 20px;
-      margin-left: auto;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: 0.2s ease;
     }
-
-    .menu-left,
-    .menu-right {
-      display: none;
+    span:first-child {
+      top: 25%;
     }
-
-    .menu-titles {
-      display: none;
+    span:last-child {
+      top: 75%;
     }
+  }
 
-    .menu-titles.show {
-      position: absolute;
-      width: 100vw;
-      height: 100vh;
+  .active {
+    span:first-child {
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      background-color: var(--important-color);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:last-child {
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      background-color: var(--important-color);
+    }
+  }
+
+  .desktop-menu {
+    display: none;
+  }
+
+  .menu {
+    position: absolute;
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    top: 100%;
+    left: 0;
+    background-color: var(--white);
+    padding: 5rem 0;
+    z-index: -3;
+    transition: 0.5s ease;
+    opacity: 0;
+    overflow: auto;
+  }
+  
+  .show {
+    opacity: 1;
+    transition: 0.5s ease;
+    z-index: 10;
+  }
+
+  #plant {
+    width: 30%;
+    height: auto;
+  }
+  
+  @media (width >= 768px) {
+
+    .desktop-menu {
       display: flex;
-      flex-direction: column;
       align-items: center;
       gap: 3rem;
-      top: 85px;
-      background-color: var(--white);
-      padding: 10px;
-      z-index: 10;
+      white-space: nowrap;
+    }
+
+    .desktop-menu a {
+      font-size: 1.4rem;
+    }
+
+    .mobile-menu {
+      display: none;
+    }
+
+    #logo {
+      width: 40%;
     }
   }
 </style>
