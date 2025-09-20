@@ -1,46 +1,84 @@
 ---
 import { Image } from "astro:assets";
-import Logo from "../assets/images/Jeannelle.png";
-import Plant from "../../public/Swiper/Plant.svg";
+import Plant from "@assets/images/Plant.svg";
+
+const menu = [
+  { label: "Accueil", href: "/" },
+  { label: "A Propos", href: "/a-propos" },
+];
 ---
 
 <header>
-  <nav>
-      <Image src={Logo} alt="Logo Jeannelle" id="logo" />
+  <nav role="navigation" aria-label="Main navigation">
+      <a href="/" id="logo">Jeannelle</a>
       <div class="desktop-menu">
-        <a href="/">Accueil</a>
-        <a href="/a-propos">A Propos</a>
+        <ul>
+          {menu.map(item => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
       </div>
       <div class="mobile-menu">
-        <button class="menu-button">
+        <button
+          class="menu-button"
+          id="menu-button"
+          aria-expanded="false"
+          aria-controls="nav-menu"
+          aria-label="Ouvrir le menu"
+        >
           <span></span>
           <span></span>
           <span></span>
         </button>
-        <div class="menu">
-          <a href="/">Accueil</a>
-          <a href="/a-propos">A Propos</a>
-          <Image src={Plant} alt="Plant" id="plant" />
-        </div>
+        <ul class="menu" id="nav-menu" role="menu">
+          {menu.map(item => (
+            <li role="none"><a role="menuitem" href={item.href}>{item.label}</a></li>
+          ))}
+          <li role="none">
+            <Image src={Plant} alt="Plant" id="plant" />
+          </li>
+        </ul>
       </div>
   </nav>
-  <div class="gradient"></div>
 </header>
 
 <script>
   function listenMenu() {
-    const buttonMenu = document.querySelector('.menu-button')
-    const menuTitles = document.querySelector(".menu");
+    const buttonMenu = document.getElementById('menu-button');
+    const menuEl = document.getElementById('nav-menu');
     const body = document.querySelector("body");
 
-    const toggleMenu = () => {
-      menuTitles?.classList.toggle("show");
-      buttonMenu?.classList.toggle("active");
-      body?.classList.toggle("no-scroll");
+    if (!buttonMenu || !menuEl) return;
+
+    const setExpanded = (value) => {
+      buttonMenu.setAttribute('aria-expanded', String(value));
     };
 
-    menuTitles?.addEventListener("click", toggleMenu);
-    buttonMenu?.addEventListener("click", toggleMenu)
+    const toggleMenu = () => {
+      menuEl.classList.toggle("show");
+      buttonMenu.classList.toggle("active");
+      body.classList.toggle("no-scroll");
+      setExpanded(menuEl.classList.contains("show"));
+    };
+
+    buttonMenu.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleMenu();
+    });
+
+    menuEl.addEventListener("click", (e) => {
+      const target = /** @type {HTMLElement} */ (e.target);
+      if (target && target.tagName === "A") {
+        toggleMenu();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && menuEl.classList.contains("show")) {
+        toggleMenu();
+        buttonMenu.focus();
+      }
+    });
   }
 
   document.addEventListener("DOMContentLoaded", listenMenu);
@@ -48,8 +86,12 @@ import Plant from "../../public/Swiper/Plant.svg";
 </script>
 
 <style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixins" as *;
+
   header {
     width: 100%;
+    height: 10vh;
     position: relative;
     background-color: white;
   }
@@ -59,6 +101,7 @@ import Plant from "../../public/Swiper/Plant.svg";
     justify-content: space-between;
     align-items: center;
     width: 90%;
+    height: 100%;
     margin: 0 auto;
     a {
       text-decoration: none;
@@ -77,10 +120,11 @@ import Plant from "../../public/Swiper/Plant.svg";
   }
 
   #logo {
+    font-size: var(--big-text);
+    font-family: var(--title);
+    font-weight: 900;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-    width: 70%;
-    height: auto;
   }
 
   .menu-button {
@@ -129,17 +173,19 @@ import Plant from "../../public/Swiper/Plant.svg";
   }
 
   .menu {
-    position: absolute;
-    width: 100vw;
-    min-height: 100vh;
+    list-style: none;
+    margin: 0;
+    padding: 5rem 0; 
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 3rem;
+    position: absolute;
+    width: 100vw;
+    min-height: 100vh;
     top: 100%;
     left: 0;
     background-color: var(--white);
-    padding: 5rem 0;
     z-index: -3;
     transition: 0.5s ease;
     opacity: 0;
@@ -157,8 +203,7 @@ import Plant from "../../public/Swiper/Plant.svg";
     height: auto;
   }
   
-  @media (width >= 768px) {
-
+  @include breakpoint-up($breakpoint-tablet) {
     .desktop-menu {
       display: flex;
       align-items: center;
@@ -166,16 +211,17 @@ import Plant from "../../public/Swiper/Plant.svg";
       white-space: nowrap;
     }
 
-    .desktop-menu a {
-      font-size: 1.4rem;
-    }
-
     .mobile-menu {
       display: none;
     }
 
-    #logo {
-      width: 40%;
+    .desktop-menu ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 3rem;
+      align-items: center;
     }
   }
 </style>
