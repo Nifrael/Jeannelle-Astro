@@ -10,48 +10,58 @@ const menu = [
 
 <header>
   <nav role="navigation" aria-label="Main navigation">
-      <a href="/" id="logo">Jeannelle</a>
-      <div class="desktop-menu">
-        <ul>
-          {menu.map(item => (
-            <li><a href={item.href}>{item.label}</a></li>
-          ))}
-        </ul>
-      </div>
-      <div class="mobile-menu">
-        <button
-          class="menu-button"
-          id="menu-button"
-          aria-expanded="false"
-          aria-controls="nav-menu"
-          aria-label="Ouvrir le menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <ul class="menu" id="nav-menu" role="menu">
-          {menu.map(item => (
-            <li role="none"><a role="menuitem" href={item.href}>{item.label}</a></li>
-          ))}
-          <li role="none">
-            <Image src={Plant} alt="Plant" id="plant" />
-          </li>
-        </ul>
-      </div>
+    <a href="/" id="logo">Jeannelle</a>
+    <div class="desktop-menu">
+      <ul>
+        {
+          menu.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div class="mobile-menu">
+      <button
+        class="menu-button"
+        id="menu-button"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+        aria-label="Ouvrir le menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="menu" id="nav-menu" role="menu">
+        {
+          menu.map((item) => (
+            <li role="none">
+              <a role="menuitem" href={item.href}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        <li role="none">
+          <Image src={Plant} alt="Plant" id="plant" />
+        </li>
+      </ul>
+    </div>
   </nav>
 </header>
 
 <script>
   function listenMenu() {
-    const buttonMenu = document.getElementById('menu-button');
-    const menuEl = document.getElementById('nav-menu');
+    const buttonMenu = document.getElementById("menu-button");
+    const menuEl = document.getElementById("nav-menu");
     const body = document.querySelector("body");
 
     if (!buttonMenu || !menuEl) return;
 
     const setExpanded = (value) => {
-      buttonMenu.setAttribute('aria-expanded', String(value));
+      buttonMenu.setAttribute("aria-expanded", String(value));
     };
 
     const toggleMenu = () => {
@@ -92,6 +102,7 @@ const menu = [
   header {
     width: 100%;
     height: 10vh;
+    margin: 0.5rem 0;
     position: relative;
     background-color: white;
   }
@@ -102,7 +113,7 @@ const menu = [
     align-items: center;
     width: 90%;
     height: 100%;
-    margin: 0 auto;
+    margin: 0rem auto;
     a {
       text-decoration: none;
       font-size: 1.4rem;
@@ -175,7 +186,7 @@ const menu = [
   .menu {
     list-style: none;
     margin: 0;
-    padding: 5rem 0; 
+    padding: 5rem 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -191,7 +202,7 @@ const menu = [
     opacity: 0;
     overflow: auto;
   }
-  
+
   .show {
     opacity: 1;
     transition: 0.5s ease;
@@ -202,7 +213,7 @@ const menu = [
     width: 30%;
     height: auto;
   }
-  
+
   @include breakpoint-up($breakpoint-tablet) {
     .desktop-menu {
       display: flex;
