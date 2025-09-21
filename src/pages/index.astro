@@ -4,20 +4,13 @@ import WelcomePhotos from "../components/Index/WelcomePhotos.astro";
 import Actualites from "../components/Index/Actualités.astro";
 import SwiperCards from "../components/Index/SwiperCards.astro";
 import TherapistCard from "../components/Index/TherapistCard.astro";
+import DescriptionCard from "@/components/Index/DescriptionCard.astro";
 ---
 
 <Layout>
   <WelcomePhotos />
+  <DescriptionCard />
   <div class="limited-container">
-    <div class="text-container main-title">
-      <h2>Un Centre de Thérapeutes</h2>
-      <p>À votre écoute, au cœur du village de Millas.</p>
-      <p>
-        Un endroit cosy où l’on peut se poser et être entendu dans ses mots… et
-        ses maux.
-      </p>
-      <p>Un centre pour vous accompagner.</p>
-    </div>
     <h2>Plusieurs thérapies y sont proposées.</h2>
     <SwiperCards />
     <Actualites />
