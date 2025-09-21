@@ -9,18 +9,19 @@ import TherapistCard from "../components/Index/TherapistCard.astro";
 <Layout>
   <WelcomePhotos />
   <div class="limited-container">
-    <Actualites />
     <div class="text-container main-title">
-      <h1>Jeannelle, un centre de thérapeutes...</h1>
+      <h2>Un Centre de Thérapeutes</h2>
       <p>À votre écoute, au cœur du village de Millas.</p>
       <p>
         Un endroit cosy où l’on peut se poser et être entendu dans ses mots… et
         ses maux.
       </p>
       <p>Un centre pour vous accompagner.</p>
-      <h1>...Plusieurs thérapies y sont proposées...</h1>
     </div>
+    <h2>Plusieurs thérapies y sont proposées.</h2>
     <SwiperCards />
+    <Actualites />
+
     <div class="text-container main-title">
       <h1>...Mais pas seulement</h1>
       <div class="text-container paragraph">
@@ -50,6 +51,10 @@ import TherapistCard from "../components/Index/TherapistCard.astro";
 </Layout>
 
 <style lang="scss">
+  .text-container {
+    text-align: center;
+    margin: 4rem auto;
+  }
   .text-container dd {
     margin-inline-start: 20px;
   }
