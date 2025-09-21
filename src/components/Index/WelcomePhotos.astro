@@ -7,47 +7,53 @@ import Yoga from "@assets/images/Welcome/Yoga.jpg";
 import Accueil from "@assets/images/Welcome/Accueil.jpg";
 ---
 
-<div class="welcome-photos">
-  <Image
-    src={Entrée}
-    alt="Entrée du local Jeannelle"
-    width={1200}
-    sizes="(max-width: 768px) 95vw, 20vw"
-    quality={70}
-  />
-  <Image
-    src={Lumière}
-    alt="Lampe cosy allumée devant le mur de pierre du local Jeannelle"
-    widths={[400, 800, 1200, 1800]}
-    sizes="(max-width: 768px) 95vw, 20vw"
-    quality={70}
-  />
-  <Image
-    src={Fauteuils}
-    alt="Fauteuils confortables dans le local Jeannelle"
-    widths={[400, 800, 1200, 1800]}
-    sizes="(max-width: 768px) 95vw, 20vw"
-    quality={70}
-  />
-  <Image
-    src={Yoga}
-    alt="Tapis de Yoga disposés dans la grande salle Jeannelle."
-    widths={[400, 800, 1200, 1800]}
-    sizes="(max-width: 768px) 95vw, 20vw"
-    quality={70}
-  />
-  <Image
-    src={Accueil}
-    alt="Chaises d'attente du local Jeannelle"
-    widths={[400, 800, 1200, 1800]}
-    sizes="(max-width: 768px) 95vw, 20vw"
-    quality={70}
-  />
-</div>
+<section class="welcome">
+  <div class="welcome-photos">
+    <Image
+      src={Entrée}
+      alt="Entrée du local Jeannelle"
+      width={1200}
+      sizes="(max-width: 768px) 95vw, 20vw"
+      quality={70}
+    />
+    <Image
+      src={Lumière}
+      alt="Lampe cosy allumée devant le mur de pierre du local Jeannelle"
+      widths={[400, 800, 1200, 1800]}
+      sizes="(max-width: 768px) 95vw, 20vw"
+      quality={70}
+    />
+    <Image
+      src={Fauteuils}
+      alt="Fauteuils confortables dans le local Jeannelle"
+      widths={[400, 800, 1200, 1800]}
+      sizes="(max-width: 768px) 95vw, 20vw"
+      quality={70}
+    />
+    <Image
+      src={Yoga}
+      alt="Tapis de Yoga disposés dans la grande salle Jeannelle."
+      widths={[400, 800, 1200, 1800]}
+      sizes="(max-width: 768px) 95vw, 20vw"
+      quality={70}
+    />
+    <Image
+      src={Accueil}
+      alt="Chaises d'attente du local Jeannelle"
+      widths={[400, 800, 1200, 1800]}
+      sizes="(max-width: 768px) 95vw, 20vw"
+      quality={70}
+    />
+  </div>
+</section>
 
 <style lang="scss">
   @use "@styles/config/variables" as *;
   @use "@styles/config/mixins" as *;
+
+  .welcome {
+    min-height: 90vh;
+  }
 
   .welcome-photos {
     width: 95%;
@@ -116,7 +122,7 @@ import Accueil from "@assets/images/Welcome/Accueil.jpg";
     .welcome-photos {
       max-width: 80%;
       height: auto;
-      margin: 4rem auto;
+      margin: 5rem auto;
       display: grid;
       align-items: center;
       grid-template-columns: repeat(4, 1fr);
