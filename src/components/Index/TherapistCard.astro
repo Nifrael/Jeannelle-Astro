@@ -1,129 +1,191 @@
 ---
 import Image from "astro/components/Image.astro";
-import Avatar from "../../assets/images/Index/KM-image.jpg";
+import KM from "../../assets/images/Index/KM-image.jpg";
+
+const therapists = [
+  {
+    name: "Karine Maraval",
+    role: "Fondatrice",
+    phone: "07.60.48.48.06",
+    href: "/a-propos",
+    image: KM,
+    alt: "Photo de Karine Maraval",
+  },
+];
+
+const telHref = (p: string) => `tel:${p.replace(/[.\s]/g, "")}`;
 ---
 
-<div class="therapist-card">
-  <Image src={Avatar} alt="Photo de Karine" />
-  <h4>Karine Maraval</h4>
-  <h4>07.60.48.48.06</h4>
-  <p>
-    Soyons nombreux à accueillir celles et ceux qui sont en demande. Soyons
-    nombreux pour échanger et partager. Offrez vos pratiques, vos connaissances,
-    votre sensibilité...
-  </p>
-  <div class="button-container">
-    <a href="/a-propos" class="button">A propos de moi</a>
-  </div>
-  <cite>
-    <h3>"Préparez votre temps, pour vous j'ai tout le mien."</h3>
-  </cite>
-</div>
+<section class="therapists" aria-labelledby="therapists-title">
+  <h2 id="therapists-title" class="sr-only">
+    L'équipe thérapeutique du Centre Jeannelle
+  </h2>
+
+  <ul class="cards" role="list">
+    {
+      therapists.map((therapist) => (
+        <li class="card">
+          <div class="avatar">
+            <Image src={therapist.image} alt={therapist.alt} />
+          </div>
+
+          <div class="content">
+            <h4 class="name">{therapist.name}</h4>
+            <p class="role">{therapist.role}</p>
+
+            <p class="phone">
+              <a
+                href={telHref(therapist.phone)}
+                aria-label={`Téléphoner à ${therapist.name}`}
+              >
+                {therapist.phone}
+              </a>
+            </p>
+            <div class="button-container">
+              <a href={therapist.href} class="button">
+                En savoir plus
+              </a>
+            </div>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</section>
 
 <style lang="scss">
-  .therapist-card {
-    height: auto;
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .therapists {
     width: 95%;
-    display: grid;
-    grid-template-rows: 130px 50px 50px repeat(3, auto);
-    position: relative;
-    box-shadow: 0px -1px 6px 6px var(--main-color);
-    border-radius: 10px;
     margin: 5rem auto;
-    padding: 1%;
-    img {
-      position: absolute;
-      width: 50%;
-      top: 0;
-      left: 50%;
-      height: auto;
-      transform: translate(-50%, -30%);
-      border-top-left-radius: 40%;
-      border-top-right-radius: 40%;
-      border-bottom-left-radius: 60%;
-      border-bottom-right-radius: 60%;
-      border: var(--main-color) 7px solid;
-    }
-    h4:first-of-type {
-      margin: 0.5rem auto;
-      padding-left: 0;
-      grid-row: 2/3;
-      justify-self: center;
-      color: var(--important-color);
-    }
-    h4:nth-of-type(2) {
-      margin: 0.5rem auto;
-      grid-row: 3/4;
-      padding-right: 0;
-      justify-self: center;
-      color: var(--important-color);
-    }
-    .button-container {
-      grid-row: 5/6;
-    }
-    p {
-      grid-row: 4/5;
-      text-align: center;
-      padding: 2% 2%;
-    }
-    cite {
-      grid-row: 6/7;
-      text-align: center;
-      color: var(--important-color);
+  }
+
+  .cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 16px;
+    background: #fff;
+    border: 1px solid color-mix(in oklab, var(--main-color) 40%, transparent);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    padding: 2.5rem 1.5rem 1.75rem;
+    transition:
+      transform 160ms ease,
+      box-shadow 160ms ease,
+      border-color 160ms ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+      border-color: color-mix(
+        in oklab,
+        var(--important-color) 40%,
+        transparent
+      );
     }
   }
 
-  @media (width >= 450px) {
-    .therapist-card img {
-      width: 30%;
+  .avatar {
+    margin-top: -3.5rem;
+    margin-bottom: 0.75rem;
+
+    img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 6px solid var(--main-color);
+      background: #fff;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
     }
+  }
+
+  .content {
+    text-align: center;
+    display: grid;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .name {
+    margin: 0.25rem 0 0;
+    color: var(--important-color);
+    font-size: clamp(1.05rem, 1vw + 0.9rem, 1.25rem);
+  }
+
+  .role {
+    margin: 0;
+    color: color-mix(in oklab, var(--important-color) 70%, #666 30%);
+    font-weight: 600;
+  }
+
+  .phone {
+    margin: 0;
+
+    a {
+      color: var(--important-color);
+      text-decoration: none;
+      border-bottom: 1px dashed
+        color-mix(in oklab, var(--important-color) 60%, transparent);
+      transition:
+        color 120ms ease,
+        border-color 120ms ease;
+
+      &:hover {
+        color: var(--main-color);
+        border-color: var(--main-color);
+      }
+    }
+  }
+
+  .bio {
+    margin: 0.25rem 0 0.5rem;
+    padding: 0 0.25rem;
+  }
+
+  .button-container {
+    margin: 0.25rem 0 0.5rem;
+  }
+
+  .quote {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--important-color);
+    font-style: normal;
+    opacity: 0.9;
   }
 
   @media (width >= 768px) {
-    .therapist-card {
-      margin: 10% auto;
+    .therapists {
       width: 90%;
-      img {
-        width: 25%;
-      }
+      margin: 6rem auto;
     }
   }
 
-  @media (width >= 992px) {
-    .therapist-card {
+  @media (width >= 1200px) {
+    .therapists {
       width: 80%;
-      height: auto;
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: 150px 30px repeat(4, auto);
-      img {
-        width: 25%;
-      }
-      h4:first-of-type {
-        grid-column: 1/2;
-        grid-row: 1/2;
-        align-self: center;
-        padding-right: 20%;
-        justify-self: left;
-      }
-      h4:nth-of-type(2) {
-        grid-column: 2/3;
-        grid-row: 1/2;
-        align-self: center;
-        padding-left: 20%;
-        justify-self: right;
-      }
-      .button-container {
-        grid-column: 1/3;
-        grid-row: 4/5;
-      }
-      p {
-        grid-column: 1/3;
-        grid-row: 3/4;
-      }
-      cite {
-        grid-column: 1/3;
-        grid-row: 5/6;
-      }
     }
   }
 </style>
