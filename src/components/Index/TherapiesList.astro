@@ -1,38 +1,39 @@
 ---
+import { Image } from "astro:assets";
+import Plant from "@assets/images/Icons/Plant.svg";
+import YinYoga from "@assets/images/Icons/Yin.svg";
+
 const therapies = [
   {
     id: 1,
     title: "Naturopathie",
     description:
       "Approche holistique visant à maintenir et restaurer la santé par des méthodes naturelles.",
-    icon: "leaf",
+    icon: Plant,
   },
   {
     id: 2,
     title: "Réflexologie",
     description:
       "Technique de massage des zones réflexes du pied correspondant aux organes du corps.",
-    icon: "foot-prints",
   },
   {
     id: 3,
-    title: "Ostéopathie",
+    title: "Yin Yoga",
     description:
-      "Thérapie manuelle visant à rétablir l'équilibre et la mobilité du corps.",
-    icon: "bone",
+      "Pratique de yoga axée sur la détente et l'étirement des tissus profonds.",
+    icon: YinYoga,
   },
   {
     id: 4,
     title: "Massage bien-être",
     description:
       "Techniques de massage pour détendre le corps et apaiser l'esprit.",
-    icon: "hands-holding",
   },
   {
     id: 5,
     title: "Méditation",
     description: "Pratique mentale pour développer attention et conscience.",
-    icon: "spa",
   },
 ];
 ---
@@ -43,7 +44,7 @@ const therapies = [
     therapies.map((therapie) => (
       <div class="therapie-card">
         <div class="therapie-icon">
-          <i class={`fa-solid fa-${therapie.icon}`} aria-hidden="true" />
+          <Image src={therapie.icon} alt={therapie.title} width={40} />
         </div>
         <h3>{therapie.title}</h3>
         <p>{therapie.description}</p>
