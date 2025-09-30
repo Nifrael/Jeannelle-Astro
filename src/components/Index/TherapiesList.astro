@@ -1,0 +1,136 @@
+---
+const therapies = [
+  {
+    id: 1,
+    title: "Naturopathie",
+    description:
+      "Approche holistique visant à maintenir et restaurer la santé par des méthodes naturelles.",
+    icon: "leaf",
+  },
+  {
+    id: 2,
+    title: "Réflexologie",
+    description:
+      "Technique de massage des zones réflexes du pied correspondant aux organes du corps.",
+    icon: "foot-prints",
+  },
+  {
+    id: 3,
+    title: "Ostéopathie",
+    description:
+      "Thérapie manuelle visant à rétablir l'équilibre et la mobilité du corps.",
+    icon: "bone",
+  },
+  {
+    id: 4,
+    title: "Massage bien-être",
+    description:
+      "Techniques de massage pour détendre le corps et apaiser l'esprit.",
+    icon: "hands-holding",
+  },
+  {
+    id: 5,
+    title: "Méditation",
+    description: "Pratique mentale pour développer attention et conscience.",
+    icon: "spa",
+  },
+];
+---
+
+<h2>Nos thérapies</h2>
+<div class="therapies-container">
+  {
+    therapies.map((therapie) => (
+      <div class="therapie-card">
+        <div class="therapie-icon">
+          <i class={`fa-solid fa-${therapie.icon}`} aria-hidden="true" />
+        </div>
+        <h3>{therapie.title}</h3>
+        <p>{therapie.description}</p>
+        <a href={`/therapies/${therapie.id}`} class="therapie-link">
+          En savoir plus
+          <i class="fa-solid fa-arrow-right" aria-hidden="true" />
+        </a>
+      </div>
+    ))
+  }
+</div>
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixins" as *;
+
+  .therapies-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .therapie-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0px -1px 3px 3px rgba(207, 154, 113, 0.249);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .therapie-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #f7f1eb;
+    margin-bottom: 1rem;
+
+    i {
+      color: #cf9a71;
+      font-size: 1.5rem;
+    }
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: #333;
+  }
+
+  p {
+    color: #666;
+    flex-grow: 1;
+    margin-bottom: 1rem;
+  }
+
+  .therapie-link {
+    display: inline-flex;
+    align-items: center;
+    color: #cf9a71;
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: auto;
+
+    i {
+      margin-left: 0.5rem;
+      transition: transform 0.2s ease;
+    }
+
+    &:hover i {
+      transform: translateX(3px);
+    }
+  }
+
+  @include breakpoint-up($breakpoint-tablet) {
+  }
+</style>
