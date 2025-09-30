@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import WelcomePhotos from "../components/Index/WelcomePhotos.astro";
 import Actualites from "../components/Index/Actualités.astro";
-import SwiperCards from "../components/Index/SwiperCards.astro";
+import TherapiesList from "../components/Index/TherapiesList.astro";
 import TherapistCard from "../components/Index/TherapistCard.astro";
 import DescriptionCard from "@/components/Index/DescriptionCard.astro";
 ---
@@ -11,8 +11,7 @@ import DescriptionCard from "@/components/Index/DescriptionCard.astro";
   <WelcomePhotos />
   <DescriptionCard />
   <div class="limited-container">
-    <h2>Plusieurs thérapies y sont proposées.</h2>
-    <SwiperCards />
+    <TherapiesList />
     <Actualites />
 
     <div class="text-container main-title">
