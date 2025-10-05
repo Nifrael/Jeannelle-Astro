@@ -5,41 +5,15 @@ import Actualites from "../components/Index/Actualités.astro";
 import TherapiesList from "../components/Index/TherapiesList.astro";
 import TherapistCard from "../components/Index/TherapistCard.astro";
 import DescriptionCard from "@/components/Index/DescriptionCard.astro";
+import Therapists from "../components/Index/Therapists.astro";
 ---
 
 <Layout>
   <WelcomePhotos />
   <DescriptionCard />
-  <div class="limited-container">
-    <TherapiesList />
-    <Actualites />
-
-    <div class="text-container main-title">
-      <h1>...Mais pas seulement</h1>
-      <div class="text-container paragraph">
-        <p>
-          <dt>
-            Si vous êtes thérapeute, j'ai à coeur de partager ce lieu avec vous
-            :
-          </dt>
-        </p>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Un cabinet pour
-            un(e) ostéopathe est disponible en location mensuelle.
-          </dd>
-        </p>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Un autre cabinet
-            est disponible : une ou deux journées fixes par semaine est possible
-            pour d'autres thérapeutes.
-          </dd>
-        </p>
-      </div>
-    </div>
-    <TherapistCard />
-  </div>
+  <TherapiesList />
+  <Therapists />
+  <TherapistCard />
 </Layout>
 
 <style lang="scss">
