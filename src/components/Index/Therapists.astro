@@ -1,0 +1,71 @@
+---
+
+---
+
+<div class="background-image">
+  <div class="text-container">
+    <h3>Vous êtes thérapeutes ?</h3>
+    <p>J'ai à coeur de partager ce lieu avec vous.</p>
+    <p>
+      Soyons nombreux à accueilir celles et ceux qui sont en demande. Soyons
+      nombreux pour échanger et partager. Offrez vos pratiques, vos
+      connaissances, votre sensibilité...
+    </p>
+  </div>
+
+  <div class="text-container">
+    <h3>Espaces disponibles</h3>
+    <p>
+      Un cabinet pour un(e) ostéopathe est disponible en location mensuelle. Un
+      autre cabinet est disponible pour une ou deux journées fixes par semaine
+      pour d'autres thérapeutes.
+    </p>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixins" as *;
+
+  .background-image {
+    width: 100%;
+    min-height: 50vh;
+    margin: 10rem auto;
+    background-image: url("/src/assets/images/Index/Help.jpg");
+    background-color: rgba(0, 0, 0, 0.395);
+    background-blend-mode: overlay;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .text-container {
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    width: 90%;
+    padding: 1.5rem;
+    text-align: center;
+    margin: 3rem auto;
+    h3 {
+      color: var(--important-color);
+    }
+    p {
+      text-align: justify;
+    }
+  }
+
+  @include breakpoint-up($breakpoint-desktop) {
+    .background-image {
+      background-attachment: fixed;
+    }
+    .text-container {
+      width: 50%;
+      padding: 3rem;
+    }
+  }
+</style>
