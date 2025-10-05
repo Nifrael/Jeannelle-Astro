@@ -1,60 +1,65 @@
 ---
 import { Image } from "astro:assets";
-import Plant from "@assets/images/Icons/Plant.svg";
+import Plant from "@assets/images/Icons/Nature.svg";
 import YinYoga from "@assets/images/Icons/Yin.svg";
-import Feet from "@assets/images/Icons/Feet.svg";
+import Feet from "@assets/images/Icons/Reflexology.svg";
+import Amma from "@assets/images/Icons/Chair.svg";
+import Brain from "@assets/images/Icons/Brain.svg";
+import Hour from "@assets/images/Icons/Hour.svg";
 
 const therapies = [
   {
     id: 1,
-    title: "Naturopathie - Nutritionniste - Micronutritionniste",
+    title: "Naturopathie - (Micro)Nutritionniste",
     description:
       "Optimisons votre santé par une meilleure hygiène de vie et une meilleure compréhension de vos symptômes afin de les soulager. ",
     icon: Plant,
   },
   {
     id: 2,
-    title: "Réflexologie",
+    title: "Réflexologie Plantaire Energétique Chinoise",
     description:
-      "Technique de massage des zones réflexes du pied correspondant aux organes du corps.",
+      "Revitalisons votre corps en optimisant la fonction de vos organes via les zones réflexes du pied et restaurons la circulation énergétique.",
     icon: Feet,
   },
   {
     id: 3,
     title: "Yin Yoga",
     description:
-      "Pratique de yoga axée sur la détente et l'étirement des tissus profonds.",
+      "Pratique de yoga introscpective et accesible à tous, utilisant des postures simples pour réduir le stress et améliorer le bien-être général du corps et de l'esrpit.",
     icon: YinYoga,
   },
   {
     id: 4,
-    title: "Massage bien-être",
+    title: "Psychopraticienne",
     description:
-      "Techniques de massage pour détendre le corps et apaiser l'esprit.",
-    icon: Feet,
+      "Ecoute bienveillante, sans jugement pour vous aider à trouver clarté et sens dans vos épreuves, permettant une reconnexion chaleureuse avec vous-même.",
+    icon: Brain,
   },
   {
     id: 5,
-    title: "Méditation",
-    description: "Pratique mentale pour développer attention et conscience.",
-    icon: Plant,
+    title: "Massage Amma",
+    description:
+      "Massage apaisant qui se pratique assis et habillé, utilisant des pressions et acupressions pour procurer une détente à la fois musculaire et énergétique.",
+    icon: Amma,
   },
+  { title: "A Venir...", description: "", icon: Hour },
 ];
 ---
 
-<h2>Nos thérapies</h2>
+<h1>NOS THERAPIES</h1>
 <div class="therapies-container">
   {
     therapies.map((therapie) => (
       <div class="therapie-card">
-        <div class="therapie-icon">
-          <Image src={therapie.icon} alt={therapie.title} width={40} />
-        </div>
-        <h3>{therapie.title}</h3>
+        <Image src={therapie.icon} alt={therapie.title} width={50} id="icon" />
+        <h4>{therapie.title}</h4>
         <p>{therapie.description}</p>
-        <a href={`/therapies/${therapie.id}`} class="therapie-link">
-          Découvrir
-        </a>
+        {therapie.id && (
+          <a href={`/therapies/${therapie.id}`} class="therapie-link">
+            Découvrir
+          </a>
+        )}
       </div>
     ))
   }
@@ -64,60 +69,47 @@ const therapies = [
   @use "@styles/config/variables" as *;
   @use "@styles/config/mixins" as *;
 
+  h1 {
+    text-align: center;
+    margin: 5rem auto;
+  }
+
   .therapies-container {
+    width: 90%;
     display: grid;
-    grid-template-columns: repeat(1, minmax(280px, 1fr));
-    grid-template-rows: min-content min-content 1fr min-content;
-    gap: 0.5rem;
-    margin: 2rem 0;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem auto;
   }
 
   .therapie-card {
     background: #fff;
     border-radius: 12px;
     padding: 1.5rem;
-    margin: 0.5rem;
     box-shadow: 0px -1px 3px 3px rgba(207, 154, 113, 0.249);
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
     display: grid;
-    grid-template-rows: subgrid;
-    grid-row: span 4;
-    height: 100%;
-
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-  }
-
-  .therapie-icon {
-    display: flex;
     align-items: center;
     justify-content: center;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: #f7f1eb;
-    margin-bottom: 1rem;
+    grid-template-rows: 80px 125px auto 70px;
+    height: 100%;
 
-    i {
-      color: #cf9a71;
-      font-size: 1.5rem;
+    p {
+      text-align: justify;
+    }
+
+    h4 {
+      color: var(--important-color);
+      text-align: center;
+      margin: 1rem;
+    }
+
+    a {
+      margin: 0 auto;
     }
   }
 
-  h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.75rem;
-    color: #333;
-  }
-
-  p {
-    color: #666;
-    flex-grow: 1;
-    margin-bottom: 1rem;
+  #icon {
+    margin: 0 auto;
   }
 
   .therapie-link {
@@ -144,9 +136,18 @@ const therapies = [
     }
   }
 
-  @include breakpoint-up($breakpoint-desktop-xl) {
+  @include breakpoint-up($breakpoint-desktop) {
     .therapies-container {
       grid-template-columns: repeat(3, minmax(280px, 1fr));
+    }
+    .therapie-card {
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
     }
   }
 </style>
