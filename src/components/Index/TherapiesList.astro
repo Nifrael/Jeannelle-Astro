@@ -75,7 +75,7 @@ const therapies = [
   }
 
   .therapies-container {
-    width: 90%;
+    width: 85%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
@@ -90,7 +90,7 @@ const therapies = [
     display: grid;
     align-items: center;
     justify-content: center;
-    grid-template-rows: 80px 125px auto 70px;
+    grid-template-rows: 80px 130px auto 70px;
     height: 100%;
 
     p {
@@ -119,27 +119,18 @@ const therapies = [
     text-decoration: none;
     font-weight: 500;
     margin-top: auto;
-
-    i {
-      margin-left: 0.5rem;
-      transition: transform 0.2s ease;
-    }
-
-    &:hover i {
-      transform: translateX(3px);
-    }
   }
 
   @include breakpoint-up($breakpoint-tablet) {
     .therapies-container {
-      grid-template-columns: repeat(2, minmax(280px, 1fr));
+      grid-template-columns: repeat(2, minmax(300px, 1fr));
     }
   }
 
   @include breakpoint-up($breakpoint-desktop) {
     .therapies-container {
-      width: 70%;
-      grid-template-columns: repeat(3, minmax(280px, 1fr));
+      width: 85%;
+      grid-template-columns: repeat(3, minmax(300px, 1fr));
     }
     .therapie-card {
       transition:
@@ -149,6 +140,13 @@ const therapies = [
         transform: translateY(-5px);
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
       }
+    }
+  }
+
+  @include breakpoint-up($breakpoint-desktop-xl) {
+    .therapies-container {
+      width: 90%;
+      max-width: 1200px;
     }
   }
 </style>
