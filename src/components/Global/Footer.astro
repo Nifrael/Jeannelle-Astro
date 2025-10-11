@@ -1,0 +1,142 @@
+---
+import Image from "astro/components/Image.astro";
+import Millas from "@assets/images/Index/Millas.jpg";
+---
+
+<footer>
+  <div class="footer-container">
+    <div class="footer-content">
+      <h3>Jeannelle</h3>
+      <div class="map-container">
+        <a
+          href="https://goo.gl/maps/3ewbTotvHqoUExid8"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image
+            src={Millas}
+            alt="Localisation Jeannelle à Millas"
+            id="map-image"
+          />
+        </a>
+      </div>
+      <div class="contact-info">
+        <p>18 Rue Lieutenant Basseras, 66170 Millas</p>
+        <p>07.60.48.48.06</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="/mentions-legales">Mentions légales</a>
+        <span class="separator">•</span>
+        <a href="/politique-confidentialite">Politique de confidentialité</a>
+      </div>
+
+      <div class="copyright">
+        <p>
+          &copy; {new Date().getFullYear()} Jeannelle - Tous droits réservés
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style lang="scss">
+  h3 {
+    color: var(--important-color);
+    text-align: center;
+    margin: 0.5rem 0;
+  }
+
+  footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--main-color);
+  }
+
+  footer p {
+    font-size: var(--small-text);
+    text-align: center;
+    margin: 0.5rem 0;
+  }
+
+  footer a {
+    color: var(--text-primary-color);
+    font-size: var(--small-text);
+    text-decoration: none;
+    transition: 0.5s ease-in-out;
+  }
+
+  footer a:visited {
+    color: var(--text-primary-color);
+  }
+
+  footer a:hover {
+    color: var(--important-color);
+    transition: 0.5s ease-in-out;
+  }
+
+  .footer-container {
+    max-width: 600px;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-links {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .footer-links a {
+    margin: 0 0.5rem;
+  }
+
+  .separator {
+    color: var(--text-primary-color);
+  }
+
+  .map-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 1.5rem auto;
+    text-align: center;
+  }
+
+  #map-image {
+    width: 70%;
+    height: auto;
+    border-radius: 40px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0.5rem 0 1rem 0;
+  }
+
+  .copyright {
+    margin-top: 2rem;
+    opacity: 0.8;
+  }
+
+  .copyright p {
+    font-size: calc(var(--small-text) - 0.1rem);
+  }
+
+  @media (width < 1024px) {
+    .footer-container {
+      width: 90%;
+      padding: 2rem 0;
+    }
+  }
+</style>
