@@ -14,6 +14,8 @@ const therapies = [
     description:
       "Optimisons votre santé par une meilleure hygiène de vie et une meilleure compréhension de vos symptômes afin de les soulager. ",
     icon: Plant,
+    duration: "1h",
+    price: "65€",
   },
   {
     id: 2,
@@ -21,13 +23,17 @@ const therapies = [
     description:
       "Revitalisons votre corps en optimisant la fonction de vos organes via les zones réflexes du pied et restaurons la circulation énergétique.",
     icon: Feet,
+    duration: "45 min",
+    price: "50€",
   },
   {
     id: 3,
-    title: "Yin Yoga",
+    title: "Yin Yoga - Cours Collectif",
     description:
-      "Pratique de yoga introscpective et accesible à tous, utilisant des postures simples pour réduir le stress et améliorer le bien-être général du corps et de l'esrpit.",
+      "Pratique de yoga introscpective et accesible à tous, utilisant des postures simples pour réduir le stress et améliorer le bien-être général du corps et de l'esprit.",
     icon: YinYoga,
+    duration: "1h",
+    price: "13€",
   },
   {
     id: 4,
@@ -35,6 +41,8 @@ const therapies = [
     description:
       "Ecoute bienveillante, sans jugement pour vous aider à trouver clarté et sens dans vos épreuves, permettant une reconnexion chaleureuse avec vous-même.",
     icon: Brain,
+    duration: "1h à 1h30",
+    price: "65€",
   },
   {
     id: 5,
@@ -42,6 +50,8 @@ const therapies = [
     description:
       "Massage apaisant qui se pratique assis et habillé, utilisant des pressions et acupressions pour procurer une détente à la fois musculaire et énergétique.",
     icon: Amma,
+    duration: "30 min",
+    price: "30€",
   },
   { title: "A Venir...", description: "", icon: Hour },
 ];
@@ -52,13 +62,13 @@ const therapies = [
   {
     therapies.map((therapie) => (
       <div class="therapie-card">
-        <Image src={therapie.icon} alt={therapie.title} width={50} id="icon" />
-        <h4>{therapie.title}</h4>
+        <Image src={therapie.icon} alt={therapie.title} width={40} id="icon" />
+        <h5>{therapie.title}</h5>
         <p>{therapie.description}</p>
-        {therapie.id && (
-          <a href={`/therapies/${therapie.id}`} class="therapie-link">
-            Découvrir
-          </a>
+        {therapie.duration && therapie.price && (
+          <p>
+            <span>{therapie.price}</span> | {therapie.duration}
+          </p>
         )}
       </div>
     ))
@@ -90,14 +100,19 @@ const therapies = [
     display: grid;
     align-items: center;
     justify-content: center;
-    grid-template-rows: 80px 130px auto 70px;
+    grid-template-rows: 40px 120px auto 60px;
     height: 100%;
 
     p {
       text-align: justify;
     }
 
-    h4 {
+    p:last-of-type {
+      text-align: center;
+      margin-top: auto;
+    }
+
+    h5 {
       color: var(--important-color);
       text-align: center;
       margin: 1rem;
@@ -105,6 +120,14 @@ const therapies = [
 
     a {
       margin: 0 auto;
+    }
+
+    span {
+      font-size: var(--h5);
+      text-align: center;
+      font-weight: 700;
+      margin-top: 1rem;
+      color: var(--important-color);
     }
   }
 
@@ -123,14 +146,14 @@ const therapies = [
 
   @include breakpoint-up($breakpoint-tablet) {
     .therapies-container {
-      grid-template-columns: repeat(2, minmax(300px, 1fr));
+      grid-template-columns: repeat(2, minmax(280px, 1fr));
     }
   }
 
   @include breakpoint-up($breakpoint-desktop) {
     .therapies-container {
       width: 85%;
-      grid-template-columns: repeat(3, minmax(300px, 1fr));
+      grid-template-columns: repeat(3, minmax(280px, 1fr));
     }
     .therapie-card {
       transition:
