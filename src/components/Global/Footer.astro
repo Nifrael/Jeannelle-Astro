@@ -28,88 +28,78 @@ import Millas from "@assets/images/Index/Millas.jpg";
 </footer>
 
 <style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixins" as *;
+
   h3 {
     color: var(--important-color);
     text-align: center;
-    margin: 0.5rem 0;
+    margin: 0;
   }
 
   footer {
+    padding-top: 2rem;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: var(--main-color);
-  }
+    .footer-container {
+      max-width: 600px;
+      width: 90%;
+      margin: 0 auto;
+    }
 
-  footer p {
-    font-size: var(--small-text);
-    text-align: center;
-    margin: 0.5rem 0;
-  }
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    p {
+      font-size: var(--small-text);
+      text-align: center;
+      margin: 0.5rem 0;
+    }
+    a {
+      color: var(--text-primary-color);
+      font-size: var(--small-text);
+      text-decoration: none;
+      transition: 0.5s ease-in-out;
+    }
+    a:visited {
+      color: var(--text-primary-color);
+    }
 
-  footer a {
-    color: var(--text-primary-color);
-    font-size: var(--small-text);
-    text-decoration: none;
-    transition: 0.5s ease-in-out;
-  }
+    a:hover {
+      color: var(--important-color);
+      transition: 0.5s ease-in-out;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .separator {
+        color: var(--text-primary-color);
+      }
+    }
 
-  footer a:visited {
-    color: var(--text-primary-color);
-  }
+    .footer-links a {
+      margin: 0 0.5rem;
+    }
+    .copyright {
+      margin-top: 2rem;
+      opacity: 0.8;
+    }
 
-  footer a:hover {
-    color: var(--important-color);
-    transition: 0.5s ease-in-out;
-  }
-
-  .footer-container {
-    max-width: 600px;
-    width: 90%;
-    margin: 0 auto;
-  }
-
-  .footer-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .footer-links {
-    margin-top: 1.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .footer-links a {
-    margin: 0 0.5rem;
-  }
-
-  .separator {
-    color: var(--text-primary-color);
+    .copyright p {
+      font-size: calc(var(--small-text) - 0.1rem);
+    }
   }
 
   .contact-info {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0.5rem 0 1rem 0;
-  }
-
-  .copyright {
-    margin-top: 2rem;
-    opacity: 0.8;
-  }
-
-  .copyright p {
-    font-size: calc(var(--small-text) - 0.1rem);
-  }
-
-  @media (width < 1024px) {
-    .footer-container {
-      width: 90%;
-      padding: 2rem 0;
-    }
+    margin: 1rem 0 1rem 0;
   }
 </style>
