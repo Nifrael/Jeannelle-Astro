@@ -3,165 +3,177 @@ import Layout from "../layouts/Layout.astro";
 import Image from "astro/components/Image.astro";
 import Avatar from "../assets/images/About/KM-avatar.jpg";
 import Candle from "../assets/images/About/candle.svg";
+import About from "@assets/images/About/About.jpg";
 ---
 
 <Layout>
-  <div class="about-photo">
-    <cite>
-      <h3>"Préparez votre temps, pour vous j'ai tout le mien."</h3>
-    </cite>
+  <div class="photo-container">
+    <Image
+      src={About}
+      alt="Photo de l'intérieur du cabinet Jeannelle"
+      class="about-photo"
+    />
+  </div>
+  <div class="citation">
+    <h4>"Préparez votre temps, pour vous j'ai tout le mien."</h4>
+  </div>
+  <div class="avatar-about">
+    <Image src={Avatar} alt="Karine Maraval" id="km-photo" />
   </div>
   <section class="limited-container">
-    <div class="about-container">
-      <div class="text-container">
-        <h2>Qui suis-je ?</h2>
-        <p>
-          8 ans à me former, à pratiquer, tester, chercher, recommencer,
-          solutionner, recommencer encore, perfectionner... Et ce dans le but de
-          devenir ma propre thérapeute... Pour mon corps, mon mental, et mon
-          énergie.
-        </p>
-        <b>
-          <p>C'est aujourd'hui chose faite.</p>
-        </b>
-        <p>
-          Le corps est une merveilleuse machine, bien orchestrée. Et comme
-          l'esprit, il vient nous parler de manière subtile, parfois maladroite.
-        </p>
-        <p>
-          Écouter, entendre, comprendre... J'ai eu à coeur d'affiner cette
-          sensibilité pour faire alliance avec le corps et l'esprit.
-        </p>
-      </div>
-      <div class="avatar-about">
-        <Image src={Avatar} alt="Karine Maraval" id="km-photo" />
-      </div>
-      <div class="text-container">
-        <h2>Pourquoi ?</h2>
-        <p>
-          Tout simplement pour me connaître, me respecter et gérer au mieux ce
-          qui me traverse.
-        </p>
-        <b>
-          <p>Être en paix, en santé, en vitalité.</p>
-        </b>
-        <p>
-          Avec joie, reconnaissance et enthousiasme, Jeannelle est là en cette
-          année 2024, pour celles et ceux qui partagent la même aspiration
-          d'être en pleine possession de leur énergie, de leur stabilité et de
-          leur authenticité.
-        </p>
-        <p>
-          Merci à celles et ceux qui m'ont encouragée, accompagnée pour mener à
-          bien ce projet d'ouverture.
-        </p>
-        <p>
-          Merci à vous d'avoir pris le temps de me lire et peut-être
-          viendrez-vous honorer le lieu de votre présence.
-        </p>
-      </div>
-      <div class="text-container">
-        <h2>
-          <dt>Mon parcours</dt>
-        </h2>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Infirmière diplômée
-            d'Etat
-          </dd>
-        </p>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Infirmière Sapeur-Pompier
-          </dd>
-        </p>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Naturopathe /
-            Réflexologue
-          </dd>
-        </p>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Diplôme Universitaire
-            de Nutrition / Micronutrition en sport et santé
-          </dd>
-        </p>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Formation en
-            maieusthésie (Niveau 4 pro)
-          </dd>
-        </p>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Stages et perfectionnement
-            en Aromathérapie
-          </dd>
-        </p>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Stages et perfectionnement
-            en réflexologie (palmaire, viscérale, sensitive, énergétique chinoise)
-          </dd>
-        </p>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Formations Yin
-            Yoga et Yoga
-          </dd>
-        </p>
-      </div>
-      <div class="text-container">
-        <h2>Un dernier mot...</h2>
-        <p>
-          Enfin, un clin d'oeil particulier et précieux à celles et ceux avec
-          qui je suis connectée d'âme à âme depuis tant d'années. Vos présences
-          subtiles m'aident...
-        </p>
-        <p>Merci d'être là, à mes côtés, sur mon épaule et dans mon coeur.</p>
-        <p><Image src={Candle} alt="Bougie" /></p>
-        <h2>...Jeannelle, c'est vous.</h2>
-      </div>
+    <div class="text-container">
+      <h2>Qui suis-je ?</h2>
+      <p>
+        8 ans à me former, à pratiquer, tester, chercher, recommencer,
+        solutionner, recommencer encore, perfectionner... Et ce dans le but de
+        devenir ma propre thérapeute... Pour mon corps, mon mental, et mon
+        énergie.
+      </p>
+      <b>
+        <p>C'est aujourd'hui chose faite.</p>
+      </b>
+      <p>
+        Le corps est une merveilleuse machine, bien orchestrée. Et comme
+        l'esprit, il vient nous parler de manière subtile, parfois maladroite.
+      </p>
+      <p>
+        Écouter, entendre, comprendre... J'ai eu à coeur d'affiner cette
+        sensibilité pour faire alliance avec le corps et l'esprit.
+      </p>
+    </div>
+
+    <div class="text-container">
+      <h2>Pourquoi ?</h2>
+      <p>
+        Tout simplement pour me connaître, me respecter et gérer au mieux ce qui
+        me traverse.
+      </p>
+      <b>
+        <p>Être en paix, en santé, en vitalité.</p>
+      </b>
+      <p>
+        Avec joie, reconnaissance et enthousiasme, Jeannelle est là en cette
+        année 2024, pour celles et ceux qui partagent la même aspiration d'être
+        en pleine possession de leur énergie, de leur stabilité et de leur
+        authenticité.
+      </p>
+      <p>
+        Merci à celles et ceux qui m'ont encouragée, accompagnée pour mener à
+        bien ce projet d'ouverture.
+      </p>
+      <p>
+        Merci à vous d'avoir pris le temps de me lire et peut-être viendrez-vous
+        honorer le lieu de votre présence.
+      </p>
+    </div>
+    <div class="text-container">
+      <h2>
+        <dt>Mon parcours</dt>
+      </h2>
+      <p>
+        <dd>
+          <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Infirmière diplômée
+          d'Etat
+        </dd>
+      </p>
+      <p>
+        <dd>
+          <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Infirmière Sapeur-Pompier
+        </dd>
+      </p>
+      <p>
+        <dd>
+          <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Naturopathe / Réflexologue
+        </dd>
+      </p>
+      <p>
+        <dd>
+          <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Diplôme Universitaire
+          de Nutrition / Micronutrition en sport et santé
+        </dd>
+      </p>
+      <p>
+        <dd>
+          <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Formation en maieusthésie
+          (Niveau 4 pro)
+        </dd>
+      </p>
+      <p>
+        <dd>
+          <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Stages et perfectionnement
+          en Aromathérapie
+        </dd>
+      </p>
+      <p>
+        <dd>
+          <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Stages et perfectionnement
+          en réflexologie (palmaire, viscérale, sensitive, énergétique chinoise)
+        </dd>
+      </p>
+      <p>
+        <dd>
+          <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Formations Yin
+          Yoga et Yoga
+        </dd>
+      </p>
+    </div>
+    <div class="text-container">
+      <h2>Un dernier mot...</h2>
+      <p>
+        Enfin, un clin d'oeil particulier et précieux à celles et ceux avec qui
+        je suis connectée d'âme à âme depuis tant d'années. Vos présences
+        subtiles m'aident...
+      </p>
+      <p>Merci d'être là, à mes côtés, sur mon épaule et dans mon coeur.</p>
+      <p><Image src={Candle} alt="Bougie" /></p>
+      <h2>...Jeannelle, c'est vous.</h2>
     </div>
   </section>
 </Layout>
 
 <style lang="scss">
-  .about-photo {
-    background-image: url(../assets/images/About/AboutMobile.jpg);
-    height: 600px;
-    background-size: cover;
-    background-position: bottom;
-    position: relative;
-    background-color: rgba(41, 41, 41, 0.313);
-    background-blend-mode: overlay;
-    width: 100%;
-    cite {
-      position: absolute;
-      bottom: 5%;
-      right: 5%;
-    }
-    cite h3 {
-      margin-left: 2%;
-      font-size: var(--h5);
-      color: var(--main-color);
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixins" as *;
+
+  .photo-container {
+    width: 90%;
+    height: 70vh;
+    margin: 0 auto;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
     }
   }
 
-  .about-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(5, auto);
-    gap: 3vw;
+  .citation {
+    width: 90%;
+    margin: 2rem auto;
+    border-radius: 20px;
+    box-shadow: 1px -1px 3px 3px rgba(207, 154, 113, 0.249);
+    padding: 0.5rem;
+    h4 {
+      text-align: center;
+      font-style: italic;
+      margin: 0;
+      padding: 0.5rem;
+      color: var(--important-color);
+    }
   }
 
   .avatar-about {
-    grid-column: 1/2;
-    grid-row: 1/2;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
+    width: 80%;
+    margin: 0 auto;
+    #km-photo {
+      width: 100%;
+      height: auto;
+      height: 100%;
+      border-bottom-left-radius: 25px;
+      border-bottom-right-radius: 50px;
+      border-top-left-radius: 50px;
+      border-top-right-radius: 25px;
+    }
   }
 
   .text-container:first-child,
@@ -225,13 +237,6 @@ import Candle from "../assets/images/About/candle.svg";
     width: 100%;
     text-align: center;
     margin: 3dvh auto 7dvh auto;
-  }
-
-  #km-photo {
-    width: 70%;
-    height: 100%;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 50px;
   }
 
   @media (width >= 992px) {
