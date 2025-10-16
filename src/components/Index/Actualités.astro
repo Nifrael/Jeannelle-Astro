@@ -1,18 +1,107 @@
 ---
 import { Image } from "astro:assets";
-import YinYoga from "../../assets/images/Planning/YinYoga.jpg";
-import NewsSwiper from "../React/NewsSwiper";
+import Yoga from "@assets/images/Welcome/Yoga.jpg";
+
+const actualities = [
+  {
+    title: "Planning Yin Yoga",
+    description:
+      "Rejoignez-nous pour un nouveau cours de Yin Yoga tous les mercredis à 18h. Idéal pour se détendre et s'étirer en profondeur.",
+    img: Yoga,
+    alt: "Cours de Yin Yoga",
+    phone: "07.60.48.48.06",
+  },
+];
 ---
 
-<div class="limited-container">
-  <div class="news-swiper">
-    <NewsSwiper client:load />
+<section class="news-section">
+  <div class="limited-container">
+    <h1>Actualités & Evenements</h1>
+    <div class="news-cards">
+      {
+        actualities.map((actu) => (
+          <article class="news-card">
+            <Image src={actu.img} alt={actu.alt} class="news-image" />
+            <div class="news-card-content">
+              <h3>{actu.title}</h3>
+              <p>{actu.description}</p>
+              <p>{actu.phone}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
   </div>
-</div>
+</section>
 
 <style lang="scss">
-  .news-swiper {
-    margin: 5% auto;
-    width: 90%;
+  @use "src/styles/config/variables.scss" as *;
+  @use "src/styles/config/mixins.scss" as *;
+
+  .news-section {
+    padding: 2rem 2rem;
+    h1 {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+  }
+
+  .news-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #333;
+  }
+
+  .news-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 2rem auto;
+  }
+
+  .news-card {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0px -1px 3px 3px rgba(207, 154, 113, 0.249);
+    overflow: hidden;
+  }
+
+  .news-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+  }
+
+  .news-card-content {
+    padding: 1.5rem;
+  }
+
+  .news-card-content h3 {
+    font-size: 1.4rem;
+    margin: 0 0 0.75rem 0;
+    font-weight: 600;
+  }
+
+  .news-card-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0 0 1.5rem 0;
+    color: #666;
+  }
+
+  @include breakpoint-up($breakpoint-desktop) {
+    .news-card {
+      width: 40%;
+    }
+
+    .news-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
   }
 </style>
