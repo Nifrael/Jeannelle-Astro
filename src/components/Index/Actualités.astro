@@ -4,7 +4,7 @@ import Yoga from "@assets/images/Welcome/Yoga.jpg";
 
 const actualities = [
   {
-    title: "Planning Yin Yoga",
+    title: "Planning Yin Yoga - Octobre",
     description:
       "Rejoignez-nous pour un nouveau cours de Yin Yoga tous les mercredis à 18h. Idéal pour se détendre et s'étirer en profondeur.",
     img: Yoga,
@@ -23,9 +23,9 @@ const actualities = [
           <article class="news-card">
             <Image src={actu.img} alt={actu.alt} class="news-image" />
             <div class="news-card-content">
-              <h3>{actu.title}</h3>
+              <h5>{actu.title}</h5>
               <p>{actu.description}</p>
-              <p>{actu.phone}</p>
+              <p id="phone-number">{actu.phone}</p>
             </div>
           </article>
         ))
@@ -79,24 +79,27 @@ const actualities = [
 
   .news-card-content {
     padding: 1.5rem;
-  }
-
-  .news-card-content h3 {
-    font-size: 1.4rem;
-    margin: 0 0 0.75rem 0;
-    font-weight: 600;
+    h5 {
+      margin: 0 0 0.75rem 0;
+    }
+    p {
+      line-height: 1.6;
+      margin: 0 0 1.5rem 0;
+    }
+    #phone-number {
+      font-weight: bold;
+      color: var(--important-color);
+      text-align: center;
+    }
   }
 
   .news-card-content p {
-    font-size: 1rem;
-    line-height: 1.6;
-    margin: 0 0 1.5rem 0;
-    color: #666;
   }
 
   @include breakpoint-up($breakpoint-desktop) {
     .news-card {
       width: 40%;
+      transition: all 0.2s ease-in-out;
     }
 
     .news-card:hover {
