@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import Plant from "@assets/images/Plant.svg";
+import Logo from "@assets/images/Jeannelle.png";
 
 const menu = [
   { label: "Accueil", href: "/" },
@@ -10,7 +11,9 @@ const menu = [
 
 <header>
   <nav role="navigation" aria-label="Main navigation">
-    <a href="/" id="logo">Jeannelle</a>
+    <a href="/">
+      <Image src={Logo} id="logo" alt="Jeannelle logo" />
+    </a>
     <div class="desktop-menu">
       <ul>
         {
@@ -114,13 +117,14 @@ const menu = [
     max-width: 1400px;
     width: 90%;
     height: 100%;
-    margin: 0rem auto;
+    margin: 1.5rem auto;
     a {
       text-decoration: none;
       font-size: var(--h4);
       transition: 0.5s ease-in-out;
       font-weight: 400;
       color: var(--important-color);
+      display: flex;
     }
     a:visited {
       color: var(--important-color);
@@ -132,11 +136,9 @@ const menu = [
   }
 
   #logo {
-    font-size: var(--h1);
-    font-family: var(--title);
-    font-weight: 900;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    width: 50%;
+    height: auto;
+    border-radius: 10px;
   }
 
   .menu-button {
@@ -224,7 +226,7 @@ const menu = [
     }
 
     #logo {
-      font-size: var(--big-text);
+      width: 25%;
     }
 
     .mobile-menu {
