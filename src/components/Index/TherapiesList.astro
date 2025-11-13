@@ -12,7 +12,9 @@ const therapies = [
     id: 1,
     title: "Naturopathie - (Micro)Nutritionniste",
     description:
-      "Optimisons votre santé par une meilleure hygiène de vie et une meilleure compréhension de vos symptômes afin de les soulager. ",
+      "Pour améliorer vos habitudes et hygiène de vie, et donner au corps et aux émonctoires leurs pleins potentiels de fonctionnement.",
+    descriptionbis:
+      "Pour améliorer et comprendre les symptômes, les maux, que le corps nous signale.",
     icon: Plant,
     duration: "1h",
     price: "65€",
@@ -21,7 +23,9 @@ const therapies = [
     id: 2,
     title: "Réflexologie Plantaire Energétique Chinoise",
     description:
-      "Revitalisons votre corps en optimisant la fonction de vos organes via les zones réflexes du pied et restaurons la circulation énergétique.",
+      "Redonner au corps et aux organes leur plein potentiel en agissant sur les zones réflexes du pied.",
+    descriptionbis:
+      "Lever les blocages énergétiques, relancer et restaurer la circulation dans les méridiens.",
     icon: Feet,
     duration: "45 min",
     price: "50€",
@@ -30,7 +34,9 @@ const therapies = [
     id: 3,
     title: "Yin Yoga - Cours Collectif",
     description:
-      "Pratique de yoga introscpective et accesible à tous, utilisant des postures simples pour réduir le stress et améliorer le bien-être général du corps et de l'esprit.",
+      "Revenir à soi, dans des postures non engageantes, ne nécessitant ni force, ni équilibre ou souplesse particulière.",
+    descriptionbis:
+      "Cette pratique introspective permet de se poser dans le moment présent, de relâcher les tensions et de réduire le stress. Agir sur les méridiens et les fascias favorise la santé des organes internes, améliore la digestion, le sommeil, soulage les douleurs et ramène de la clarté et de l'apaisement à l'esprit.",
     icon: YinYoga,
     duration: "1h",
     price: "13€",
@@ -39,7 +45,8 @@ const therapies = [
     id: 4,
     title: "Psychopraticienne",
     description:
-      "Ecoute bienveillante, sans jugement pour vous aider à trouver clarté et sens dans vos épreuves, permettant une reconnexion chaleureuse avec vous-même.",
+      "Être entendu dans sa sensibilité et ses ressentis, au-delà des mots et des faits. Être entendu et accompagné sans jugement remet du sens et de la clarté sur nos questionnements, en soi et dans les épreuves que l'on traverse.",
+    descriptionbis: "Soyez prêts à chaleureuse rencontre avec vous-même.",
     icon: Brain,
     duration: "1h à 1h30",
     price: "65€",
@@ -48,7 +55,8 @@ const therapies = [
     id: 5,
     title: "Massage Amma",
     description:
-      "Massage apaisant qui se pratique assis et habillé, utilisant des pressions et acupressions pour procurer une détente à la fois musculaire et énergétique.",
+      "Technique manuelle de massage sur personne habillée et assise. Dos, bras et mains, nuque et crâne, et si vous le souhaitez, cuisses, jambes et pieds. Un massage qui travaille d'un point de vue musculaire et énergétique par de nombreuses pressions et acupressions.",
+    descriptionbis: "Il s'agit d'apaiser, avec les mains.",
     icon: Amma,
     duration: "30 min",
     price: "30€",
@@ -62,9 +70,13 @@ const therapies = [
   {
     therapies.map((therapie) => (
       <div class="therapie-card">
-        <Image src={therapie.icon} alt={therapie.title} width={40} id="icon" />
+        <Image src={therapie.icon} alt={therapie.title} width={50} id="icon" />
         <h5>{therapie.title}</h5>
-        <p>{therapie.description}</p>
+        <div class="paragraph">
+          {" "}
+          <p>{therapie.description}</p>
+          <p>{therapie.descriptionbis}</p>
+        </div>
         {therapie.duration && therapie.price && (
           <p>
             <span>{therapie.price}</span> | {therapie.duration}
@@ -88,7 +100,7 @@ const therapies = [
     width: 85%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    gap: 2rem;
     margin: 2rem auto;
   }
 
@@ -100,10 +112,10 @@ const therapies = [
     display: grid;
     align-items: center;
     justify-content: center;
-    grid-template-rows: 40px 120px auto 60px;
+    grid-template-rows: 60px 100px auto 60px;
     height: 100%;
 
-    p {
+    .paragraph p {
       text-align: justify;
     }
 
@@ -115,7 +127,7 @@ const therapies = [
     h5 {
       color: var(--important-color);
       text-align: center;
-      margin: 1rem;
+      margin: 0.5rem;
     }
 
     a {
@@ -153,9 +165,11 @@ const therapies = [
   @include breakpoint-up($breakpoint-desktop) {
     .therapies-container {
       width: 85%;
-      grid-template-columns: repeat(3, minmax(280px, 1fr));
+      grid-template-columns: 1fr;
+      justify-items: center;
     }
     .therapie-card {
+      width: 70%;
       transition:
         transform 0.3s ease,
         box-shadow 0.3s ease;
