@@ -1,71 +1,173 @@
 ---
-
+import { Image } from "astro:assets";
+import SalleA from "@assets/images/Rooms/SalleA.jpg";
+import SalleB from "@assets/images/Rooms/SalleB.jpg";
+import Formation from "@assets/images/Rooms/Formation.jpg";
+import Pilates from "@assets/images/Rooms/Pilates.jpg";
 ---
 
-<div class="background-image">
-  <div class="text-container">
-    <h2>Vous êtes thérapeutes ?</h2>
-    <p>J'ai à coeur de partager ce lieu avec vous.</p>
-    <p>
-      Soyons nombreux à accueilir celles et ceux qui sont en demande. Soyons
-      nombreux pour échanger et partager. Offrez vos pratiques, vos
-      connaissances, votre sensibilité...
-    </p>
+<section class="therapists-section">
+  <div class="content-row">
+    <div class="text-col">
+      <h2>Vous êtes thérapeutes ?</h2>
+      <p>J'ai à coeur de partager ce lieu avec vous.</p>
+      <p>
+        Soyons nombreux à accueilir celles et ceux qui sont en demande. Soyons
+        nombreux pour échanger et partager. Offrez vos pratiques, vos
+        connaissances, votre sensibilité...
+      </p>
+    </div>
+    <div class="images-col">
+      <div class="image-wrapper">
+        <Image src={SalleA} alt="Cabinet de thérapie" />
+      </div>
+      <div class="image-wrapper">
+        <Image src={SalleB} alt="Espace de consultation" />
+      </div>
+    </div>
   </div>
 
-  <div class="text-container">
-    <h2>Espaces disponibles</h2>
-    <p>
-      Un cabinet pour un(e) ostéopathe est disponible en location mensuelle. Un
-      autre cabinet est disponible pour une ou deux journées fixes par semaine
-      pour d'autres thérapeutes.
-    </p>
+  <div class="content-row">
+    <div class="text-col">
+      <h2>Salle formations</h2>
+      <p>
+        Il vous est possible de réserver le local pour vos formations, vos
+        conférences, vos évènements...
+      </p>
+    </div>
+    <div class="image-col">
+      <Image src={Formation} alt="Cabinet ostéopathe" />
+    </div>
   </div>
-</div>
+
+  <div class="content-row">
+    <div class="text-col">
+      <h2>Espace Yoga</h2>
+      <p>
+        Si vous êtes professeur de Yoga Pilates, l'espace Yoga peut être mis à
+        votre disposition.
+      </p>
+    </div>
+    <div class="image-col">
+      <Image src={Pilates} alt="Cabinet partagé" />
+    </div>
+  </div>
+</section>
 
 <style lang="scss">
   @use "@styles/config/variables" as *;
   @use "@styles/config/mixins" as *;
 
-  .background-image {
+  .therapists-section {
     width: 100%;
-    min-height: 50vh;
-    margin: 7rem auto;
-    background-image: url("/src/assets/images/Index/Help.jpg");
-    background-color: rgba(0, 0, 0, 0.395);
-    background-blend-mode: overlay;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    margin: 4rem auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    gap: 3rem;
+    background-color: var(--white-bg-blur);
   }
 
-  .text-container {
-    background-color: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    width: 90%;
-    padding: 1.5rem;
-    text-align: center;
-    margin: 3rem auto;
-    h2 {
-      color: var(--important-color);
+  .content-row {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .text-col {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1rem;
+
+      h2 {
+        color: var(--important-color);
+        margin-bottom: 1rem;
+      }
     }
-    p {
-      text-align: justify;
+
+    .images-col {
+      display: flex;
+
+      .image-wrapper {
+        flex: 1;
+        height: 300px;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+
+    .image-col {
+      height: 300px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
   }
 
   @include breakpoint-up($breakpoint-desktop) {
-    .background-image {
-      background-attachment: fixed;
+    .therapists-section {
+      gap: 0;
+      margin: 10rem auto; // Remove margin to be full width if needed, or keep vertical margin
+      max-width: 100%; // Ensure full width
     }
-    .text-container {
-      width: 50%;
-      padding: 3rem;
+
+    .content-row {
+      flex-direction: row;
+      align-items: stretch;
+      padding: 0;
+      gap: 0;
+      height: 50vh; // Limit height as requested
+      max-height: 500px; // Cap it to ensure it doesn't get too tall
+
+      // Target the second row to swap visual order on desktop
+      &:nth-child(2) {
+        flex-direction: row-reverse;
+      }
+
+      .text-col {
+        width: 50%;
+        padding: 4rem; // Keep internal padding for text readability
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.5
+        ); // Optional: subtle background to differentiate if needed
+      }
+
+      .image-col {
+        width: 50%;
+        height: 100%;
+        border-radius: 0; // Remove border radius
+        padding: 0; // No padding
+      }
+
+      .images-col {
+        width: 50%;
+        padding: 0;
+        gap: 0; // No gap between images
+
+        .image-wrapper {
+          border-radius: 0;
+          height: 100%;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
     }
   }
 </style>
