@@ -1,0 +1,13 @@
+@use "variables" as *;
+
+@mixin breakpoint-down($size) {
+  @media (width <= $size) {
+    @content;
+  }
+}
+
+@mixin breakpoint-up($size) {
+  @media (width >= $size) {
+    @content;
+  }
+}

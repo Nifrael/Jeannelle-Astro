@@ -1,0 +1,105 @@
+---
+import Image from "astro/components/Image.astro";
+import Millas from "@assets/images/Index/Millas.jpg";
+---
+
+<footer>
+  <div class="footer-container">
+    <div class="footer-content">
+      <h3>Jeannelle</h3>
+      <div class="contact-info">
+        <p>18 Rue Lieutenant Basseras, 66170 Millas</p>
+        <p>07.60.48.48.06</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="/mentions-legales">Mentions légales</a>
+        <span class="separator">•</span>
+        <a href="/politique-de-confidentialite">Politique de confidentialité</a>
+      </div>
+
+      <div class="copyright">
+        <p>
+          &copy; {new Date().getFullYear()} Jeannelle - Tous droits réservés
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixins" as *;
+
+  h3 {
+    color: var(--important-color);
+    text-align: center;
+    margin: 0;
+  }
+
+  footer {
+    padding-top: 2rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--main-color);
+    .footer-container {
+      max-width: 600px;
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    p {
+      font-size: var(--small-text);
+      text-align: center;
+      margin: 0.5rem 0;
+    }
+    a {
+      color: var(--text-primary-color);
+      font-size: var(--small-text);
+      text-decoration: none;
+      transition: 0.5s ease-in-out;
+    }
+    a:visited {
+      color: var(--text-primary-color);
+    }
+
+    a:hover {
+      color: var(--important-color);
+      transition: 0.5s ease-in-out;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .separator {
+        color: var(--text-primary-color);
+      }
+    }
+
+    .footer-links a {
+      margin: 0 0.5rem;
+    }
+    .copyright {
+      margin-top: 2rem;
+      opacity: 0.8;
+    }
+
+    .copyright p {
+      font-size: calc(var(--small-text) - 0.1rem);
+    }
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem 0 1rem 0;
+  }
+</style>

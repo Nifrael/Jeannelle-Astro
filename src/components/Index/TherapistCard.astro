@@ -1,129 +1,125 @@
 ---
-import Image from "astro/components/Image.astro";
-import Avatar from "../../assets/images/Index/KM-image.jpg";
+import { Image } from "astro:assets";
+import KM from "../../assets/images/Index/KM-image.jpg";
+
+const therapists = [
+  {
+    name: "Karine Maraval",
+    role: "Fondatrice",
+    phone: "07.60.48.48.06",
+    href: "/a-propos",
+    image: KM,
+    alt: "Photo de Karine Maraval",
+  },
+];
+
+const telHref = (p: string) => `tel:${p.replace(/[.\s]/g, "")}`;
 ---
 
-<div class="therapist-card">
-  <Image src={Avatar} alt="Photo de Karine" />
-  <h4>Karine Maraval</h4>
-  <h4>07.60.48.48.06</h4>
-  <p>
-    Soyons nombreux à accueillir celles et ceux qui sont en demande. Soyons
-    nombreux pour échanger et partager. Offrez vos pratiques, vos connaissances,
-    votre sensibilité...
-  </p>
-  <div class="button-container">
-    <a href="/a-propos" class="button">A propos de moi</a>
-  </div>
-  <cite>
-    <h3>"Préparez votre temps, pour vous j'ai tout le mien."</h3>
-  </cite>
-</div>
+<h1>Qui sommes-nous ?</h1>
+
+<ul class="cards" role="list">
+  {
+    therapists.map((therapist) => (
+      <li class="card">
+        <div class="avatar">
+          <Image
+            src={therapist.image}
+            alt={therapist.alt}
+            width={220}
+            height={220}
+            class="therapist-image"
+          />
+        </div>
+        <div class="card-content">
+          <h4 class="name">{therapist.name}</h4>
+          <p class="phone">
+            <a
+              href={telHref(therapist.phone)}
+              aria-label={`Téléphoner à ${therapist.name}`}
+            >
+              {therapist.phone}
+            </a>
+            <p class="role">{therapist.role}</p>
+          </p>
+          <div class="button-container">
+            <a href={therapist.href} class="button">
+              {" "}
+              Me découvrir{" "}
+            </a>
+          </div>
+        </div>
+      </li>
+    ))
+  }
+</ul>
 
 <style lang="scss">
-  .therapist-card {
-    height: auto;
-    width: 95%;
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixins" as *;
+
+  h1 {
+    text-align: center;
+    margin: 2rem auto;
+  }
+
+  .cards {
+    width: 80%;
+    list-style: none;
+    margin: 3rem auto;
+    padding: 0;
     display: grid;
-    grid-template-rows: 130px 50px 50px repeat(3, auto);
-    position: relative;
-    box-shadow: 0px -1px 6px 6px var(--main-color);
-    border-radius: 10px;
-    margin: 5rem auto;
-    padding: 1%;
-    img {
-      position: absolute;
-      width: 50%;
-      top: 0;
-      left: 50%;
-      height: auto;
-      transform: translate(-50%, -30%);
-      border-top-left-radius: 40%;
-      border-top-right-radius: 40%;
-      border-bottom-left-radius: 60%;
-      border-bottom-right-radius: 60%;
-      border: var(--main-color) 7px solid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      border-radius: 20px;
     }
-    h4:first-of-type {
-      margin: 0.5rem auto;
-      padding-left: 0;
-      grid-row: 2/3;
-      justify-self: center;
-      color: var(--important-color);
-    }
-    h4:nth-of-type(2) {
-      margin: 0.5rem auto;
-      grid-row: 3/4;
-      padding-right: 0;
-      justify-self: center;
-      color: var(--important-color);
-    }
-    .button-container {
-      grid-row: 5/6;
-    }
-    p {
-      grid-row: 4/5;
+    .card-content {
+      width: 100%;
       text-align: center;
-      padding: 2% 2%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      .name {
+        margin: 0;
+        color: var(--important-color);
+        font-size: clamp(1.2rem, 1.5vw + 0.9rem, 1.5rem);
+      }
+      .role {
+        font-style: italic;
+        font-weight: 600;
+        margin: 0;
+      }
     }
-    cite {
-      grid-row: 6/7;
-      text-align: center;
+  }
+
+  .avatar {
+    margin-bottom: 1.5rem;
+
+    .therapist-image {
+      width: 190px;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 6px solid var(--important-color);
+    }
+  }
+
+  .phone {
+    a {
       color: var(--important-color);
+      text-decoration: none;
     }
   }
 
-  @media (width >= 450px) {
-    .therapist-card img {
-      width: 30%;
-    }
-  }
-
-  @media (width >= 768px) {
-    .therapist-card {
-      margin: 10% auto;
-      width: 90%;
-      img {
-        width: 25%;
-      }
-    }
-  }
-
-  @media (width >= 992px) {
-    .therapist-card {
-      width: 80%;
-      height: auto;
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: 150px 30px repeat(4, auto);
-      img {
-        width: 25%;
-      }
-      h4:first-of-type {
-        grid-column: 1/2;
-        grid-row: 1/2;
-        align-self: center;
-        padding-right: 20%;
-        justify-self: left;
-      }
-      h4:nth-of-type(2) {
-        grid-column: 2/3;
-        grid-row: 1/2;
-        align-self: center;
-        padding-left: 20%;
-        justify-self: right;
-      }
-      .button-container {
-        grid-column: 1/3;
-        grid-row: 4/5;
-      }
-      p {
-        grid-column: 1/3;
-        grid-row: 3/4;
-      }
-      cite {
-        grid-column: 1/3;
-        grid-row: 5/6;
-      }
-    }
+  #discover-link {
+    border: 1px solid var(--important-color);
   }
 </style>

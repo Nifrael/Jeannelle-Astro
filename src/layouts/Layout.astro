@@ -1,6 +1,6 @@
 ---
-import Navbar from "./Navbar.astro";
-import Footer from "./Footer.astro";
+import Navbar from "@components/Global/Navbar.astro";
+import Footer from "@components/Global/Footer.astro";
 import "../styles/global.scss";
 import { ClientRouter } from "astro:transitions";
 ---
@@ -43,9 +43,6 @@ import { ClientRouter } from "astro:transitions";
       }
     </script>
 
-    <script
-      src="https://kit.fontawesome.com/5ae925a9ee.js"
-      crossorigin="anonymous"></script>
     <meta name="generator" content={Astro.generator} />
     <title>Jeannelle</title>
     <ClientRouter />

@@ -3,17 +3,22 @@ import Layout from "../layouts/Layout.astro";
 import Image from "astro/components/Image.astro";
 import Avatar from "../assets/images/About/KM-avatar.jpg";
 import Candle from "../assets/images/About/candle.svg";
+import About from "@assets/images/About/About.jpg";
 ---
 
 <Layout>
-  <div class="about-photo">
-    <cite>
-      <h3>"Préparez votre temps, pour vous j'ai tout le mien."</h3>
-    </cite>
+  <div class="photo-container">
+    <Image
+      src={About}
+      alt="Photo de l'intérieur du cabinet Jeannelle"
+      class="about-photo"
+    />
+    <h4>"Préparez votre temps, pour vous j'ai tout le mien."</h4>
   </div>
+
   <section class="limited-container">
-    <div class="about-container">
-      <div class="text-container">
+    <div class="about-section">
+      <div class="text-content">
         <h2>Qui suis-je ?</h2>
         <p>
           8 ans à me former, à pratiquer, tester, chercher, recommencer,
@@ -32,22 +37,16 @@ import Candle from "../assets/images/About/candle.svg";
           Écouter, entendre, comprendre... J'ai eu à coeur d'affiner cette
           sensibilité pour faire alliance avec le corps et l'esprit.
         </p>
-      </div>
-      <div class="avatar-about">
-        <Image src={Avatar} alt="Karine Maraval" id="km-photo" />
-      </div>
-      <div class="text-container">
         <h2>Pourquoi ?</h2>
         <p>
-          Tout simplement pour me connaître, me respecter et gérer au mieux ce
-          qui me traverse.
+          Pour me connaître, me respecter et gérer au mieux ce qui me traverse.
         </p>
         <b>
           <p>Être en paix, en santé, en vitalité.</p>
         </b>
         <p>
-          Avec joie, reconnaissance et enthousiasme, Jeannelle est là en cette
-          année 2024, pour celles et ceux qui partagent la même aspiration
+          Avec joie, reconnaissance et enthousiasme, Jeannelle est là, depuis
+          l'année 2024, pour celles et ceux qui partagent la même aspiration
           d'être en pleine possession de leur énergie, de leur stabilité et de
           leur authenticité.
         </p>
@@ -60,242 +59,198 @@ import Candle from "../assets/images/About/candle.svg";
           viendrez-vous honorer le lieu de votre présence.
         </p>
       </div>
-      <div class="text-container">
-        <h2>
-          <dt>Mon parcours</dt>
-        </h2>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Infirmière diplômée
-            d'Etat
-          </dd>
-        </p>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Infirmière Sapeur-Pompier
-          </dd>
-        </p>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Naturopathe /
-            Réflexologue
-          </dd>
-        </p>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Diplôme Universitaire
-            de Nutrition / Micronutrition en sport et santé
-          </dd>
-        </p>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Formation en
-            maieusthésie (Niveau 4 pro)
-          </dd>
-        </p>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Stages et perfectionnement
-            en Aromathérapie
-          </dd>
-        </p>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Stages et perfectionnement
-            en réflexologie (palmaire, viscérale, sensitive, énergétique chinoise)
-          </dd>
-        </p>
-        <p>
-          <dd>
-            <i class="fa-solid fa-spa" style="color: #cf9a71;"></i> Formations Yin
-            Yoga et Yoga
-          </dd>
-        </p>
-      </div>
-      <div class="text-container">
-        <h2>Un dernier mot...</h2>
-        <p>
-          Enfin, un clin d'oeil particulier et précieux à celles et ceux avec
-          qui je suis connectée d'âme à âme depuis tant d'années. Vos présences
-          subtiles m'aident...
-        </p>
-        <p>Merci d'être là, à mes côtés, sur mon épaule et dans mon coeur.</p>
-        <p><Image src={Candle} alt="Bougie" /></p>
-        <h2>...Jeannelle, c'est vous.</h2>
+      <div class="avatar-about">
+        <Image src={Avatar} alt="Karine Maraval" id="km-photo" />
       </div>
     </div>
+
+    <div class="text-container">
+      <h2>Mon parcours</h2>
+      <ul>
+        <li>Infirmière diplômée d'Etat</li>
+        <li>Infirmière Sapeur-Pompier</li>
+        <li>Naturopathe / Réflexologue</li>
+        <li>
+          Diplôme Universitaire de Nutrition / Micronutrition en sport et santé
+        </li>
+        <li>Formation en maieusthésie (Niveau 4 pro)</li>
+        <li>Stages et perfectionnement en Aromathérapie</li>
+        <li>
+          Stages et perfectionnement en réflexologie (palmaire, viscérale,
+          sensitive, énergétique chinoise)
+        </li>
+        <li>Formations Yin Yoga et Yoga</li>
+      </ul>
+    </div>
   </section>
+  <div class="tribute-section">
+    <div class="tribute-text">
+      <h2>Un dernier mot...</h2>
+      <p>
+        Enfin, un clin d'oeil particulier et précieux à celles et ceux avec qui
+        je suis connectée d'âme à âme depuis tant d'années. Vos présences
+        subtiles m'aident...
+      </p>
+      <p>Merci d'être là, à mes côtés, sur mon épaule et dans mon coeur.</p>
+      <p><Image src={Candle} alt="Bougie" /></p>
+      <h2>...Jeannelle, c'est vous.</h2>
+    </div>
+  </div>
 </Layout>
 
 <style lang="scss">
-  .about-photo {
-    background-image: url(../assets/images/About/AboutMobile.jpg);
-    height: 600px;
-    background-size: cover;
-    background-position: bottom;
-    position: relative;
-    background-color: rgba(41, 41, 41, 0.313);
-    background-blend-mode: overlay;
-    width: 100%;
-    cite {
-      position: absolute;
-      bottom: 5%;
-      right: 5%;
-    }
-    cite h3 {
-      margin-left: 2%;
-      font-size: var(--h5);
-      color: var(--main-color);
-    }
-  }
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixins" as *;
 
-  .about-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(5, auto);
-    gap: 3vw;
-  }
-
-  .avatar-about {
-    grid-column: 1/2;
-    grid-row: 1/2;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-  }
-
-  .text-container:first-child,
-  .text-container:nth-child(2),
-  .text-container:nth-child(3),
-  .text-container:nth-child(4),
-  .text-container:nth-child(5) {
-    grid-column: 1/2;
+  .photo-container {
     width: 90%;
-    padding-left: 0;
-    padding-right: 0;
+    height: 80vh;
+    margin: 1rem auto;
+    position: relative;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      z-index: 0;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.3),
+        rgba(0, 0, 0, 0.1)
+      );
+      z-index: 1;
+    }
+    h4 {
+      position: absolute;
+      bottom: 5px;
+      z-index: 2;
+      text-align: center;
+      font-style: italic;
+      margin: 0;
+      padding: 1rem;
+      color: var(--important-color);
+    }
   }
 
-  .text-container > dd {
-    margin-left: 5%;
-  }
-
-  p {
-    padding-left: 0;
-  }
-
-  .text-container:first-child {
-    grid-row: 2/3;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: justify;
-    width: 100%;
-  }
-
-  .text-container:nth-child(2) {
-    grid-row: 3/4;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    text-align: justify;
-  }
-
-  .text-container:nth-child(3) {
-    grid-row: 4/5;
-    display: flex;
-    flex-direction: column;
-    text-align: justify;
-    width: 100%;
-  }
-
-  .text-container:nth-child(4) {
-    grid-row: 5/6;
-    display: flex;
-    flex-direction: column;
-    text-align: justify;
-    width: 100%;
-  }
-
-  .text-container:nth-child(5) {
-    grid-row: 6/7;
+  .limited-container {
+    width: 95%;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .about-section {
     display: flex;
     flex-direction: column;
-    text-align: justify;
-    width: 100%;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    .text-content {
+      text-align: justify;
+    }
+    .avatar-about {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+
+      #km-photo {
+        width: 100%;
+        height: auto;
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 50px;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 25px;
+      }
+    }
+  }
+
+  .text-container {
+    li {
+      font-size: var(--p);
+      font-family: var(--text);
+      color: var(--text-primary-color);
+      line-height: 1.75rem;
+    }
+  }
+
+  .tribute-section {
+    background-image: url("../assets/images/About/Bougie.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 80vh;
+    margin: 4rem auto 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tribute-text {
+    width: 80%;
+    padding: 1rem;
+    margin: 2rem auto;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
     text-align: center;
-    margin: 3dvh auto 7dvh auto;
+    h2 {
+      color: var(--text-primary-color);
+    }
+    h2:last-child {
+      margin-top: 0;
+    }
+    img {
+      margin: 0.5rem auto;
+    }
   }
 
-  #km-photo {
-    width: 70%;
-    height: 100%;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 50px;
-  }
-
-  @media (width >= 992px) {
-    .about-photo {
-      background-image: url(../assets/images/About/AboutDesktop.jpg);
-      height: 80dvh;
-      background-position: 0% 80%;
-      background-size: cover;
-      cite h3 {
-        margin: 0;
+  @include breakpoint-up($breakpoint-desktop) {
+    .photo-container {
+      height: 75vh;
+      margin: 3rem auto;
+      img {
+        object-position: bottom;
+      }
+      h4 {
+        right: 10px;
       }
     }
 
-    .about-container {
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(4, auto);
-    }
-
-    .text-container:first-child {
-      grid-column: 1/2;
-      grid-row: 1/2;
-      padding-left: 20px;
-    }
-
-    .text-container:nth-child(3) {
-      grid-column: 1/3;
-      grid-row: 2/3;
-      padding-left: 20px;
-      padding-right: 100px;
-    }
-
-    .text-container:nth-child(4) {
-      grid-column: 1/3;
-      grid-row: 3/4;
-      padding-left: 20px;
-      padding-right: 100px;
-    }
-
-    .text-container:nth-child(5) {
-      grid-column: 1/3;
-      grid-row: 4/5;
-      padding-left: 20px;
-      padding-right: 100px;
-    }
-
-    .text-container:first-child h2,
-    .text-container:nth-child(2) h2,
-    .text-container:nth-child(3) h2,
-    .text-container:nth-child(4) h2 {
-      margin: 2dvh 0;
-    }
-
-    p {
-      padding-left: 2%;
+    .about-section {
+      flex-direction: row;
+      align-items: self-end;
+      gap: 4rem;
     }
 
     .avatar-about {
-      grid-column: 2/3;
+      flex: 0 0 45%;
+      max-width: 45%;
+    }
+
+    .tribute-section {
+      background-attachment: fixed;
+      margin-bottom: 0;
+      min-height: 70vh;
+      .tribute-text {
+        width: 60%;
+      }
     }
   }
 
-  @media (width >= 1200px) {
-    .about-photo {
-      height: 90dvh;
+  @include breakpoint-up($breakpoint-desktop-xl) {
+    .photo-container {
+      margin: 4rem auto;
+    }
+  }
+
+  @include breakpoint-up($breakpoint-desktop-xxl) {
+    .photo-container {
+      margin: 4rem auto 5rem auto;
     }
   }
 </style>

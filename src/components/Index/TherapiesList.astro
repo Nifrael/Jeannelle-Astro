@@ -1,0 +1,194 @@
+---
+import { Image } from "astro:assets";
+import Plant from "@assets/images/Icons/Nature.svg";
+import YinYoga from "@assets/images/Icons/Yin.svg";
+import Feet from "@assets/images/Icons/Reflexology.svg";
+import Amma from "@assets/images/Icons/Chair.svg";
+import Brain from "@assets/images/Icons/Brain.svg";
+import Hour from "@assets/images/Icons/Hour.svg";
+
+const therapies = [
+  {
+    id: 1,
+    title: "Naturopathie - (Micro)Nutritionniste",
+    description:
+      "Pour améliorer vos habitudes et hygiène de vie, et donner au corps et aux émonctoires leurs pleins potentiels de fonctionnement.",
+    descriptionbis:
+      "Pour améliorer et comprendre les symptômes, les maux, que le corps nous signale.",
+    icon: Plant,
+    duration: "1h",
+    price: "65€",
+  },
+  {
+    id: 2,
+    title: "Réflexologie Plantaire Energétique Chinoise",
+    description:
+      "Redonner au corps et aux organes leur plein potentiel en agissant sur les zones réflexes du pied.",
+    descriptionbis:
+      "Lever les blocages énergétiques, relancer et restaurer la circulation dans les méridiens.",
+    icon: Feet,
+    duration: "45 min",
+    price: "50€",
+  },
+  {
+    id: 3,
+    title: "Yin Yoga - Cours Collectif",
+    description:
+      "Revenir à soi, dans des postures non engageantes, ne nécessitant ni force, ni équilibre ou souplesse particulière.",
+    descriptionbis:
+      "Cette pratique introspective permet de se poser dans le moment présent, de relâcher les tensions et de réduire le stress. Agir sur les méridiens et les fascias favorise la santé des organes internes, améliore la digestion, le sommeil, soulage les douleurs et ramène de la clarté et de l'apaisement à l'esprit.",
+    icon: YinYoga,
+    duration: "1h",
+    price: "13€",
+  },
+  {
+    id: 4,
+    title: "Psychopraticienne",
+    description:
+      "Être entendu dans sa sensibilité et ses ressentis, au-delà des mots et des faits. Être entendu et accompagné sans jugement remet du sens et de la clarté sur nos questionnements, en soi et dans les épreuves que l'on traverse.",
+    descriptionbis: "Soyez prêts à chaleureuse rencontre avec vous-même.",
+    icon: Brain,
+    duration: "1h à 1h30",
+    price: "65€",
+  },
+  {
+    id: 5,
+    title: "Massage Amma",
+    description:
+      "Technique manuelle de massage sur personne habillée et assise. Dos, bras et mains, nuque et crâne, et si vous le souhaitez, cuisses, jambes et pieds. Un massage qui travaille d'un point de vue musculaire et énergétique par de nombreuses pressions et acupressions.",
+    descriptionbis: "Il s'agit d'apaiser, avec les mains.",
+    icon: Amma,
+    duration: "30 min",
+    price: "30€",
+  },
+  { title: "A Venir...", description: "", icon: Hour },
+];
+---
+
+<h1>Nos thérapies</h1>
+<div class="therapies-container">
+  {
+    therapies.map((therapie) => (
+      <div class="therapie-card">
+        <Image src={therapie.icon} alt={therapie.title} width={50} id="icon" />
+        <h5>{therapie.title}</h5>
+        <div class="paragraph">
+          {" "}
+          <p>{therapie.description}</p>
+          <p>{therapie.descriptionbis}</p>
+        </div>
+        {therapie.duration && therapie.price && (
+          <p>
+            <span>{therapie.price}</span> | {therapie.duration}
+          </p>
+        )}
+      </div>
+    ))
+  }
+</div>
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixins" as *;
+
+  h1 {
+    text-align: center;
+    margin: 0 auto 5rem auto;
+  }
+
+  .therapies-container {
+    width: 85%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 2rem auto;
+  }
+
+  .therapie-card {
+    background-color: var(--white-bg-blur);
+    backdrop-filter: blur(30px);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0px -1px 3px 3px rgba(207, 154, 113, 0.249);
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-rows: 60px 100px auto 60px;
+    height: 100%;
+
+    .paragraph p {
+      text-align: justify;
+    }
+
+    p:last-of-type {
+      text-align: center;
+      margin-top: auto;
+    }
+
+    h5 {
+      color: var(--important-color);
+      text-align: center;
+      margin: 0.5rem;
+    }
+
+    a {
+      margin: 0 auto;
+    }
+
+    span {
+      font-size: var(--h5);
+      text-align: center;
+      font-weight: 700;
+      margin-top: 1rem;
+      color: var(--important-color);
+    }
+  }
+
+  #icon {
+    margin: 0 auto;
+  }
+
+  .therapie-link {
+    display: inline-flex;
+    align-items: center;
+    color: #cf9a71;
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: auto;
+  }
+
+  @include breakpoint-up($breakpoint-tablet) {
+    .therapies-container {
+      grid-template-columns: repeat(2, minmax(280px, 1fr));
+    }
+  }
+
+  @include breakpoint-up($breakpoint-desktop) {
+    .therapies-container {
+      width: 90%;
+      grid-template-columns: 1fr;
+      justify-items: center;
+    }
+    .therapie-card {
+      width: 95%;
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .paragraph {
+        padding: 0 4rem;
+      }
+    }
+  }
+
+  @include breakpoint-up($breakpoint-desktop-xl) {
+    .therapies-container {
+      width: 90%;
+      max-width: 1200px;
+    }
+  }
+</style>

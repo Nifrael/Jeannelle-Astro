@@ -1,0 +1,51 @@
+<div class="background-image">
+  <div class="text-container">
+    <h2>Un Centre de Thérapeutes</h2>
+    <p>À votre écoute, au cœur du village de Millas.</p>
+    <p>
+      Un endroit cosy et authentique où l’on peut se poser et être entendu dans
+      ses mots… et ses maux.
+    </p>
+    <p>Un centre pour vous accompagner.</p>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixins" as *;
+
+  .background-image {
+    width: 100%;
+    min-height: 80vh;
+    margin: 1rem auto;
+    background-image: url("/src/assets/images/BackPivoine.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .text-container {
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    width: 90%;
+    padding: 1.5rem;
+    text-align: center;
+    margin: 4rem auto;
+  }
+
+  @include breakpoint-up($breakpoint-tablet) {
+    .background-image {
+      background-attachment: fixed;
+    }
+  }
+
+  @include breakpoint-up($breakpoint-desktop) {
+    .text-container {
+      width: 50%;
+    }
+  }
+</style>

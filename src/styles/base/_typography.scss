@@ -1,0 +1,54 @@
+@use "@styles/config/variables" as *;
+@use "@styles/config/mixins" as *;
+
+@use "@fontsource-variable/playwrite-gb-s";
+@use "@fontsource-variable/dancing-script";
+
+@each $i in (1, 2, 3, 4, 5) {
+  h#{$i} {
+    font-size: var(--h#{$i});
+    color: var(--text-primary-color);
+  }
+}
+
+h1,
+h2 {
+  font-family: var(--title);
+  color: var(--important-color);
+}
+
+h3,
+h4,
+h5,
+p {
+  font-family: var(--text);
+}
+
+p {
+  margin: 0.5rem 0;
+  font-size: var(--p);
+  color: var(--text-primary-color);
+}
+
+a {
+  text-decoration: none;
+  font-family: var(--text);
+  color: var(--text-primary-color);
+  transition: all 0.4s ease-in-out;
+  &:hover {
+    color: var(--important-color);
+    transition: all 0.4s ease-in-out;
+  }
+}
+
+@include breakpoint-down($breakpoint-desktop) {
+  :root {
+    --scale: 1.18;
+  }
+
+  @for $i from 1 through 4 {
+    h#{$i} {
+      font-size: var(--h#{$i + 1});
+    }
+  }
+}
