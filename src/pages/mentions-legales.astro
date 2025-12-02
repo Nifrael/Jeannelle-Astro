@@ -3,9 +3,8 @@ import Layout from "@layouts/Layout.astro";
 ---
 
 <Layout>
-  <!-- Importer les mentions légales du premier projet. -->
-  <h1>Mentions Légales</h1>
   <main class="page-content">
+    <h1>Mentions Légales</h1>
     <section>
       <h2>Éditeur et responsable de la publication du site</h2>
       <p>
@@ -67,6 +66,9 @@ import Layout from "@layouts/Layout.astro";
   .page-content {
     margin: 0 auto;
     padding-bottom: 2rem;
+    h1 {
+      text-align: center;
+    }
     h2 {
       text-align: center;
       padding-top: 2rem;
