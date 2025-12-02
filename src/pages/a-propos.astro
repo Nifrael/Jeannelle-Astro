@@ -105,7 +105,7 @@ import About from "@assets/images/About/About.jpg";
   .photo-container {
     width: 90%;
     height: 80vh;
-    margin: 1.5rem auto;
+    margin: 1rem auto;
     position: relative;
     img {
       width: 100%;
@@ -121,7 +121,7 @@ import About from "@assets/images/About/About.jpg";
       border-radius: 20px;
       background: linear-gradient(
         to top,
-        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0.3),
         rgba(0, 0, 0, 0.1)
       );
       z-index: 1;
@@ -211,7 +211,8 @@ import About from "@assets/images/About/About.jpg";
 
   @include breakpoint-up($breakpoint-desktop) {
     .photo-container {
-      height: 80vh;
+      height: 75vh;
+      margin: 3rem auto;
       img {
         object-position: bottom;
       }
@@ -238,6 +239,18 @@ import About from "@assets/images/About/About.jpg";
       .tribute-text {
         width: 60%;
       }
+    }
+  }
+
+  @include breakpoint-up($breakpoint-desktop-xl) {
+    .photo-container {
+      margin: 4rem auto;
+    }
+  }
+
+  @include breakpoint-up($breakpoint-desktop-xxl) {
+    .photo-container {
+      margin: 4rem auto 5rem auto;
     }
   }
 </style>
