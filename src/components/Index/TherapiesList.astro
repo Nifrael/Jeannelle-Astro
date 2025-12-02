@@ -165,8 +165,8 @@ const therapies = [
 
   @include breakpoint-up($breakpoint-desktop) {
     .therapies-container {
-      width: 85%;
-      grid-template-columns: 1fr 1fr;
+      width: 90%;
+      grid-template-columns: 1fr;
       justify-items: center;
     }
     .therapie-card {
@@ -177,6 +177,10 @@ const therapies = [
       &:hover {
         transform: translateY(-5px);
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .paragraph {
+        padding: 0 4rem;
       }
     }
   }
