@@ -47,9 +47,9 @@ const menu = [
             </li>
           ))
         }
-        <li role="none">
+        <!-- <li role="none">
           <Image src={Plant} alt="Plant" id="plant" width={1200} />
-        </li>
+        </li> -->
       </ul>
     </div>
   </nav>
@@ -218,6 +218,9 @@ const menu = [
   }
 
   @include breakpoint-up($breakpoint-tablet) {
+    header {
+      margin: 1rem auto 0 auto;
+    }
     .desktop-menu {
       display: flex;
       align-items: center;
