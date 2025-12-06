@@ -1,15 +1,34 @@
 ---
 import { Image } from "astro:assets";
 import Yoga from "@assets/images/Welcome/Yoga.jpg";
+import InstantSoleana from "@assets/images/News/InstantSoleana.jpg";
+import Conference1 from "@assets/images/News/ConferencePassee.png";
 
 const actualities = [
   {
+    title: "Portes Ouvertes Par L'Instant Soleana",
+    description:
+      "Retrouvez l'Instant Soleana chez Jeannelle le samedi 13 décembre de 14h à 19h.",
+    img: InstantSoleana,
+    alt: "Massages",
+    link: "https://linstant-soleana.fr",
+    linkText: "Visiter le site",
+  },
+  {
     title: "Planning Yin Yoga",
     description:
-      "Rejoignez-nous pour un cours de Yin Yoga tous les vendredis à 18h30. Réserver par téléphone jusque la veille. Préparez votre petite serviette.",
+      "Rejoignez-nous pour un cours de Yin Yoga tous les vendredis à 18h. Réserver par téléphone jusque la veille. Préparez votre petite serviette.",
     img: Yoga,
     alt: "Cours de Yin Yoga",
     phone: "07.60.48.48.06",
+  },
+  {
+    title:
+      "Conférence Passée - On ne sait plus comment manger... Ou comment bien s'alimenter.",
+    description:
+      "A bientôt pour de nouvelles conférences et merci pour votre présence.",
+    img: Conference1,
+    alt: "Conférence Passée",
   },
 ];
 ---
@@ -25,7 +44,14 @@ const actualities = [
             <div class="news-card-content">
               <h5>{actu.title}</h5>
               <p>{actu.description}</p>
-              <p id="phone-number">{actu.phone}</p>
+              {actu.phone && <p id="phone-number">{actu.phone}</p>}
+              {actu.link && (
+                <div class="button-container">
+                  <a href={actu.link} target="_blank" class="button">
+                    {actu.linkText}
+                  </a>
+                </div>
+              )}
             </div>
           </article>
         ))
@@ -98,7 +124,7 @@ const actualities = [
 
   @include breakpoint-up($breakpoint-desktop) {
     .news-cards {
-      flex-direction: column;
+      flex-direction: row;
       justify-content: center;
       align-items: center;
       gap: 2rem;
