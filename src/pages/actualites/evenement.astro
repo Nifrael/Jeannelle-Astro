@@ -1,0 +1,75 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { Image } from "astro:assets";
+import EvenementYoga from "@assets/images/News/EvenementYoga.png";
+---
+
+<Layout>
+  <main class="event-container">
+    <h1>2 Heures Autour du Yoga</h1>
+    
+    <div class="poster-wrapper">
+      <Image 
+        src={EvenementYoga} 
+        alt="Affiche de l'évènement 2 Heures Autour du Yoga" 
+        class="poster-image"
+      />
+    </div>
+
+    <div class="button-container">
+      <a href="/" class="button">Retour à l'accueil</a>
+    </div>
+  </main>
+</Layout>
+
+<style lang="scss">
+  @use "src/styles/config/variables.scss" as *;
+  @use "src/styles/config/mixins.scss" as *;
+
+  .event-container {
+    margin: 1rem auto;
+    padding: 0 1rem 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h1 {
+      margin-bottom: 2rem;
+      text-align: center;
+      font-family: var(--title);
+      color: var(--important-color);
+    }
+
+    .poster-wrapper {
+      margin: 1rem auto 2rem auto;
+      max-width: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      
+      .poster-image {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        border-radius: 12px;
+        object-fit: contain;
+
+      }
+    }
+  }
+
+  @include breakpoint-up($breakpoint-tablet) {
+    .event-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1.5rem 3rem 1.5rem;
+
+      .poster-wrapper {
+        .poster-image {
+          max-width: 500px;
+          border-radius: 20px;
+        }
+      }
+    }
+  }
+</style>
