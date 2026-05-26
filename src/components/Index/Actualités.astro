@@ -3,8 +3,17 @@ import { Image } from "astro:assets";
 import Yoga from "@assets/images/Welcome/Yoga.jpg";
 import InstantSoleana from "@assets/images/News/InstantSoleana.jpg";
 import Conference1 from "@assets/images/News/ConferencePassee.png";
+import EvenementYoga from "@assets/images/News/EvenementYoga.png";
 
 const actualities = [
+  {
+    title: "2 Heures Autour du Yoga",
+    description: "Le dimanche 28 juin, de 16h30 à 18h30, venez découvrir le Yoga sous plusieurs de ses formes.",
+    img: EvenementYoga,
+    alt: "2 Heures Autour du Yoga",
+    link: "/actualites/evenement",
+    linkText: "Découvrir le programme",
+  },
   {
     title: "Planning Yin Yoga",
     description:
@@ -20,7 +29,7 @@ const actualities = [
     img: InstantSoleana,
     alt: "Massages",
     link: "https://linstant-soleana.fr",
-    linkText: "En savoir plus",
+    linkText: "Faire Connaissance",
   },
 
   {
@@ -48,7 +57,12 @@ const actualities = [
               {actu.phone && <p id="phone-number">{actu.phone}</p>}
               {actu.link && (
                 <div class="button-container">
-                  <a href={actu.link} target="_blank" class="button">
+                  <a
+                    href={actu.link}
+                    target={actu.link.startsWith("http") ? "_blank" : undefined}
+                    rel={actu.link.startsWith("http") ? "noopener noreferrer" : undefined}
+                    class="button"
+                  >
                     {actu.linkText}
                   </a>
                 </div>
