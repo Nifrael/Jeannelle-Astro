@@ -50,7 +50,7 @@ const therapies = [
     icon: Brain,
     duration: "1h à 1h30",
     price: "65€",
-    secondPrice: "180€ pour 3 séances",
+    secondPrice: "160€ pour 3 séances",
   },
   {
     id: 5,
@@ -81,9 +81,7 @@ const therapies = [
         {therapie.duration && therapie.price && (
           <p>
             <span>{therapie.price}</span> | {therapie.duration}
-            {therapie.secondPrice && (
-              <span>{therapie.secondPrice}</span>
-            )}
+            {therapie.secondPrice && <span>{therapie.secondPrice}</span>}
           </p>
         )}
       </div>
@@ -121,32 +119,32 @@ const therapies = [
     height: 100%;
   }
 
-    .paragraph p {
-      text-align: justify;
-    }
+  .paragraph p {
+    text-align: justify;
+  }
 
-    p:last-of-type {
-      text-align: center;
-      margin-top: auto;
-    }
+  p:last-of-type {
+    text-align: center;
+    margin-top: auto;
+  }
 
-    h5 {
-      color: var(--important-color);
-      text-align: center;
-      margin: 0.5rem;
-    }
+  h5 {
+    color: var(--important-color);
+    text-align: center;
+    margin: 0.5rem;
+  }
 
-    a {
-      margin: 0 auto;
-    }
+  a {
+    margin: 0 auto;
+  }
 
-    span {
-      font-size: var(--h5);
-      text-align: center;
-      font-weight: 700;
-      margin-top: 1rem;
-      color: var(--important-color);
-    }
+  span {
+    font-size: var(--h5);
+    text-align: center;
+    font-weight: 700;
+    margin-top: 1rem;
+    color: var(--important-color);
+  }
 
   #icon {
     margin: 0 auto;
