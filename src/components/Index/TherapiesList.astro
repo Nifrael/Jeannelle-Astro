@@ -50,7 +50,8 @@ const therapies = [
     icon: Brain,
     duration: "1h à 1h30",
     price: "65€",
-    secondPrice: "160€ pour 3 séances",
+    secondPrice: "160€",
+    pack: "3 séances espacées de 21 jours.",
   },
   {
     id: 5,
@@ -78,12 +79,20 @@ const therapies = [
           <p>{therapie.description}</p>
           <p>{therapie.descriptionbis}</p>
         </div>
-        {therapie.duration && therapie.price && (
-          <p>
-            <span>{therapie.price}</span> | {therapie.duration}
-            {therapie.secondPrice && <span>{therapie.secondPrice}</span>}
-          </p>
-        )}
+        <p>
+          {therapie.duration && therapie.price && (
+            <>
+              <span>{therapie.price}</span> | {therapie.duration}
+            </>
+          )}
+
+          {therapie.secondPrice && therapie.pack && <br/>}
+          {therapie.secondPrice && therapie.pack && (
+            <>
+              <span>{therapie.secondPrice}</span> | {therapie.pack}
+            </>
+          )}
+        </p>
       </div>
     ))
   }
