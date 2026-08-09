@@ -1,0 +1,195 @@
+---
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import Nature from "@assets/images/Icons/Nature.svg";
+import Yin from "@assets/images/Icons/Yin.svg";
+import Reflexology from "@assets/images/Icons/Reflexology.svg";
+import Chair from "@assets/images/Icons/Chair.svg";
+import Brain from "@assets/images/Icons/Brain.svg";
+import Hour from "@assets/images/Icons/Hour.svg";
+
+export async function getStaticPaths() {
+  const therapies = await getCollection("therapies", ({ data }) => !data.draft);
+  return therapies.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+
+const icons = {
+  nature: Nature,
+  yin: Yin,
+  reflexology: Reflexology,
+  chair: Chair,
+  brain: Brain,
+  hour: Hour,
+};
+const icon = icons[data.icon];
+---
+
+<Layout>
+  <main class="therapy-page">
+    <!-- <a href="/#therapies" class="back-link">← Toutes les thérapies</a> -->
+
+    <header class="therapy-header">
+      <Image
+        src={icon}
+        alt=""
+        width={64}
+        class="therapy-icon"
+        aria-hidden="true"
+      />
+      <h1>{data.title}</h1>
+      <p class="therapy-lead">{data.excerpt}</p>
+
+      <div class="therapy-meta">
+        {data.duration && <span class="meta-chip">{data.duration}</span>}
+        {data.price && <span class="meta-chip meta-price">{data.price}</span>}
+        {
+          data.secondPrice && data.pack && (
+            <span class="meta-chip meta-price">
+              {data.secondPrice} · {data.pack}
+            </span>
+          )
+        }
+      </div>
+    </header>
+
+    {
+      data.image && (
+        <div class="therapy-hero">
+          <Image src={data.image} alt={data.title} class="therapy-hero-img" />
+        </div>
+      )
+    }
+
+    <article class="article-body">
+      <Content />
+    </article>
+
+    <div class="button-container">
+      <a href="/#therapies" class="button">Retour aux thérapies</a>
+    </div>
+  </main>
+</Layout>
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixins" as *;
+
+  .therapy-page {
+    width: 90%;
+    max-width: 760px;
+    margin: 2rem auto 4rem auto;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    color: var(--important-color);
+  }
+
+  .therapy-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h1 {
+      margin: 0.5rem 0 1rem 0;
+    }
+  }
+
+  .therapy-icon {
+    margin: 0 auto;
+  }
+
+  .therapy-lead {
+    font-size: var(--h5);
+    max-width: 560px;
+    margin: 0 auto 1.5rem auto;
+  }
+
+  .therapy-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .meta-chip {
+    font-family: var(--text);
+    font-size: var(--small-text);
+    color: var(--text-primary-color);
+    background-color: var(--white-bg-blur);
+    border-radius: 999px;
+    padding: 0.4rem 1rem;
+    box-shadow: 0px -1px 3px 2px rgba(207, 154, 113, 0.2);
+  }
+
+  .meta-price {
+    color: var(--important-color);
+    font-weight: 700;
+  }
+
+  .therapy-hero {
+    margin: 2rem auto;
+
+    .therapy-hero-img {
+      width: 100%;
+      height: auto;
+      max-height: 420px;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+  }
+
+  .article-body {
+    background-color: var(--white-bg-blur);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0px -1px 3px 3px rgba(207, 154, 113, 0.249);
+
+    :global(h2) {
+      color: var(--important-color);
+      margin: 2rem 0 0.75rem 0;
+      font-family: var(--text);
+      font-size: var(--h5);
+    }
+
+    :global(h2:first-child) {
+      margin-top: 0;
+    }
+
+    :global(p) {
+      line-height: 1.7;
+    }
+
+    :global(ul) {
+      padding-left: 1.25rem;
+      line-height: 1.8;
+    }
+
+    :global(blockquote) {
+      margin: 2rem 0 0 0;
+      padding: 1rem 1.25rem;
+      border-left: 3px solid var(--important-color);
+      background-color: rgba(207, 154, 113, 0.08);
+      border-radius: 0 12px 12px 0;
+
+      :global(p) {
+        margin: 0;
+      }
+    }
+  }
+
+  @include breakpoint-up($breakpoint-tablet) {
+    .article-body {
+      padding: 2.5rem 3rem;
+    }
+  }
+</style>
