@@ -1,0 +1,164 @@
+---
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const actualites = await getCollection(
+    "actualites",
+    ({ data }) => !data.draft && !data.externalUrl,
+  );
+  return actualites.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+
+const categoryLabels = {
+  evenement: "Événement",
+  conference: "Conférence",
+  partenaire: "Partenaire",
+  cours: "Cours",
+};
+
+const formattedDate = data.date
+  ? new Intl.DateTimeFormat("fr-FR", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }).format(data.date)
+  : null;
+---
+
+<Layout>
+  <main class="actu-page">
+    <!-- <a href="/#actualites" class="back-link">← Toutes les actualités</a> -->
+
+    <header class="actu-header">
+      <span class="actu-tag">{categoryLabels[data.category]}</span>
+      <h1>{data.title}</h1>
+      <div class="actu-meta">
+        {formattedDate && <span>{formattedDate}</span>}
+        {data.location && <span>· {data.location}</span>}
+      </div>
+    </header>
+
+    <div class="actu-hero">
+      <Image src={data.image} alt={data.title} class="actu-hero-img" />
+    </div>
+
+    <article class="article-body">
+      <Content />
+    </article>
+
+    <div class="button-container">
+      <a href="/#actualites" class="button">Retour aux actualités</a>
+    </div>
+  </main>
+</Layout>
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixins" as *;
+
+  .actu-page {
+    width: 90%;
+    max-width: 760px;
+    margin: 2rem auto 4rem auto;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    color: var(--important-color);
+  }
+
+  .actu-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+
+    h1 {
+      margin: 1rem 0 0.5rem 0;
+    }
+  }
+
+  .actu-tag {
+    display: inline-block;
+    font-family: var(--text);
+    font-size: var(--small-text);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    background-color: var(--important-color);
+    border-radius: 999px;
+    padding: 0.3rem 0.9rem;
+  }
+
+  .actu-meta {
+    font-family: var(--text);
+    color: var(--text-primary-color);
+    font-size: var(--small-text);
+  }
+
+  .actu-hero {
+    margin: 1.5rem auto 2rem auto;
+
+    .actu-hero-img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: contain;
+      border-radius: 16px;
+    }
+  }
+
+  .article-body {
+    background-color: var(--white-bg-blur);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0px -1px 3px 3px rgba(207, 154, 113, 0.249);
+
+    :global(h2) {
+      color: var(--important-color);
+      margin: 2rem 0 0.75rem 0;
+      font-family: var(--text);
+      font-size: var(--h5);
+    }
+
+    :global(h2:first-child) {
+      margin-top: 0;
+    }
+
+    :global(p) {
+      line-height: 1.7;
+    }
+
+    :global(ul) {
+      padding-left: 1.25rem;
+      line-height: 1.8;
+    }
+
+    :global(blockquote) {
+      margin: 2rem 0 0 0;
+      padding: 1rem 1.25rem;
+      border-left: 3px solid var(--important-color);
+      background-color: rgba(207, 154, 113, 0.08);
+      border-radius: 0 12px 12px 0;
+
+      :global(p) {
+        margin: 0;
+      }
+    }
+  }
+
+  @include breakpoint-up($breakpoint-tablet) {
+    .article-body {
+      padding: 2.5rem 3rem;
+    }
+  }
+</style>
