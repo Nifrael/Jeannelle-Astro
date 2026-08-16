@@ -65,10 +65,12 @@ const formatDate = (date) =>
                 src={actu.data.image}
                 alt={actu.data.title}
                 class="news-image"
+                widths={[400, 600, 800]}
+                sizes="(min-width: 1024px) 360px, (min-width: 768px) 45vw, 90vw"
               />
             </div>
             <p class="news-meta">{meta.join(" · ")}</p>
-            <h3 class="news-title">{actu.data.title}</h3>
+            <h5 class="news-title">{actu.data.title}</h5>
             <p class="news-excerpt">{actu.data.excerpt}</p>
             <a
               href={href}
@@ -93,9 +95,17 @@ const formatDate = (date) =>
   @use "@styles/config/mixins" as *;
 
   .news-section {
-    width: 85%;
+    width: 80%;
     max-width: 1200px;
     margin: 4rem auto;
+
+    @include breakpoint-up($breakpoint-tablet) {
+      width: 85%;
+    }
+
+    @include breakpoint-up($breakpoint-desktop) {
+      width: 90%;
+    }
   }
 
   .news-header {
@@ -149,7 +159,6 @@ const formatDate = (date) =>
   }
 
   .news-title {
-    font-size: var(--h5);
     line-height: 1.4;
     margin: 0 0 0.75rem 0;
   }
