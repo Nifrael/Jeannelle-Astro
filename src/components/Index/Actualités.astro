@@ -40,10 +40,12 @@ const formatDate = (date) =>
 ---
 
 <section class="news-section" id="actualites">
-  <h2 class="section-title">Actualités & Événements</h2>
-  <p class="section-subtitle">
-    Rendez-vous, ateliers et rencontres à ne pas manquer chez Jeannelle.
-  </p>
+  <header class="news-header">
+    <h2 class="section-title">Actualités & Événements</h2>
+    <p class="section-subtitle">
+      Rendez-vous, ateliers et rencontres à ne pas manquer chez Jeannelle.
+    </p>
+  </header>
 
   <div class="news-grid">
     {
@@ -51,6 +53,11 @@ const formatDate = (date) =>
         const href = actu.data.externalUrl ?? `/actualites/${actu.id}`;
         const isExternal = Boolean(actu.data.externalUrl);
         const isPast = actu.data.date && actu.data.date < now;
+        const meta = [
+          categoryLabels[actu.data.category],
+          actu.data.date &&
+            `${isPast ? "Passé · " : ""}${formatDate(actu.data.date)}`,
+        ].filter(Boolean);
         return (
           <article class="news-card">
             <div class="news-image-wrapper">
@@ -59,28 +66,21 @@ const formatDate = (date) =>
                 alt={actu.data.title}
                 class="news-image"
               />
-              <span class="news-tag">{categoryLabels[actu.data.category]}</span>
             </div>
-            <div class="news-card-content">
-              {actu.data.date && (
-                <p class="news-date">
-                  {isPast ? "Passé · " : ""}
-                  {formatDate(actu.data.date)}
-                </p>
-              )}
-              <h3>{actu.data.title}</h3>
-              <p class="news-excerpt">{actu.data.excerpt}</p>
-              <div class="button-container">
-                <a
-                  href={href}
-                  target={isExternal ? "_blank" : undefined}
-                  rel={isExternal ? "noopener noreferrer" : undefined}
-                  class="button"
-                >
-                  {actu.data.ctaLabel ?? "En savoir plus"}
-                </a>
-              </div>
-            </div>
+            <p class="news-meta">{meta.join(" · ")}</p>
+            <h3 class="news-title">{actu.data.title}</h3>
+            <p class="news-excerpt">{actu.data.excerpt}</p>
+            <a
+              href={href}
+              target={isExternal ? "_blank" : undefined}
+              rel={isExternal ? "noopener noreferrer" : undefined}
+              class="news-link"
+            >
+              {actu.data.ctaLabel ?? "Lire la suite"}
+              <span class="news-arrow" aria-hidden="true">
+                →
+              </span>
+            </a>
           </article>
         );
       })
@@ -93,92 +93,85 @@ const formatDate = (date) =>
   @use "@styles/config/mixins" as *;
 
   .news-section {
-    width: 90%;
+    width: 85%;
     max-width: 1200px;
-    margin: 5rem auto;
+    margin: 4rem auto;
+  }
+
+  .news-header {
+    text-align: center;
+    margin-bottom: 4rem;
   }
 
   .section-title {
-    text-align: center;
-    margin-bottom: 0.5rem;
+    margin: 0;
   }
 
   .section-subtitle {
-    text-align: center;
-    max-width: 560px;
-    margin: 0 auto 3rem auto;
+    margin: 1rem auto 0 auto;
   }
 
   .news-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
+    column-gap: 2.5rem;
+    row-gap: 4rem;
   }
 
   .news-card {
+    position: relative;
     display: flex;
     flex-direction: column;
-    background-color: var(--white-bg-blur);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0px -1px 3px 3px rgba(207, 154, 113, 0.249);
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
   }
 
   .news-image-wrapper {
-    position: relative;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
   }
 
   .news-image {
     width: 100%;
-    height: 220px;
+    height: auto;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
     display: block;
+    transition: transform 0.6s ease;
   }
 
-  .news-tag {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
+  .news-meta {
     font-family: var(--text);
     font-size: var(--small-text);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--white);
-    background-color: var(--important-color);
-    border-radius: 999px;
-    padding: 0.3rem 0.85rem;
-  }
-
-  .news-card-content {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding: 1.5rem;
-
-    h3 {
-      font-size: var(--h5);
-      margin: 0 0 0.75rem 0;
-    }
-  }
-
-  .news-date {
-    font-size: var(--small-text);
+    letter-spacing: 0.12em;
     color: var(--important-color);
-    margin: 0 0 0.5rem 0;
+    opacity: 0.6;
+    margin: 0 0 0.75rem 0;
+  }
+
+  .news-title {
+    font-size: var(--h5);
+    line-height: 1.4;
+    margin: 0 0 0.75rem 0;
   }
 
   .news-excerpt {
     flex: 1;
-    line-height: 1.6;
-    margin: 0 0 1.5rem 0;
+    line-height: 1.7;
+    margin: 0 0 1.25rem 0;
   }
 
-  .button-container {
-    margin: 0;
-    text-align: center;
+  .news-link {
+    align-self: flex-start;
+    font-size: var(--small-text);
+    color: var(--important-color);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .news-arrow {
+    display: inline-block;
+    transition: transform 0.4s ease;
   }
 
   @include breakpoint-up($breakpoint-tablet) {
@@ -193,8 +186,9 @@ const formatDate = (date) =>
     }
 
     .news-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      .news-arrow {
+        transform: translateX(4px);
+      }
     }
   }
 </style>
