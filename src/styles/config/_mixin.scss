@@ -1,0 +1,38 @@
+@use "variables" as *;
+
+@mixin breakpoint-up($size) {
+  @media (width >= $size) {
+    @content;
+  }
+}
+
+@mixin focus-visible {
+  outline: 2px solid var(--color-action);
+  outline-offset: 3px;
+  border-radius: var(--rayon-s);
+}
+
+@mixin container {
+  width: 100%;
+  max-width: var(--largeur-max);
+  margin-inline: auto;
+  padding-inline: var(--gouttiere);
+}
+
+// Appareil avec souris (ordinateur) : on n'y propose pas d'appel téléphonique.
+// Détecte le mode de pointage, pas la largeur : une fenêtre étroite sur ordinateur reste un ordinateur.
+@mixin souris {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}
+
+// Effet de survol réservé aux appareils à souris : sur mobile, un :hover reste
+// « collé » après le toucher. S'utilise à la place de &:hover.
+@mixin survol {
+  @include souris {
+    &:hover {
+      @content;
+    }
+  }
+}

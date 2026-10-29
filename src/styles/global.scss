@@ -1,10 +1,5 @@
 @use "config/variables";
-@use "config/mixins";
+@use "config/mixin";
 
-@use "base/typography";
 @use "base/base";
-
-@use "sass:meta";
-@include meta.load-css("Components/buttons");
-
-
+@use "base/typography";
