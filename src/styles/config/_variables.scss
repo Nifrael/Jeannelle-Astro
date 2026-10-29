@@ -1,27 +1,101 @@
-:root {
-  --main-color: rgba(252, 232, 229, 0.3);
-  --main-color-full-opacity: rgb(255, 249, 249);
-  --text-primary-color: #5b5b5b;
-  --important-color: #cf9a71;
-  --white: white;
-  --white-bg-blur: rgba(255, 255, 255, 0.6);
-  --title: "Dancing Script Variable";
-  --text: "Playwrite GB S Variable";
-  --base-size: 1rem;
-  --scale: 1.25;
-  --h5: calc(var(--base-size) * var(--scale));
-  --h4: calc(var(--h5) * var(--scale));
-  --h3: calc(var(--h4) * var(--scale));
-  --h2: calc(var(--h3) * var(--scale));
-  --h1: calc(var(--h2) * var(--scale));
-  --big-text: calc(var(--h1) * var(--scale));
-  --small-text: calc(var(--base-size) / var(--scale));
-  --swiper-navigation-size: 35px !important;
-  --swiper-theme-color: var(--important-color) !important;
-  --swiper-pagination-bottom: 25px;
-}
+// Breakpoints pour les media queries (les media queries n'acceptent pas les variables CSS)
 
 $breakpoint-tablet: 768px;
 $breakpoint-desktop: 1024px;
 $breakpoint-desktop-xl: 1280px;
 $breakpoint-desktop-xxl: 1440px;
+
+// Palette d'origine de Jeannelle (ancien _variables.scss), sans ajout.
+// Elle n'alimente que les tokens :root ci-dessous.
+
+$blanc: #ffffff;
+$rose: rgb(252, 232, 229); // utilisé à 30 % d'opacité, comme avant (--main-color)
+$rose-clair: rgb(255, 249, 249); // ancien --main-color-full-opacity
+$gris: #5b5b5b; // ancien --text-primary-color
+// Ancien --important-color. Contraste 2,4:1 sur le fond : insuffisant pour du texte (AA = 4,5:1).
+// Une version foncée est à décider avec Julien : en attendant, c'est la couleur d'action.
+$caramel: #cf9a71;
+
+// Fin des couleurs
+
+:root {
+  // Fonds
+  --color-bg-primary: #{rgba($rose, 0.3)};
+  // Opaque : en-tête collant et menu mobile, qui passent au-dessus du contenu.
+  --color-bg-secondary: #{$rose-clair};
+  --color-bg-cards: #{$blanc};
+  // Carte posée sur une photo (ancien --white-bg-blur).
+  --color-bg-translucent: #{rgba($blanc, 0.6)};
+
+  // Textes
+  --color-text: #{$gris};
+  --color-text-secondary: #{$gris};
+
+  // Actions (liens, boutons)
+  --color-action: #{$caramel};
+  --color-action-hover: #{$gris};
+  --color-action-text: #{$blanc};
+  --color-action-soft: #{rgba($caramel, 0.08)};
+
+  // Traits et décors (transparences du caramel, comme les ombres de l'ancien site)
+  --color-accent: #{$caramel};
+  --color-border: #{rgba($caramel, 0.25)};
+  // Dégradé sous un texte blanc posé sur une photo (cartes des thérapeutes) : gris de la palette.
+  --color-overlay: #{rgba($gris, 0.85)};
+
+  // Ombres
+  // Reprises de l'ancien site (cartes et carrousel).
+  --shadow-s: 0 -1px 3px 3px #{rgba($caramel, 0.25)};
+  --shadow-m: 0 -1px 6px 6px #{rgba($caramel, 0.25)};
+
+  // Échelle typographique (fluide entre mobile et desktop via --scale)
+  --base-size: 1rem;
+  --scale: 1.2;
+  --little-text: calc(var(--base-size) * 0.875);
+  --p: calc(var(--base-size) * 1.0625);
+  --h5: calc(var(--base-size) * var(--scale));
+  --h4: calc(var(--h5) * var(--scale));
+  --h3: calc(var(--h4) * var(--scale));
+  --h2: calc(var(--h3) * var(--scale));
+  --h1: calc(var(--h2) * var(--scale));
+  --display: calc(var(--h1) * var(--scale));
+
+  // Espacements
+  --espace-xs: 0.25rem;
+  --espace-s: 0.5rem;
+  --espace-m: 1rem;
+  --espace-l: 1.5rem;
+  --espace-xl: 2.5rem;
+  --espace-xxl: 4rem;
+  --espace-section: 4.5rem;
+
+  // Rayons
+  --rayon-s: 6px;
+  --rayon-m: 12px;
+  --rayon-l: 24px;
+  --rayon-pilule: 999px;
+  --rayon-rond: 50%;
+
+  // Mise en page
+  --hauteur-entete: 4.5rem;
+  --largeur-max: 72rem;
+  --largeur-texte: 42rem;
+  --gouttiere: var(--espace-m);
+
+  // Animations
+  --transition: 180ms ease-out;
+}
+
+@media (width >= $breakpoint-tablet) {
+  :root {
+    --gouttiere: var(--espace-l);
+    --espace-section: 6rem;
+  }
+}
+
+@media (width >= $breakpoint-desktop) {
+  :root {
+    --hauteur-entete: 5.5rem;
+    --espace-section: 7.5rem;
+  }
+}
