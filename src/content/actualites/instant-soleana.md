@@ -2,7 +2,9 @@
 title: "Jeannelle accueille L'Instant Soleana"
 excerpt: "Massages et soins bien-être vous attendent désormais chez Jeannelle."
 category: "partenaire"
-image: "../../assets/images/News/InstantSoleana.jpg"
+image:
+  src: "../../assets/images/actualites/instant-soleana.jpg"
+  alt: "Mains posées sur un dos lors d'un massage"
 externalUrl: "https://linstant-soleana.fr"
 ctaLabel: "Faire connaissance"
 ---

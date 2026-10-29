@@ -4,7 +4,10 @@ excerpt: "Retour sur une conférence dédiée à l'alimentation et au bien mange
 category: "conference"
 date: 2025-11-15
 location: "Jeannelle — Millas"
-image: "../../assets/images/News/ConferencePassee.png"
+image:
+  src: "../../assets/images/actualites/conference-alimentation.png"
+  alt: "Affiche de la conférence « On ne sait plus comment manger » : table garnie de légumes, fruits, poisson et produits laitiers"
+poster: true
 ---
 
 « On ne sait plus comment manger… ou comment bien s'alimenter. » Le temps d'une
@@ -15,4 +18,4 @@ Merci à toutes celles et ceux qui étaient présents. À bientôt pour de nouve
 conférences !
 
 > Envie d'être informé·e des prochains rendez-vous ? Contactez Jeannelle par
-> téléphone au **07.60.48.48.06**.
+> téléphone au **07 60 48 48 06**.

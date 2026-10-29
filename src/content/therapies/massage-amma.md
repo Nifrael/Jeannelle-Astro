@@ -1,9 +1,12 @@
 ---
 title: "Massage Amma"
 excerpt: "Un massage assis, habillé, qui apaise le corps par de nombreuses pressions."
-icon: "chair"
+icon: "massage"
 duration: "30 min"
 price: "30€"
+image:
+  src: "../../assets/images/lieu/cabinet-clair.jpg"
+  alt: "Cabinet clair et épuré, au calme"
 order: 5
 ---
 
@@ -22,11 +25,3 @@ les mains.
 Installé·e sur une chaise ergonomique, vous restez habillé·e. Aucune huile,
 aucune préparation particulière : un moment de détente accessible, idéal pour
 relâcher les tensions du quotidien.
-
-## Informations pratiques
-
-- **Durée :** 30 minutes
-- **Tarif :** 30€
-
-> Pour prendre rendez-vous, contactez Jeannelle par téléphone au
-> **07.60.48.48.06**.

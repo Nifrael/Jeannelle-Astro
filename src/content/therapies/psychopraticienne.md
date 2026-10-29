@@ -1,11 +1,14 @@
 ---
 title: "Psychopraticienne"
 excerpt: "Être entendu·e dans sa sensibilité et ses ressentis, au-delà des mots et des faits."
-icon: "brain"
+icon: "esprit"
 duration: "1h à 1h30"
 price: "65€"
 secondPrice: "160€"
 pack: "3 séances espacées de 21 jours"
+image:
+  src: "../../assets/images/lieu/fauteuils.jpg"
+  alt: "Deux fauteuils en velours bleu face à face, devant un mur de pierre et de brique"
 order: 4
 ---
 
@@ -24,12 +27,3 @@ ensemble. Soyez prêt·e à une chaleureuse rencontre avec vous-même.
 Les séances durent de 1h à 1h30. Un accompagnement en profondeur peut se
 construire sur un cycle de plusieurs séances, pour laisser au cheminement le
 temps de s'installer.
-
-## Informations pratiques
-
-- **Durée :** de 1h à 1h30
-- **Tarif :** 65€ la séance
-- **Forfait :** 160€ pour 3 séances espacées de 21 jours
-
-> Pour prendre rendez-vous, contactez Jeannelle par téléphone au
-> **07.60.48.48.06**.

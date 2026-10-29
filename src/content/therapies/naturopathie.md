@@ -1,9 +1,12 @@
 ---
 title: "Naturopathie & (Micro)Nutrition"
 excerpt: "Redonner au corps et aux émonctoires leur plein potentiel de fonctionnement."
-icon: "nature"
+icon: "feuille"
 duration: "1h"
 price: "65€"
+image:
+  src: "../../assets/images/lieu/lumiere.jpg"
+  alt: "Lampe de sel allumée et bouquet de fleurs séchées devant un mur de pierre"
 order: 1
 ---
 
@@ -25,11 +28,3 @@ Un premier échange approfondi permet de faire le point sur votre terrain, votre
 mode de vie et vos objectifs. À partir de là, nous construisons ensemble des
 pistes concrètes et personnalisées : ajustements alimentaires, micronutrition,
 plantes, hygiène de vie. Rien d'imposé — tout se fait à votre rythme.
-
-## Informations pratiques
-
-- **Durée :** environ 1 heure
-- **Tarif :** 65€
-
-> Pour prendre rendez-vous, contactez Jeannelle par téléphone au
-> **07.60.48.48.06**.

@@ -1,9 +1,12 @@
 ---
 title: "Yin Yoga — Cours Collectif"
 excerpt: "Revenir à soi dans des postures douces, sans force ni souplesse particulière."
-icon: "yin"
+icon: "yoga"
 duration: "1h"
 price: "13€"
+image:
+  src: "../../assets/images/lieu/salle-yoga-bougies.jpg"
+  alt: "Salle de yoga aux murs de pierre, tapis et coussins disposés à la lumière des bougies"
 order: 3
 ---
 
@@ -25,11 +28,3 @@ confortable et votre petite serviette.
 
 **Rendez-vous chaque vendredi à 18h.** Réservation par téléphone jusqu'à la
 veille.
-
-## Informations pratiques
-
-- **Durée :** 1 heure
-- **Tarif :** 13€ le cours
-
-> Pour réserver votre place, contactez Jeannelle par téléphone au
-> **07.60.48.48.06**.

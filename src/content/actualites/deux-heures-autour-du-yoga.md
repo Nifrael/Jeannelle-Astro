@@ -4,7 +4,10 @@ excerpt: "Venez découvrir le Yoga sous plusieurs de ses formes, le temps d'un a
 category: "evenement"
 date: 2026-06-28
 location: "Jeannelle — Millas"
-image: "../../assets/images/News/EvenementYoga.png"
+image:
+  src: "../../assets/images/actualites/deux-heures-yoga.png"
+  alt: "Affiche de l'après-midi « 2H autour du Yoga » avec Robyn, Soledad et Karine, 10 €"
+poster: true
 ctaLabel: "Découvrir le programme"
 ---
 
@@ -23,4 +26,4 @@ accessible à toutes et tous, quel que soit votre niveau.
 Prévoyez une tenue confortable. Le nombre de places étant limité, la
 réservation est recommandée.
 
-> Pour réserver, contactez Jeannelle par téléphone au **07.60.48.48.06**.
+> Pour réserver, contactez Jeannelle par téléphone au **07 60 48 48 06**.

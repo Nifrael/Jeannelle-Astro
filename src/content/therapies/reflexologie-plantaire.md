@@ -1,9 +1,12 @@
 ---
 title: "Réflexologie Plantaire Énergétique Chinoise"
 excerpt: "Agir sur les zones réflexes du pied pour relancer la circulation énergétique."
-icon: "reflexology"
+icon: "pied"
 duration: "45 min"
 price: "50€"
+image:
+  src: "../../assets/images/lieu/cabinet-pierre.jpg"
+  alt: "Cabinet au parquet de chêne et au mur de pierre apparente, éclairé par une fenêtre"
 order: 2
 ---
 
@@ -24,11 +27,3 @@ potentiel et à relancer la circulation dans les méridiens selon l'approche
 Confortablement installé·e, vous vous laissez porter pendant que Jeannelle
 travaille les zones réflexes du pied par pressions et mobilisations. Un moment
 de détente profonde, à l'écoute des signaux du corps.
-
-## Informations pratiques
-
-- **Durée :** environ 45 minutes
-- **Tarif :** 50€
-
-> Pour prendre rendez-vous, contactez Jeannelle par téléphone au
-> **07.60.48.48.06**.

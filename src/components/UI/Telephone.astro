@@ -1,0 +1,70 @@
+---
+// Numéro de téléphone : lien d'appel sur mobile, simple texte sur ordinateur
+// (un lien tel: y ouvre une application d'appel inutile).
+// Avec `bouton`, le lien d'appel prend l'apparence d'un bouton ; son texte est le slot.
+import { telephone } from "@data/coordonnees";
+import Bouton from "@components/UI/Bouton.astro";
+import Icone from "@components/UI/Icone.astro";
+
+type Props = { bouton?: boolean; taille?: "normale" | "petite" };
+
+const { bouton = false, taille = "normale" } = Astro.props;
+---
+
+{
+  bouton ? (
+    <span class:list={["telephone telephone--bouton", `telephone--${taille}`]}>
+      <span class="telephone__mobile">
+        <Bouton href={telephone.lien} icone="telephone" taille={taille}>
+          <slot>{telephone.affiche}</slot>
+        </Bouton>
+      </span>
+      <span class="telephone__ordinateur">
+        <Icone nom="telephone" />
+        {telephone.affiche}
+      </span>
+    </span>
+  ) : (
+    <span class="telephone">
+      <a class="telephone__mobile" href={telephone.lien}>
+        {telephone.affiche}
+      </a>
+      <span class="telephone__ordinateur">{telephone.affiche}</span>
+    </span>
+  )
+}
+
+<style lang="scss">
+  @use "@styles/config/mixin" as *;
+
+  .telephone__ordinateur {
+    display: none;
+  }
+
+  .telephone--bouton .telephone__ordinateur {
+    align-items: center;
+    gap: var(--espace-s);
+    font-size: var(--h4);
+    font-weight: 600;
+    color: var(--color-action);
+    white-space: nowrap;
+  }
+
+  .telephone--petite .telephone__ordinateur {
+    font-size: var(--h5);
+  }
+
+  @include souris {
+    .telephone__mobile {
+      display: none;
+    }
+
+    .telephone__ordinateur {
+      display: inline;
+    }
+
+    .telephone--bouton .telephone__ordinateur {
+      display: inline-flex;
+    }
+  }
+</style>
