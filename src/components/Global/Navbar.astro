@@ -1,248 +1,374 @@
 ---
 import { Image } from "astro:assets";
-import Plant from "@assets/images/Plant.svg";
-import Logo from "@assets/images/Jeannelle.png";
+import logo from "@assets/images/logo/jeannelle.png";
+import entree from "@assets/images/lieu/entree.jpg";
+import { telephone } from "@data/coordonnees";
+import Bouton from "@components/UI/Bouton.astro";
+import Icone from "@components/UI/Icone.astro";
 
-const menu = [
-  { label: "Accueil", href: "/" },
-  { label: "A Propos", href: "/a-propos" },
+const liens = [
+  { href: "/therapies/", texte: "Thérapies" },
+  { href: "/espaces/", texte: "Le lieu" },
+  { href: "/actualites/", texte: "Actualités" },
+  { href: "/a-propos/", texte: "À propos" },
 ];
+
+// "page" sur la page exacte, "true" dans une sous-page de la rubrique.
+const pageActuelle = Astro.url.pathname;
+const ariaCurrent = (href: string) => {
+  if (pageActuelle === href) return "page";
+  if (pageActuelle.startsWith(href)) return "true";
+  return undefined;
+};
 ---
 
-<header>
-  <nav role="navigation" aria-label="Main navigation">
-    <a href="/">
-      <Image src={Logo} id="logo" alt="Jeannelle logo" />
+<header class="entete">
+  <div class="entete__barre container">
+    <a class="logo" href="/">
+      <Image
+        src={logo}
+        alt="Jeannelle, retour à l'accueil"
+        width={360}
+        loading="eager"
+      />
     </a>
-    <div class="desktop-menu">
-      <ul>
-        {
-          menu.map((item) => (
-            <li>
-              <a href={item.href}>{item.label}</a>
-            </li>
-          ))
-        }
-      </ul>
+
+    {
+      /* Mobile : panneau plein écran. Ordinateur : le panneau s'efface (display: contents) et la nav se centre dans la barre. */
+    }
+    <div id="menu-principal" class="panneau">
+      {
+        /* Menu mobile : on « entre » sous l'arche de la porte. Décorative, la photo est déjà décrite sur l'accueil. */
+      }
+      <Image
+        src={entree}
+        alt=""
+        widths={[320, 480, 640]}
+        sizes="16rem"
+        class="panneau__arche"
+      />
+      <nav aria-label="Navigation principale">
+        <ul class="liens" role="list">
+          {
+            liens.map((lien) => (
+              <li>
+                <a href={lien.href} aria-current={ariaCurrent(lien.href)}>
+                  {lien.texte}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      {/* Bas du menu mobile uniquement. */}
+      <div class="panneau__pied">
+        <Bouton href="/contact/" icone="email">Me contacter</Bouton>
+        <Image src={logo} alt="" width={240} class="panneau__signature" />
+      </div>
     </div>
-    <div class="mobile-menu">
-      <button
-        class="menu-button"
-        id="menu-button"
-        aria-expanded="false"
-        aria-controls="nav-menu"
-        aria-label="Ouvrir le menu"
+
+    <div class="entete__contact">
+      <Bouton href="/contact/" icone="email" taille="petite"
+        >Me contacter</Bouton
       >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <ul class="menu" id="nav-menu" role="menu">
-        {
-          menu.map((item) => (
-            <li role="none">
-              <a role="menuitem" href={item.href}>
-                {item.label}
-              </a>
-            </li>
-          ))
-        }
-        <!-- <li role="none">
-          <Image src={Plant} alt="Plant" id="plant" width={1200} />
-        </li> -->
-      </ul>
     </div>
-  </nav>
+
+    <a class="appel-mobile" href={telephone.lien}>
+      <Icone nom="telephone" />
+      <span class="visually-hidden">Appeler le {telephone.affiche}</span>
+    </a>
+
+    {
+      /* « Menu » plutôt que « Ouvrir le menu » : aria-expanded annonce déjà s'il est ouvert. */
+    }
+    <button
+      type="button"
+      id="bascule-menu"
+      class="bascule"
+      aria-controls="menu-principal"
+      aria-expanded="false"
+    >
+      <span class="visually-hidden">Menu</span>
+      <span class="bascule__trait" aria-hidden="true"></span>
+    </button>
+  </div>
 </header>
 
 <script>
-  function listenMenu() {
-    const buttonMenu = document.getElementById("menu-button");
-    const menuEl = document.getElementById("nav-menu");
-    const body = document.querySelector("body");
-
-    if (!buttonMenu || !menuEl) return;
-
-    const setExpanded = (value) => {
-      buttonMenu.setAttribute("aria-expanded", String(value));
-    };
-
-    const toggleMenu = () => {
-      menuEl.classList.toggle("show");
-      buttonMenu.classList.toggle("active");
-      body.classList.toggle("no-scroll");
-      setExpanded(menuEl.classList.contains("show"));
-    };
-
-    buttonMenu.addEventListener("click", (e) => {
-      e.stopPropagation();
-      toggleMenu();
-    });
-
-    menuEl.addEventListener("click", (e) => {
-      const target = /** @type {HTMLElement} */ (e.target);
-      if (target && target.tagName === "A") {
-        toggleMenu();
-      }
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && menuEl.classList.contains("show")) {
-        toggleMenu();
-        buttonMenu.focus();
-      }
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", listenMenu);
-  document.addEventListener("astro:after-swap", listenMenu);
+  import { initNavbar } from "@scripts/navbar";
+  initNavbar();
 </script>
 
 <style lang="scss">
   @use "@styles/config/variables" as *;
-  @use "@styles/config/mixins" as *;
+  @use "@styles/config/mixin" as *;
 
-  header {
-    width: 100%;
-    height: 8vh;
-    min-height: 80px;
-    margin: 0.5rem 0;
-    position: relative;
+  .entete {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--color-border);
   }
 
-  nav {
+  .entete__barre {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    max-width: 1400px;
-    width: 90%;
-    height: 100%;
-    margin: 0.5rem auto;
-    a {
-      text-decoration: none;
-      font-size: var(--h4);
-      transition: 0.5s ease-in-out;
-      font-weight: 400;
-      color: var(--important-color);
-      display: flex;
-    }
-    a:visited {
-      color: var(--important-color);
-    }
-    a:hover {
-      color: var(--text-primary-color);
-      transition: 0.5s ease-in-out;
+    gap: var(--espace-s);
+    height: var(--hauteur-entete);
+  }
+
+  .logo {
+    margin-inline-end: auto;
+
+    img {
+      width: 8.5rem;
     }
   }
 
-  #logo {
-    width: 50%;
-    height: auto;
-    border-radius: 10px;
-  }
+  // ----- Menu mobile -----
 
-  .menu-button {
-    height: 30px;
-    width: 30px;
-    position: relative;
-    background-color: transparent;
-    border: none;
-    span {
-      height: 3px;
-      width: 100%;
-      background-color: var(--important-color);
-      border-radius: 25px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      transition: 0.2s ease;
-    }
-    span:first-child {
-      top: 25%;
-    }
-    span:last-child {
-      top: 75%;
-    }
-  }
-
-  .active {
-    span:first-child {
-      top: 50%;
-      transform: translate(-50%, -50%) rotate(45deg);
-      background-color: var(--important-color);
-    }
-    span:nth-child(2) {
-      opacity: 0;
-    }
-    span:last-child {
-      top: 50%;
-      transform: translate(-50%, -50%) rotate(-45deg);
-      background-color: var(--important-color);
-    }
-  }
-
-  .desktop-menu {
-    display: none;
-  }
-
-  .menu {
-    list-style: none;
-    margin: 0;
-    padding: 5rem 0;
+  .panneau {
+    position: fixed;
+    inset: var(--hauteur-entete) 0 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3rem;
-    position: absolute;
-    width: 100vw;
-    min-height: 100vh;
-    top: 100%;
-    left: 0;
-    background-color: var(--main-color-full-opacity);
-    z-index: -3;
-    transition: 0.5s ease;
+    gap: var(--espace-l);
+    padding: var(--espace-l) var(--gouttiere);
+    overflow-y: auto;
+    background-color: var(--color-bg-secondary);
+    text-align: center;
+    visibility: hidden;
     opacity: 0;
-    overflow: auto;
+    transition:
+      opacity var(--transition),
+      visibility var(--transition);
+
+    &.ouvert {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 
-  .show {
-    opacity: 1;
-    transition: 0.5s ease;
-    z-index: 10;
+  // Photo de la porte découpée en arche, comme la voûte en brique de l'entrée.
+  .panneau__arche {
+    flex-shrink: 0;
+    // La hauteur suit celle de l'écran : sur un petit téléphone, le bouton reste visible sans défiler.
+    height: min(17.5rem, 28svh);
+    width: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 999px 999px var(--rayon-s) var(--rayon-s);
   }
 
-  #plant {
-    width: 30%;
-    height: auto;
+  .liens {
+    display: grid;
+    gap: var(--espace-m);
+
+    a {
+      font-family: var(--font-title);
+      font-size: var(--h3);
+      color: var(--color-text);
+      text-decoration: none;
+
+      &[aria-current] {
+        font-style: italic;
+        color: var(--color-action);
+      }
+    }
   }
 
-  @include breakpoint-up($breakpoint-tablet) {
-    header {
-      margin: 1rem auto 0 auto;
-    }
-    .desktop-menu {
-      display: flex;
-      align-items: center;
-      gap: 3rem;
-      white-space: nowrap;
+  // Légère montée à l'ouverture, sauf si l'utilisateur limite les animations.
+  @media (prefers-reduced-motion: no-preference) {
+    .panneau__arche,
+    .panneau .liens,
+    .panneau__pied {
+      transform: translateY(0.5rem);
+      transition: transform var(--transition);
     }
 
-    #logo {
-      width: 25%;
+    .panneau.ouvert .panneau__arche,
+    .panneau.ouvert .liens,
+    .panneau.ouvert .panneau__pied {
+      transform: none;
+    }
+  }
+
+  .panneau__pied {
+    display: grid;
+    gap: var(--espace-l);
+    justify-items: center;
+    margin-top: auto;
+  }
+
+  .panneau__signature {
+    width: 6rem;
+    opacity: 0.6;
+  }
+
+  .entete__contact {
+    display: none;
+  }
+
+  .appel-mobile,
+  .bascule {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--rayon-rond);
+  }
+
+  .appel-mobile {
+    background-color: var(--color-action);
+    color: var(--color-action-text);
+    font-size: var(--h5);
+
+    @include survol {
+      background-color: var(--color-text);
+      color: var(--color-action-text);
+    }
+  }
+
+  .bascule {
+    border: 1px solid var(--color-border);
+    background: none;
+    cursor: pointer;
+  }
+
+  // Trois traits dessinés avec un seul élément et ses pseudo-éléments ; croix quand le menu est ouvert.
+  .bascule__trait,
+  .bascule__trait::before,
+  .bascule__trait::after {
+    display: block;
+    width: 1.125rem;
+    height: 2px;
+    border-radius: 2px;
+    background-color: var(--color-text);
+    transition:
+      transform var(--transition),
+      background-color var(--transition);
+  }
+
+  .bascule__trait {
+    position: relative;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
     }
 
-    .mobile-menu {
+    &::before {
+      transform: translateY(-6px);
+    }
+
+    &::after {
+      transform: translateY(6px);
+    }
+  }
+
+  .bascule[aria-expanded="true"] .bascule__trait {
+    background-color: transparent;
+
+    &::before {
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      transform: rotate(-45deg);
+    }
+  }
+
+  // Pas d'appel depuis un ordinateur, même dans une fenêtre étroite.
+  @include souris {
+    .appel-mobile {
+      display: none;
+    }
+  }
+
+  :global(.menu-ouvert) {
+    overflow: hidden;
+  }
+
+  // ----- Ordinateur -----
+
+  @include breakpoint-up($breakpoint-desktop) {
+    // Trois colonnes : logo à gauche, liens au centre exact, bouton à droite.
+    .entete__barre {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: var(--espace-xl);
+    }
+
+    .logo {
+      margin: 0;
+
+      img {
+        width: 10.5rem;
+      }
+    }
+
+    // `visibility` s'hérite : sans ce rappel, les liens resteraient cachés comme le panneau mobile.
+    .panneau {
+      display: contents;
+      visibility: visible;
+    }
+
+    .panneau .liens {
+      transform: none;
+    }
+
+    .panneau__arche,
+    .panneau__pied,
+    .appel-mobile,
+    .bascule {
       display: none;
     }
 
-    .desktop-menu ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
+    .liens {
       display: flex;
-      gap: 3rem;
-      align-items: center;
+      gap: var(--espace-xl);
+
+      a {
+        position: relative;
+        padding-block: var(--espace-xs);
+        font-family: var(--font-text);
+        font-size: var(--p);
+        font-weight: 500;
+
+        &[aria-current] {
+          font-style: normal;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          inset: auto 0 0;
+          height: 2px;
+          background-color: var(--color-accent);
+          transform: scaleX(0);
+          transition: transform var(--transition);
+        }
+
+        &[aria-current]::after {
+          transform: scaleX(1);
+        }
+
+        @include survol {
+          &::after {
+            transform: scaleX(1);
+          }
+        }
+      }
+    }
+
+    .entete__contact {
+      display: block;
+      justify-self: end;
     }
   }
 </style>

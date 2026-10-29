@@ -1,0 +1,96 @@
+---
+import { Image } from "astro:assets";
+import { espaces, introduction } from "@data/espaces";
+import EnTeteSection from "@components/UI/EnTeteSection.astro";
+import Bouton from "@components/UI/Bouton.astro";
+
+// Une photo par espace, dans l'ordre de la page Le lieu.
+const photos = espaces.map((espace) => ({
+  ...espace.photos[0],
+  titre: espace.titre,
+}));
+---
+
+<section class="apercu" aria-labelledby="apercu-titre">
+  <div class="apercu__grille container">
+    <div class="apercu__texte">
+      <EnTeteSection
+        id="apercu-titre"
+        surtitre={introduction.surtitre}
+        titre={introduction.titre}
+      >
+        {introduction.texte.map((texte) => <p>{texte}</p>)}
+      </EnTeteSection>
+      <Bouton href="/espaces/">Voir les espaces à louer</Bouton>
+    </div>
+    <ul role="list" class="apercu__photos">
+      {
+        photos.map((photo) => (
+          <li>
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              widths={[320, 480, 640]}
+              sizes="(width >= 1024px) 18rem, 33vw"
+            />
+            <span>{photo.titre}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixin" as *;
+
+  .apercu {
+    padding-block: var(--espace-section);
+    background-color: var(--color-bg-cards);
+  }
+
+  .apercu__grille {
+    display: grid;
+    gap: var(--espace-xl);
+    align-items: center;
+  }
+
+  .apercu__photos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--espace-s);
+
+    li {
+      display: grid;
+      gap: var(--espace-s);
+    }
+
+    img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: var(--rayon-m);
+    }
+
+    span {
+      font-size: var(--little-text);
+      color: var(--color-text-secondary);
+    }
+  }
+
+  @include breakpoint-up($breakpoint-desktop) {
+    .apercu__grille {
+      grid-template-columns: 1fr 1.3fr;
+      gap: var(--espace-xxl);
+    }
+
+    .apercu__photos {
+      gap: var(--espace-m);
+
+      li:nth-child(2) {
+        margin-top: var(--espace-xl);
+      }
+    }
+  }
+</style>

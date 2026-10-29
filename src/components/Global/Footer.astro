@@ -1,105 +1,212 @@
 ---
-import Image from "astro/components/Image.astro";
-import Millas from "@assets/images/Index/Millas.jpg";
+import { Image } from "astro:assets";
+import logo from "@assets/images/logo/jeannelle.png";
+import { adresse, email, horaires, itineraires } from "@data/coordonnees";
+import Icone from "@components/UI/Icone.astro";
+import Telephone from "@components/UI/Telephone.astro";
+
+type Lien = { href: string; texte: string };
+type Props = { therapies: Lien[] };
+
+const { therapies } = Astro.props;
+
+const pages: Lien[] = [
+  { href: "/espaces/", texte: "Le lieu et la location" },
+  { href: "/actualites/", texte: "Actualités" },
+  { href: "/a-propos/", texte: "À propos" },
+  { href: "/contact/", texte: "Contact et accès" },
+];
 ---
 
-<footer>
-  <div class="footer-container">
-    <div class="footer-content">
-      <h3>Jeannelle</h3>
-      <div class="contact-info">
-        <p>18 Rue Lieutenant Basseras, 66170 Millas</p>
-        <p>07.60.48.48.06</p>
-      </div>
-
-      <div class="footer-links">
-        <a href="/mentions-legales">Mentions légales</a>
-        <span class="separator">•</span>
-        <a href="/politique-de-confidentialite">Politique de confidentialité</a>
-      </div>
-
-      <div class="copyright">
-        <p>
-          &copy; {new Date().getFullYear()} Jeannelle - Tous droits réservés
-        </p>
-      </div>
+<footer class="pied">
+  <div class="pied__grille container">
+    <div class="pied__marque">
+      <Image src={logo} alt="Jeannelle" width={360} />
+      <p>
+        Centre de thérapeutes au cœur du village de Millas. Un lieu pour se
+        poser et être entendu.
+      </p>
     </div>
+
+    <section aria-labelledby="pied-contact">
+      <h2 id="pied-contact">Nous trouver</h2>
+      <ul role="list" class="pied__liste">
+        <li>
+          <Icone nom="localisation" />
+          <span>{adresse.rue}<br />{adresse.codePostal} {adresse.ville}</span>
+        </li>
+        <li>
+          <Icone nom="telephone" />
+          <Telephone />
+        </li>
+        {
+          email && (
+            <li>
+              <Icone nom="email" />
+              <a href={`mailto:${email}`}>{email}</a>
+            </li>
+          )
+        }
+        <li>
+          <Icone nom="horloge" />
+          <span>{horaires}</span>
+        </li>
+      </ul>
+      <a
+        class="pied__itineraire"
+        href={itineraires[0].url}
+        target="_blank"
+        rel="noopener"
+      >
+        Itinéraire<span class="visually-hidden">
+          vers Jeannelle sur {itineraires[0].texte} (nouvel onglet)</span
+        >
+      </a>
+    </section>
+
+    <nav aria-labelledby="pied-therapies">
+      <h2 id="pied-therapies">Thérapies</h2>
+      <ul role="list" class="pied__liens">
+        {
+          therapies.map((lien) => (
+            <li>
+              <a href={lien.href}>{lien.texte}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <nav aria-labelledby="pied-pages">
+      <h2 id="pied-pages">Jeannelle</h2>
+      <ul role="list" class="pied__liens">
+        {
+          pages.map((lien) => (
+            <li>
+              <a href={lien.href}>{lien.texte}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+
+  <div class="pied__bas container">
+    <p>&copy; {new Date().getFullYear()} Jeannelle · Karine Maraval</p>
+    <ul role="list">
+      <li><a href="/mentions-legales/">Mentions légales</a></li>
+      <li><a href="/politique-de-confidentialite/">Confidentialité</a></li>
+    </ul>
   </div>
 </footer>
 
 <style lang="scss">
   @use "@styles/config/variables" as *;
-  @use "@styles/config/mixins" as *;
+  @use "@styles/config/mixin" as *;
 
-  h3 {
-    color: var(--important-color);
-    text-align: center;
-    margin: 0;
-  }
+  .pied {
+    padding-top: var(--espace-xxl);
+    background-color: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text);
 
-  footer {
-    padding-top: 2rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--main-color);
-    .footer-container {
-      max-width: 600px;
-      width: 90%;
-      margin: 0 auto;
-    }
-
-    .footer-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    p {
-      font-size: var(--small-text);
-      text-align: center;
-      margin: 0.5rem 0;
-    }
     a {
-      color: var(--text-primary-color);
-      font-size: var(--small-text);
+      color: var(--color-text);
       text-decoration: none;
-      transition: 0.5s ease-in-out;
-    }
-    a:visited {
-      color: var(--text-primary-color);
-    }
 
-    a:hover {
-      color: var(--important-color);
-      transition: 0.5s ease-in-out;
-    }
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .separator {
-        color: var(--text-primary-color);
+      @include survol {
+        color: var(--color-action);
       }
     }
 
-    .footer-links a {
-      margin: 0 0.5rem;
-    }
-    .copyright {
-      margin-top: 2rem;
-      opacity: 0.8;
+    h2 {
+      margin-bottom: var(--espace-m);
+      font-family: var(--font-text);
+      font-size: var(--little-text);
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent);
     }
 
-    .copyright p {
-      font-size: calc(var(--small-text) - 0.1rem);
+    p,
+    li {
+      font-size: var(--little-text);
     }
   }
 
-  .contact-info {
+  .pied__grille {
+    display: grid;
+    gap: var(--espace-xl);
+    padding-bottom: var(--espace-xl);
+  }
+
+  .pied__marque {
+    display: grid;
+    align-content: start;
+    gap: var(--espace-m);
+    max-width: 22rem;
+
+    img {
+      width: 10rem;
+    }
+
+    p {
+      color: var(--color-text-secondary);
+    }
+  }
+
+  .pied__liste {
+    display: grid;
+    gap: var(--espace-s);
+
+    li {
+      display: flex;
+      gap: var(--espace-s);
+      align-items: flex-start;
+    }
+
+    :global(.icone) {
+      margin-top: 0.25em;
+      color: var(--color-accent);
+    }
+  }
+
+  .pied .pied__itineraire {
+    display: inline-block;
+    margin-top: var(--espace-m);
+    text-decoration: underline;
+  }
+
+  .pied__liens {
+    display: grid;
+    gap: var(--espace-s);
+  }
+
+  .pied__bas {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 1rem 0 1rem 0;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--espace-s) var(--espace-l);
+    padding-block: var(--espace-l);
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+
+    ul {
+      display: flex;
+      gap: var(--espace-l);
+    }
+  }
+
+  @include breakpoint-up($breakpoint-tablet) {
+    .pied__grille {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @include breakpoint-up($breakpoint-desktop) {
+    .pied__grille {
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    }
   }
 </style>

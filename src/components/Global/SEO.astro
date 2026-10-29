@@ -1,0 +1,62 @@
+---
+import { getImage } from "astro:assets";
+import { nomDuSite, partageParDefaut, formatPartage } from "@data/seo";
+import { versJsonLd, type JsonLd } from "@lib/donnees-structurees";
+
+export type PropsSEO = {
+  titre: string;
+  description: string;
+  indexable?: boolean;
+  type?: "website" | "article";
+  image?: { src: ImageMetadata; alt: string };
+  donneesStructurees?: JsonLd;
+};
+
+type Props = PropsSEO;
+
+const {
+  titre,
+  description,
+  indexable = true,
+  type = "website",
+  image = partageParDefaut,
+  donneesStructurees,
+} = Astro.props;
+
+// L'accueil garde le nom seul ; les autres pages finissent par « · Jeannelle ».
+const titreComplet = titre === nomDuSite ? titre : `${titre} · ${nomDuSite}`;
+const canonique = new URL(Astro.url.pathname, Astro.site);
+
+// `getImage` produit au build le fichier recadré au format de partage.
+const partage = await getImage({ src: image.src, ...formatPartage });
+---
+
+<title>{titreComplet}</title>
+<meta name="description" content={description} />
+{
+  indexable ? (
+    <link rel="canonical" href={canonique} />
+  ) : (
+    <meta name="robots" content="noindex" />
+  )
+}
+
+<meta property="og:site_name" content={nomDuSite} />
+<meta property="og:locale" content="fr_FR" />
+<meta property="og:type" content={type} />
+<meta property="og:title" content={titreComplet} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonique} />
+<meta property="og:image" content={new URL(partage.src, Astro.site)} />
+<meta property="og:image:width" content={String(formatPartage.width)} />
+<meta property="og:image:height" content={String(formatPartage.height)} />
+<meta property="og:image:alt" content={image.alt} />
+<meta name="twitter:card" content="summary_large_image" />
+{
+  donneesStructurees && (
+    <script
+      type="application/ld+json"
+      set:html={versJsonLd(donneesStructurees)}
+    />
+  )
+}

@@ -1,0 +1,119 @@
+---
+import { Image } from "astro:assets";
+import salle from "@assets/images/lieu/salle-yoga-bougies.jpg";
+import { presentation } from "@data/accueil";
+import Icone from "@components/UI/Icone.astro";
+import EnTeteSection from "@components/UI/EnTeteSection.astro";
+import LienFleche from "@components/UI/LienFleche.astro";
+---
+
+<section
+  id="bienvenue"
+  class="presentation"
+  aria-labelledby="presentation-titre"
+>
+  <div class="presentation__grille container">
+    <div>
+      <EnTeteSection
+        id="presentation-titre"
+        surtitre={presentation.surtitre}
+        titre={presentation.titre}
+      >
+        {presentation.paragraphes.map((texte) => <p>{texte}</p>)}
+      </EnTeteSection>
+      <ul role="list" class="piliers">
+        {
+          presentation.piliers.map((pilier) => (
+            <li>
+              <span class="piliers__icone">
+                <Icone nom={pilier.icone} />
+              </span>
+              <h3>{pilier.titre}</h3>
+              <p>{pilier.texte}</p>
+            </li>
+          ))
+        }
+      </ul>
+      <LienFleche href="/a-propos/"
+        >Découvrir l'histoire de Jeannelle</LienFleche
+      >
+    </div>
+    <Image
+      src={salle}
+      alt="Salle de yoga à la lumière des bougies, tapis et coussins disposés au sol"
+      widths={[480, 720, 960]}
+      sizes="(width >= 1024px) 30rem, 100vw"
+      class="presentation__photo"
+    />
+  </div>
+</section>
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixin" as *;
+
+  // Pas de marge basse : la section Thérapies qui suit a déjà la sienne. Les deux fonds
+  // roses étant presque identiques, les deux marges s'additionnaient en un grand vide.
+  .presentation {
+    padding-top: var(--espace-section);
+  }
+
+  .presentation__grille {
+    display: grid;
+    gap: var(--espace-xl);
+    align-items: center;
+  }
+
+  .presentation__photo {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--rayon-l);
+  }
+
+  .piliers {
+    display: grid;
+    gap: var(--espace-l);
+    margin-bottom: var(--espace-xl);
+
+    li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      column-gap: var(--espace-m);
+      row-gap: var(--espace-xs);
+    }
+
+    h3 {
+      font-size: var(--h5);
+    }
+
+    p {
+      grid-column: 2;
+      color: var(--color-text-secondary);
+    }
+  }
+
+  .piliers__icone {
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--rayon-rond);
+    background-color: var(--color-bg-secondary);
+    color: var(--color-action);
+    font-size: var(--h5);
+  }
+
+  @include breakpoint-up($breakpoint-desktop) {
+    .presentation__grille {
+      grid-template-columns: 0.9fr 1fr;
+      gap: var(--espace-xxl);
+    }
+
+    // Sur mobile le texte vient d'abord ; sur grand écran la photo reprend la colonne de gauche.
+    .presentation__photo {
+      order: -1;
+    }
+  }
+</style>

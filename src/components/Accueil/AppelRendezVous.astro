@@ -1,0 +1,83 @@
+---
+import { Image } from "astro:assets";
+import pivoine from "@assets/images/lieu/pivoine.jpg";
+import { appel } from "@data/accueil";
+import { adresseComplete } from "@data/coordonnees";
+import Telephone from "@components/UI/Telephone.astro";
+---
+
+<section class="appel" aria-labelledby="appel-titre">
+  <Image
+    src={pivoine}
+    alt=""
+    widths={[640, 1280, 1920]}
+    sizes="100vw"
+    class="appel__fond"
+  />
+  <div class="container">
+    <div class="appel__carte">
+      <h2 id="appel-titre">{appel.titre}</h2>
+      <p>{appel.texte}</p>
+      <Telephone bouton />
+      <p class="appel__adresse">
+        {adresseComplete} · <a href="/contact/">Plan et accès</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixin" as *;
+
+  .appel {
+    position: relative;
+    isolation: isolate;
+    padding-block: var(--espace-section);
+  }
+
+  .appel__fond {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .appel__carte {
+    display: grid;
+    gap: var(--espace-m);
+    justify-items: center;
+    max-width: 36rem;
+    margin-inline: auto;
+    padding: var(--espace-xl) var(--espace-l);
+    border-radius: var(--rayon-l);
+    background-color: var(--color-bg-translucent);
+    backdrop-filter: blur(20px);
+    box-shadow: var(--shadow-m);
+    text-align: center;
+
+    > p:first-of-type {
+      color: var(--color-text-secondary);
+    }
+  }
+
+  .appel__adresse {
+    font-size: var(--little-text);
+    color: var(--color-text-secondary);
+  }
+
+  @include breakpoint-up($breakpoint-tablet) {
+    .appel__carte {
+      padding: var(--espace-xxl);
+    }
+  }
+
+  // La pivoine est à droite de la photo : la carte se range à gauche pour la laisser voir.
+  @include breakpoint-up($breakpoint-desktop) {
+    .appel__carte {
+      margin-inline-start: 0;
+    }
+  }
+</style>
