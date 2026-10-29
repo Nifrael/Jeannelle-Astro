@@ -1,0 +1,41 @@
+---
+import Surtitre from "@components/UI/Surtitre.astro";
+type Props = {
+  titre: string;
+  surtitre?: string;
+  id?: string;
+  centre?: boolean;
+};
+
+const { titre, surtitre, id, centre = false } = Astro.props;
+---
+
+<header class:list={["en-tete", { "en-tete--centre": centre }]}>
+  {surtitre && <Surtitre>{surtitre}</Surtitre>}
+  <h2 id={id}>{titre}</h2>
+  {
+    Astro.slots.has("default") && (
+      <div class="en-tete__texte">
+        <slot />
+      </div>
+    )
+  }
+</header>
+
+<style lang="scss">
+  .en-tete {
+    display: grid;
+    gap: var(--espace-m);
+    max-width: var(--largeur-texte);
+    margin-bottom: var(--espace-xl);
+  }
+
+  .en-tete--centre {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .en-tete__texte {
+    color: var(--color-text-secondary);
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+import Surtitre from "@components/UI/Surtitre.astro";
+import FilAriane, { type Etape } from "@components/UI/FilAriane.astro";
+
+type Props = {
+  titre: string;
+  surtitre?: string;
+  ariane?: Etape[];
+};
+
+const { titre, surtitre, ariane } = Astro.props;
+---
+
+<header class="en-tete-page">
+  <div class="container">
+    {ariane && <FilAriane etapes={ariane} />}
+    {surtitre && <Surtitre>{surtitre}</Surtitre>}
+    <h1>{titre}</h1>
+    {
+      Astro.slots.has("default") && (
+        <div class="en-tete-page__texte">
+          <slot />
+        </div>
+      )
+    }
+  </div>
+</header>
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixin" as *;
+
+  .en-tete-page {
+    padding-block: var(--espace-xl) var(--espace-xxl);
+    background-color: var(--color-bg-secondary);
+
+    .container {
+      display: grid;
+      gap: var(--espace-m);
+    }
+
+    h1 {
+      max-width: 20ch;
+    }
+  }
+
+  .en-tete-page__texte {
+    max-width: var(--largeur-texte);
+    font-size: var(--h5);
+    color: var(--color-text-secondary);
+  }
+
+  @include breakpoint-up($breakpoint-desktop) {
+    .en-tete-page {
+      padding-block: var(--espace-xxl);
+    }
+  }
+</style>

@@ -1,0 +1,214 @@
+---
+import { Image } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import EnTetePage from "@components/UI/EnTetePage.astro";
+import Telephone from "@components/UI/Telephone.astro";
+import { espaces, introduction } from "@data/espaces";
+import attente from "@assets/images/lieu/salle-attente.jpg";
+import lumiere from "@assets/images/lieu/lumiere.jpg";
+import fauteuils from "@assets/images/lieu/fauteuils.jpg";
+import entree from "@assets/images/lieu/entree.jpg";
+
+const ambiance = [
+  {
+    src: entree,
+    alt: "Entrée voûtée en pierre et brique, porte vitrée et enseigne Jeannelle",
+  },
+  {
+    src: attente,
+    alt: "Salle d'attente : chaises design devant une fresque de pivoines",
+  },
+  {
+    src: lumiere,
+    alt: "Lampe de sel allumée et bouquet de fleurs séchées devant un mur de pierre",
+  },
+  {
+    src: fauteuils,
+    alt: "Deux fauteuils en velours bleu devant un mur de pierre et de brique",
+  },
+];
+---
+
+<Layout
+  titre="Le lieu et la location de salles"
+  description="Cabinets de consultation, salle de formation et espace yoga à louer pour les thérapeutes, au cœur de Millas."
+>
+  <EnTetePage
+    titre={introduction.titre}
+    surtitre={introduction.surtitre}
+    ariane={[{ texte: "Le lieu" }]}
+  >
+    {introduction.texte.map((texte) => <p>{texte}</p>)}
+  </EnTetePage>
+
+  <section class="ambiance container" aria-label="Le lieu en images">
+    <ul role="list">
+      {
+        ambiance.map((photo, index) => (
+          <li>
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              widths={[320, 480, 720]}
+              sizes="(width >= 1024px) 18rem, 50vw"
+              loading={index < 2 ? "eager" : "lazy"}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <div class="espaces container">
+    {
+      espaces.map((espace, index) => (
+        <section
+          class:list={["espace", { "espace--inverse": index % 2 === 1 }]}
+          aria-labelledby={espace.id}
+        >
+          <div
+            class:list={[
+              "espace__photos",
+              { "espace__photos--double": espace.photos.length > 1 },
+            ]}
+          >
+            {espace.photos.map((photo) => (
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                widths={[480, 720, 960]}
+                sizes="(width >= 1024px) 36rem, 100vw"
+              />
+            ))}
+          </div>
+          <div class="espace__texte">
+            <h2 id={espace.id}>{espace.titre}</h2>
+            <p>{espace.texte}</p>
+            <ul class="espace__details">
+              {espace.details.map((detail) => (
+                <li>{detail}</li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ))
+    }
+  </div>
+
+  <section class="contact-location" aria-labelledby="contact-location">
+    <div class="container">
+      <h2 id="contact-location">Envie de rejoindre Jeannelle ?</h2>
+      <p>
+        Parlons de votre pratique, de vos besoins et des créneaux disponibles.
+      </p>
+      <Telephone bouton />
+    </div>
+  </section>
+</Layout>
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixin" as *;
+
+  .ambiance {
+    margin-top: calc(var(--espace-xl) * -1);
+
+    ul {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--espace-s);
+    }
+
+    img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: var(--rayon-m);
+    }
+  }
+
+  .espaces {
+    display: grid;
+    gap: var(--espace-section);
+    padding-block: var(--espace-section);
+  }
+
+  .espace {
+    display: grid;
+    gap: var(--espace-xl);
+    align-items: center;
+  }
+
+  .espace__photos {
+    display: grid;
+    gap: var(--espace-s);
+
+    img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: var(--rayon-l);
+    }
+  }
+
+  .espace__photos--double {
+    grid-template-columns: 1fr 1fr;
+
+    img {
+      aspect-ratio: 3 / 4;
+    }
+  }
+
+  .espace__texte {
+    display: grid;
+    gap: var(--espace-m);
+
+    > p {
+      color: var(--color-text-secondary);
+    }
+  }
+
+  .espace__details {
+    display: grid;
+    gap: var(--espace-s);
+    padding-inline-start: var(--espace-l);
+
+    li::marker {
+      color: var(--color-accent);
+    }
+  }
+
+  .contact-location {
+    padding-block: var(--espace-section);
+    background-color: var(--color-bg-secondary);
+    text-align: center;
+
+    .container {
+      display: grid;
+      gap: var(--espace-m);
+      justify-items: center;
+    }
+
+    p {
+      color: var(--color-text-secondary);
+    }
+  }
+
+  @include breakpoint-up($breakpoint-tablet) {
+    .ambiance ul {
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--espace-m);
+    }
+  }
+
+  @include breakpoint-up($breakpoint-desktop) {
+    .espace {
+      grid-template-columns: 1.2fr 1fr;
+      gap: var(--espace-xxl);
+    }
+
+    .espace--inverse .espace__photos {
+      order: 2;
+    }
+  }
+</style>

@@ -1,57 +1,63 @@
 ---
+import { Font } from "astro:assets";
+import { getCollection } from "astro:content";
+import "@styles/global.scss";
+import SEO, { type PropsSEO } from "@components/Global/SEO.astro";
 import Navbar from "@components/Global/Navbar.astro";
 import Footer from "@components/Global/Footer.astro";
-import "../styles/global.scss";
-import { ClientRouter } from "astro:transitions";
+import { trierTherapies } from "@lib/therapies";
+
+type Props = PropsSEO;
+
+const therapies = trierTherapies(await getCollection("therapies")).map(
+  (therapie) => ({
+    href: `/therapies/${therapie.id}/`,
+    texte: therapie.data.title,
+  }),
+);
 ---
 
 <!doctype html>
 <html lang="fr">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta
-      name="description"
-      content="Jeannelle, un centre de thérapeutes, au coeur du village de Millas. Un endroit cosy où l'on peut se poser et être entendu dans ses mots... et ses maux."
-    />
-    <link rel="icon" type="image/svg+xml" href="/Icon/Plant.svg" />
-    <link rel="icon" type="image/x-icon" sizes="any" href="/Icon/Plant.ico" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/Icon/Plant-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/Icon/Plant-16x16.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/Icon/Plant-apple-touch.png"
-    />
-    <meta property="og:site_name" content="Jeannelle" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Jeannelle",
-        "url": "https://www.jeannelle.me/"
-      }
-    </script>
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <title>Jeannelle</title>
-    <ClientRouter />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <SEO {...Astro.props} />
+
+    <Font cssVariable="--font-title" preload />
+    <Font cssVariable="--font-text" preload />
   </head>
   <body>
+    <a class="evitement" href="#contenu">Aller au contenu</a>
     <Navbar />
-    <main>
+    <main id="contenu">
       <slot />
     </main>
-    <Footer />
+    <Footer therapies={therapies} />
   </body>
 </html>
+
+<style lang="scss">
+  // Lien d'évitement : invisible jusqu'à ce qu'on y arrive au clavier.
+  .evitement {
+    position: absolute;
+    top: var(--espace-s);
+    left: var(--espace-s);
+    z-index: 20;
+    padding: var(--espace-s) var(--espace-m);
+    border-radius: var(--rayon-s);
+    background-color: var(--color-action);
+    color: var(--color-action-text);
+    transform: translateY(-200%);
+
+    &:focus {
+      transform: none;
+    }
+  }
+</style>

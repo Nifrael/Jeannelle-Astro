@@ -1,0 +1,78 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import EnTetePage from "@components/UI/EnTetePage.astro";
+import Grille from "@components/UI/Grille.astro";
+import CarteActualite from "@components/Actualites/CarteActualite.astro";
+import { estPassee, trierActualites } from "@lib/actualites";
+
+const actualites = trierActualites(await getCollection("actualites"));
+const aVenir = actualites.filter((actualite) => !estPassee(actualite));
+const passees = actualites.filter((actualite) => estPassee(actualite));
+---
+
+<Layout
+  titre="Actualités"
+  description="Ateliers, conférences, cours et partenaires : tous les rendez-vous de Jeannelle, centre de thérapeutes à Millas."
+>
+  <EnTetePage
+    titre="Actualités et événements"
+    surtitre="À ne pas manquer"
+    ariane={[{ texte: "Actualités" }]}
+  >
+    <p>Rendez-vous, ateliers et rencontres chez Jeannelle.</p>
+  </EnTetePage>
+
+  <div class="container actualites">
+    <section aria-labelledby="a-venir">
+      <h2 id="a-venir">À venir et en ce moment</h2>
+      {
+        aVenir.length > 0 ? (
+          <Grille>
+            {aVenir.map((actualite) => (
+              <li>
+                <CarteActualite actualite={actualite} />
+              </li>
+            ))}
+          </Grille>
+        ) : (
+          <p class="vide">
+            Pas d'événement prévu pour le moment : revenez bientôt, ou
+            appelez-nous pour être informé·e.
+          </p>
+        )
+      }
+    </section>
+
+    {
+      passees.length > 0 && (
+        <section aria-labelledby="passees">
+          <h2 id="passees">Ils ont eu lieu</h2>
+          <Grille>
+            {passees.map((actualite) => (
+              <li>
+                <CarteActualite actualite={actualite} />
+              </li>
+            ))}
+          </Grille>
+        </section>
+      )
+    }
+  </div>
+</Layout>
+
+<style lang="scss">
+  .actualites {
+    display: grid;
+    gap: var(--espace-section);
+    padding-block: var(--espace-xxl) var(--espace-section);
+
+    h2 {
+      margin-bottom: var(--espace-xl);
+    }
+  }
+
+  .vide {
+    color: var(--color-text-secondary);
+  }
+</style>

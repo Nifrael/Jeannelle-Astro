@@ -1,0 +1,128 @@
+---
+import { Image } from "astro:assets";
+import entree from "@assets/images/lieu/entree.jpg";
+
+// La phrase vient de la page À propos (src/content/pages/a-propos.md) : un seul endroit à modifier.
+type Props = { citation: string };
+
+const { citation } = Astro.props;
+---
+
+<section class="hero" aria-labelledby="hero-titre">
+  {
+    /* Titre pour Google et les lecteurs d'écran ; à l'écran, la photo et la phrase suffisent. */
+  }
+  <h1 id="hero-titre" class="visually-hidden">
+    Jeannelle, centre de thérapeutes à Millas
+  </h1>
+
+  <div class="hero__scene container">
+    {
+      /* Chargée en priorité (LCP). Sur mobile, le galet est haut : la photo 4:3 est recadrée
+         et s'affiche en réalité sur environ 155vw de large, d'où le `sizes` plus grand. */
+    }
+    <Image
+      src={entree}
+      alt="Entrée voûtée en pierre et brique du centre Jeannelle, enseigne lumineuse au-dessus de la porte vitrée"
+      widths={[480, 720, 960, 1200, 1600]}
+      sizes="(width >= 1024px) 46rem, (width >= 768px) 92vw, 155vw"
+      loading="eager"
+      fetchpriority="high"
+      class="hero__galet"
+    />
+
+    <blockquote class="hero__citation">
+      <p>« {citation} »</p>
+      <footer>Karine Maraval</footer>
+    </blockquote>
+  </div>
+</section>
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixin" as *;
+
+  // Hauteur naturelle : sur mobile, le début de la section suivante apparaît en bas d'écran,
+  // signe qu'il y a une suite.
+  .hero {
+    padding-block: var(--espace-xl) 0;
+  }
+
+  .hero__scene {
+    display: grid;
+    justify-items: center;
+  }
+
+  // Galet : quatre arrondis différents, pour une forme organique plutôt qu'un ovale parfait.
+  .hero__galet {
+    width: 100%;
+    max-width: 46rem;
+    // Mobile : à peine plus haut que large, pour remplir l'écran sans forme de fuseau.
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 40%;
+    border-radius: 58% 42% 48% 52% / 46% 54% 46% 54%;
+  }
+
+  // La citation chevauche le bas du galet, sur la carte translucide de l'ancien site.
+  .hero__citation {
+    position: relative;
+    width: min(90%, 30rem);
+    margin-top: -5rem;
+    padding: var(--espace-l);
+    border-radius: var(--rayon-l);
+    background-color: var(--color-bg-translucent);
+    backdrop-filter: blur(20px);
+
+    p {
+      font-family: var(--font-title);
+      font-size: var(--h5);
+      font-style: italic;
+      line-height: 1.25;
+      color: var(--color-text);
+    }
+
+    footer {
+      margin-top: var(--espace-s);
+      font-size: var(--little-text);
+      color: var(--color-text-secondary);
+
+      &::before {
+        content: "— ";
+      }
+    }
+  }
+
+  @include breakpoint-up($breakpoint-tablet) {
+    .hero {
+      padding-bottom: var(--espace-section);
+    }
+
+    .hero__galet {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  // Sur grand écran, la citation déborde du galet en bas à droite.
+  @include breakpoint-up($breakpoint-desktop) {
+    .hero {
+      padding-top: var(--espace-xxl);
+    }
+
+    .hero__scene {
+      position: relative;
+      width: fit-content;
+    }
+
+    .hero__citation {
+      position: absolute;
+      bottom: calc(var(--espace-l) * -1);
+      right: calc(var(--espace-xxl) * -1);
+      // En longueur : la phrase tient sur une ligne, la signature dessous.
+      width: auto;
+      max-width: 40rem;
+      margin: 0;
+      padding: var(--espace-m) var(--espace-l);
+    }
+  }
+</style>

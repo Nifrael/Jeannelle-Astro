@@ -1,0 +1,45 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import EnTetePage from "@components/UI/EnTetePage.astro";
+import Grille from "@components/UI/Grille.astro";
+import CarteTherapie from "@components/Therapies/CarteTherapie.astro";
+import AppelRendezVous from "@components/Accueil/AppelRendezVous.astro";
+import { trierTherapies } from "@lib/therapies";
+
+const therapies = trierTherapies(await getCollection("therapies"));
+---
+
+<Layout
+  titre="Thérapies"
+  description="Naturopathie, réflexologie plantaire, yin yoga, massage amma et accompagnement psychocorporel chez Jeannelle à Millas : déroulé, durée et tarifs."
+>
+  <EnTetePage
+    titre="Nos thérapies"
+    surtitre="Prendre soin de soi"
+    ariane={[{ texte: "Thérapies" }]}
+  >
+    <p>
+      Des accompagnements pour prendre soin de son corps, de son esprit et de
+      son énergie.
+    </p>
+  </EnTetePage>
+  <div class="container liste">
+    <Grille taille="etroite">
+      {
+        therapies.map((therapie) => (
+          <li>
+            <CarteTherapie therapie={therapie} titre="h2" />
+          </li>
+        ))
+      }
+    </Grille>
+  </div>
+  <AppelRendezVous />
+</Layout>
+
+<style lang="scss">
+  .liste {
+    padding-block: var(--espace-l) var(--espace-section);
+  }
+</style>

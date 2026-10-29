@@ -1,0 +1,204 @@
+---
+import { Image } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import EnTetePage from "@components/UI/EnTetePage.astro";
+import Bouton from "@components/UI/Bouton.astro";
+import Telephone from "@components/UI/Telephone.astro";
+import Icone from "@components/UI/Icone.astro";
+import {
+  adresse,
+  email,
+  horaires,
+  itineraires,
+  telephone,
+} from "@data/coordonnees";
+import entree from "@assets/images/lieu/entree.jpg";
+---
+
+<Layout
+  titre="Contact et accès"
+  description={`Prendre rendez-vous chez Jeannelle : ${telephone.affiche}. ${adresse.rue}, ${adresse.codePostal} ${adresse.ville}.`}
+>
+  <EnTetePage
+    titre="Contact et accès"
+    surtitre="Prendre rendez-vous"
+    ariane={[{ texte: "Contact" }]}
+  >
+    <p>
+      Les séances ont lieu sur rendez-vous. Le plus simple : un appel, nous
+      trouverons ensemble un créneau.
+    </p>
+  </EnTetePage>
+
+  <div class="contact container">
+    <section class="contact__carte" aria-labelledby="coordonnees">
+      <h2 id="coordonnees">Coordonnées</h2>
+      <ul role="list" class="contact__liste">
+        <li>
+          <span class="contact__icone"><Icone nom="telephone" /></span>
+          <div>
+            <h3>Téléphone</h3>
+            <Telephone />
+          </div>
+        </li>
+        {
+          email && (
+            <li>
+              <span class="contact__icone">
+                <Icone nom="email" />
+              </span>
+              <div>
+                <h3>E-mail</h3>
+                <a href={`mailto:${email}`}>{email}</a>
+              </div>
+            </li>
+          )
+        }
+        <li>
+          <span class="contact__icone"><Icone nom="localisation" /></span>
+          <div>
+            <h3>Adresse</h3>
+            <p>{adresse.rue}<br />{adresse.codePostal} {adresse.ville}</p>
+          </div>
+        </li>
+        <li>
+          <span class="contact__icone"><Icone nom="horloge" /></span>
+          <div>
+            <h3>Horaires</h3>
+            <p>{horaires}</p>
+          </div>
+        </li>
+      </ul>
+      <Telephone bouton>Appeler Jeannelle</Telephone>
+    </section>
+
+    <section class="acces" aria-labelledby="acces">
+      <Image
+        src={entree}
+        alt="Façade de Jeannelle : entrée voûtée en pierre et brique, numéro 18"
+        widths={[480, 720, 960]}
+        sizes="(width >= 1024px) 36rem, 100vw"
+      />
+      <h2 id="acces">Venir chez Jeannelle</h2>
+      {
+        /* [À VALIDER] indications d'accès et stationnement à demander à Karine. */
+      }
+      <p>
+        Au cœur du village de Millas : repérez la porte vitrée sous la voûte de
+        brique, au numéro 18.
+      </p>
+      <p class="acces__itineraires-titre">Ouvrir l'itinéraire dans :</p>
+      <ul role="list" class="acces__itineraires">
+        {
+          itineraires.map((itineraire) => (
+            <li>
+              <Bouton
+                href={itineraire.url}
+                target="_blank"
+                rel="noopener"
+                variante="secondaire"
+                icone="localisation"
+              >
+                {itineraire.texte}
+                <span class="visually-hidden">(nouvel onglet)</span>
+              </Bouton>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
+</Layout>
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixin" as *;
+
+  .contact {
+    display: grid;
+    gap: var(--espace-xl);
+    padding-block: var(--espace-xxl) var(--espace-section);
+  }
+
+  .contact__carte {
+    display: grid;
+    gap: var(--espace-l);
+    justify-items: start;
+    align-self: start;
+    padding: var(--espace-l);
+    border: 1px solid var(--color-border);
+    border-radius: var(--rayon-l);
+    background-color: var(--color-bg-cards);
+    box-shadow: var(--shadow-s);
+  }
+
+  .contact__liste {
+    display: grid;
+    gap: var(--espace-l);
+
+    li {
+      display: flex;
+      gap: var(--espace-m);
+    }
+
+    h3 {
+      font-family: var(--font-text);
+      font-size: var(--little-text);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+    }
+
+    a {
+      font-size: var(--h5);
+      font-weight: 500;
+    }
+  }
+
+  .contact__icone {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--rayon-rond);
+    background-color: var(--color-bg-secondary);
+    color: var(--color-action);
+    font-size: var(--h5);
+  }
+
+  .acces {
+    display: grid;
+    gap: var(--espace-m);
+
+    img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: var(--rayon-l);
+      margin-bottom: var(--espace-s);
+    }
+  }
+
+  .acces__itineraires-titre {
+    font-weight: 600;
+  }
+
+  .acces__itineraires {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espace-s);
+  }
+
+  @include breakpoint-up($breakpoint-desktop) {
+    .contact {
+      grid-template-columns: 1fr 1.2fr;
+      gap: var(--espace-xxl);
+    }
+
+    .contact__carte {
+      padding: var(--espace-xl);
+    }
+  }
+</style>

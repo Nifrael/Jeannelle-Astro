@@ -1,0 +1,84 @@
+---
+import Icone, { type NomIcone } from "@components/UI/Icone.astro";
+
+type Props = {
+  variante?: "principal" | "secondaire";
+  taille?: "normale" | "petite";
+  icone?: NomIcone;
+  href: string;
+  target?: string;
+  rel?: string;
+};
+
+const {
+  variante = "principal",
+  taille = "normale",
+  icone,
+  ...attributs
+} = Astro.props;
+---
+
+<a
+  class:list={["bouton", `bouton--${variante}`, `bouton--${taille}`]}
+  {...attributs}
+>
+  {icone && <Icone nom={icone} />}
+  <slot />
+</a>
+
+<style lang="scss">
+  @use "@styles/config/mixin" as *;
+
+  .bouton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espace-s);
+    min-height: 3rem;
+    padding: var(--espace-s) var(--espace-l);
+    border: 1px solid transparent;
+    border-radius: var(--rayon-pilule);
+    font-family: var(--font-text);
+    font-size: var(--p);
+    font-weight: 500;
+    text-decoration: none;
+    text-align: center;
+    transition:
+      background-color var(--transition),
+      color var(--transition),
+      border-color var(--transition);
+
+    :global(.icone) {
+      font-size: 1.15em;
+    }
+  }
+
+  // Format compact, pour l'en-tête.
+  .bouton--petite {
+    min-height: 2.5rem;
+    padding: var(--espace-xs) var(--espace-m);
+    font-size: var(--little-text);
+  }
+
+  .bouton--principal {
+    background-color: var(--color-action);
+    color: var(--color-action-text);
+
+    // Comme l'ancien bouton : au survol, le fond s'efface et le texte prend la couleur.
+    @include survol {
+      border-color: var(--color-action);
+      background-color: var(--color-bg-cards);
+      color: var(--color-action);
+    }
+  }
+
+  .bouton--secondaire {
+    border-color: var(--color-action);
+    color: var(--color-action);
+
+    @include survol {
+      background-color: var(--color-action-soft);
+      color: var(--color-action);
+    }
+  }
+</style>

@@ -1,0 +1,147 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+
+type Props = { praticienne: CollectionEntry<"praticiennes"> };
+
+const { praticienne } = Astro.props;
+const { name, role, photo, link } = praticienne.data;
+
+// Sans photo, un monogramme : initiales du prénom et du nom.
+const initiales = name
+  .split(" ")
+  .map((mot) => mot[0])
+  .join("");
+const externe = link?.startsWith("http") ?? false;
+---
+
+<article class="carte">
+  {
+    photo ? (
+      <Image
+        src={photo.src}
+        alt={photo.alt}
+        widths={[320, 480, 640]}
+        sizes="(width >= 768px) 20rem, 80vw"
+        class="carte__photo"
+      />
+    ) : (
+      <span class="carte__initiales" aria-hidden="true">
+        {initiales}
+      </span>
+    )
+  }
+  <div class="carte__texte">
+    <h3>
+      {
+        link ? (
+          <a
+            href={link}
+            target={externe ? "_blank" : undefined}
+            rel={externe ? "noopener" : undefined}
+          >
+            {name}
+            {externe && <span class="visually-hidden">(nouvel onglet)</span>}
+          </a>
+        ) : (
+          name
+        )
+      }
+    </h3>
+    <p>{role}</p>
+  </div>
+</article>
+
+<style lang="scss">
+  @use "@styles/config/mixin" as *;
+
+  // Carte portrait : la photo remplit la carte, le texte est posé en bas sur un dégradé.
+  .carte {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: flex-end;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--rayon-l);
+    background-color: var(--color-bg-secondary);
+    box-shadow: var(--shadow-s);
+
+    // Dégradé gris (couleur de texte de la palette) pour que le nom reste lisible sur la photo.
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 50% 0 0;
+      z-index: -1;
+      background: linear-gradient(to top, var(--color-overlay), transparent);
+    }
+  }
+
+  .carte__photo {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 20%;
+    transition: transform 400ms ease-out;
+  }
+
+  .carte__initiales {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-title);
+    font-size: var(--display);
+    font-style: italic;
+    color: var(--color-accent);
+  }
+
+  .carte__texte {
+    display: grid;
+    gap: var(--espace-xs);
+    padding: var(--espace-l);
+    color: var(--color-action-text);
+
+    h3 {
+      font-size: var(--h3);
+    }
+
+    p {
+      font-size: var(--little-text);
+    }
+  }
+
+  // Le lien du nom couvre toute la carte : une seule cible, un seul arrêt au clavier.
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+    }
+
+    &:focus-visible {
+      outline: none;
+
+      &::before {
+        outline: 2px solid var(--color-action);
+        outline-offset: -4px;
+        border-radius: var(--rayon-l);
+      }
+    }
+  }
+
+  .carte:has(a) {
+    @include survol {
+      .carte__photo {
+        transform: scale(1.03);
+      }
+    }
+  }
+</style>

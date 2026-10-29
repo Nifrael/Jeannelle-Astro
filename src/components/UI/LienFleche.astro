@@ -1,0 +1,40 @@
+---
+import Icone from "@components/UI/Icone.astro";
+
+type Props = { href: string; externe?: boolean };
+
+const { href, externe = false } = Astro.props;
+---
+
+<a
+  class="lien-fleche"
+  href={href}
+  target={externe ? "_blank" : undefined}
+  rel={externe ? "noopener" : undefined}
+>
+  <slot />
+  {externe && <span class="visually-hidden">(nouvel onglet)</span>}
+  <Icone nom={externe ? "lien-externe" : "fleche"} />
+</a>
+
+<style lang="scss">
+  @use "@styles/config/mixin" as *;
+
+  .lien-fleche {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espace-s);
+    font-weight: 500;
+    text-decoration: none;
+
+    :global(.icone) {
+      transition: transform var(--transition);
+    }
+
+    @include survol {
+      :global(.icone) {
+        transform: translateX(3px);
+      }
+    }
+  }
+</style>

@@ -1,0 +1,36 @@
+---
+// Grille responsive : autant de colonnes que la largeur le permet.
+// « etroite » pour des cartes compactes (thérapies), « large » pour les cartes en ligne (praticiennes).
+type Props = { taille?: "etroite" | "normale" | "large" };
+
+const { taille = "normale" } = Astro.props;
+---
+
+<ul role="list" class:list={["grille", `grille--${taille}`]}>
+  <slot />
+</ul>
+
+<style lang="scss">
+  .grille {
+    --grille-min: 20rem;
+
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(min(100%, var(--grille-min)), 1fr)
+    );
+    gap: var(--espace-l);
+
+    > :global(li) {
+      display: grid;
+    }
+  }
+
+  .grille--etroite {
+    --grille-min: 17rem;
+  }
+
+  .grille--large {
+    --grille-min: 28rem;
+  }
+</style>

@@ -1,0 +1,31 @@
+---
+import Icone, { type NomIcone } from "@components/UI/Icone.astro";
+
+type Props = { icone?: NomIcone };
+
+const { icone } = Astro.props;
+---
+
+<span class="pastille">
+  {icone && <Icone nom={icone} />}
+  <slot />
+</span>
+
+<style lang="scss">
+  .pastille {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espace-xs);
+    padding: var(--espace-xs) var(--espace-m);
+    border: 1px solid var(--color-border);
+    border-radius: var(--rayon-pilule);
+    background-color: var(--color-bg-cards);
+    font-size: var(--little-text);
+    font-weight: 500;
+    color: var(--color-text);
+
+    :global(.icone) {
+      color: var(--color-action);
+    }
+  }
+</style>

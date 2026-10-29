@@ -1,0 +1,30 @@
+---
+// Surtitre de section : la pivoine du logo devant un texte en serif italique, en caramel.
+// Signature propre à Jeannelle, à la place des petites majuscules espacées génériques.
+---
+
+<p class="surtitre">
+  <span class="surtitre__pivoine" aria-hidden="true"></span>
+  <span><slot /></span>
+</p>
+
+<style lang="scss">
+  .surtitre {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espace-s);
+    font-family: var(--font-title);
+    font-size: var(--h5);
+    font-style: italic;
+    color: var(--color-action);
+  }
+
+  // La pivoine sert de masque : sa couleur est celle du texte (currentColor), donc du token.
+  .surtitre__pivoine {
+    flex-shrink: 0;
+    width: 2.05em;
+    height: 1.75em;
+    background-color: currentColor;
+    mask: url("@assets/images/logo/pivoine.png") center / contain no-repeat;
+  }
+</style>

@@ -1,0 +1,55 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Bouton from "@components/UI/Bouton.astro";
+---
+
+<Layout
+  titre="Page introuvable"
+  description="Cette page n'existe pas ou a été déplacée."
+  indexable={false}
+>
+  <section class="introuvable container">
+    <p class="introuvable__code">404</p>
+    <h1>Cette page s'est fait la malle</h1>
+    <p>
+      Elle n'existe pas ou a été déplacée. Prenez le temps de souffler, et
+      repartons de l'accueil.
+    </p>
+    <div class="introuvable__actions">
+      <Bouton href="/">Retour à l'accueil</Bouton>
+      <Bouton href="/therapies/" variante="secondaire"
+        >Voir les thérapies</Bouton
+      >
+    </div>
+  </section>
+</Layout>
+
+<style lang="scss">
+  .introuvable {
+    display: grid;
+    gap: var(--espace-l);
+    justify-items: center;
+    padding-block: var(--espace-section);
+    text-align: center;
+
+    > p:not(.introuvable__code) {
+      max-width: 32rem;
+      color: var(--color-text-secondary);
+    }
+  }
+
+  .introuvable__code {
+    font-family: var(--font-title);
+    font-size: var(--display);
+    font-style: italic;
+    line-height: 1;
+    color: var(--color-accent);
+  }
+
+  .introuvable__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--espace-m);
+  }
+</style>

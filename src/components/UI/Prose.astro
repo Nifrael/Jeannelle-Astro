@@ -1,0 +1,47 @@
+---
+// Habille le HTML produit par <Content /> (Markdown), qui n'a pas d'attribut de scope.
+---
+
+<div class="prose"><slot /></div>
+
+<style lang="scss">
+  .prose {
+    display: grid;
+    gap: var(--espace-m);
+    max-width: var(--largeur-texte);
+
+    // Intertitres en caramel, comme sur l'ancien site : ils rythment le texte.
+    :global(h2) {
+      margin-top: var(--espace-l);
+      font-size: var(--h3);
+      color: var(--color-action);
+    }
+
+    :global(h3) {
+      margin-top: var(--espace-m);
+      font-size: var(--h4);
+    }
+
+    :global(ul) {
+      display: grid;
+      gap: var(--espace-s);
+      padding-inline-start: var(--espace-l);
+    }
+
+    :global(li::marker) {
+      color: var(--color-accent);
+    }
+
+    :global(blockquote) {
+      margin-top: var(--espace-m);
+      padding: var(--espace-m) var(--espace-l);
+      border-inline-start: 3px solid var(--color-accent);
+      border-radius: 0 var(--rayon-m) var(--rayon-m) 0;
+      background-color: var(--color-bg-secondary);
+    }
+
+    :global(img) {
+      border-radius: var(--rayon-m);
+    }
+  }
+</style>

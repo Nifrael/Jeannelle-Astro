@@ -1,0 +1,364 @@
+---
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import FilAriane from "@components/UI/FilAriane.astro";
+import Prose from "@components/UI/Prose.astro";
+import Telephone from "@components/UI/Telephone.astro";
+import CarteTherapie from "@components/Therapies/CarteTherapie.astro";
+import Grille from "@components/UI/Grille.astro";
+import { adresseComplete } from "@data/coordonnees";
+import { trierTherapies } from "@lib/therapies";
+
+export async function getStaticPaths() {
+  const therapies = trierTherapies(await getCollection("therapies"));
+  const praticiennes = await getCollection("praticiennes");
+  return therapies.map((therapie) => ({
+    params: { slug: therapie.id },
+    props: {
+      therapie,
+      // Praticiennes qui proposent cette thérapie (champ `therapies` de leur fiche).
+      praticiennes: praticiennes
+        .filter((praticienne) =>
+          praticienne.data.therapies.some(({ id }) => id === therapie.id),
+        )
+        .toSorted((a, b) => a.data.order - b.data.order),
+      autres: therapies.filter((autre) => autre.id !== therapie.id).slice(0, 3),
+    },
+  }));
+}
+
+const { therapie, praticiennes, autres } = Astro.props;
+const { title, excerpt, duration, price, secondPrice, pack, image } =
+  therapie.data;
+const { Content } = await render(therapie);
+
+// Cases de la fiche pratique : seulement celles qui ont une valeur.
+const infos = [
+  { libelle: "Durée", valeur: duration },
+  { libelle: "Tarif", valeur: price },
+  { libelle: "Forfait", valeur: secondPrice, detail: pack },
+].filter((info) => info.valeur);
+---
+
+<Layout titre={title} description={excerpt} type="article" image={image}>
+  <div class="therapie container">
+    <FilAriane
+      etapes={[{ texte: "Thérapies", href: "/therapies/" }, { texte: title }]}
+    />
+
+    {/* Carte photo : titre et accroche posés en bas, sur un dégradé. */}
+    <header
+      class:list={["carte", "couverture", { "couverture--sans-photo": !image }]}
+    >
+      {
+        image && (
+          <Image
+            src={image.src}
+            alt={image.alt}
+            widths={[480, 720, 960, 1200]}
+            sizes="(width >= 768px) 46rem, 92vw"
+            loading="eager"
+            fetchpriority="high"
+            class="couverture__photo"
+          />
+        )
+      }
+      <div class="couverture__texte">
+        <h1>{title}</h1>
+        <p>{excerpt}</p>
+      </div>
+    </header>
+
+    {
+      infos.length > 0 && (
+        <dl class="carte fiche">
+          {infos.map((info) => (
+            <div class="fiche__case">
+              <dt>{info.libelle}</dt>
+              <dd>
+                {info.valeur}
+                {"detail" in info && info.detail && (
+                  <span class="fiche__detail">{info.detail}</span>
+                )}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      )
+    }
+
+    <section class="carte contenu" aria-label="Présentation de la thérapie">
+      <Prose><Content /></Prose>
+    </section>
+
+    {
+      praticiennes.map((praticienne) => (
+        <article class="carte praticienne">
+          {praticienne.data.photo && (
+            <Image
+              src={praticienne.data.photo.src}
+              alt=""
+              width={128}
+              height={128}
+              fit="cover"
+              class="praticienne__photo"
+            />
+          )}
+          <div class="praticienne__texte">
+            <p class="libelle">Praticienne</p>
+            <h2>
+              {praticienne.data.link ? (
+                <a href={praticienne.data.link}>{praticienne.data.name}</a>
+              ) : (
+                praticienne.data.name
+              )}
+            </h2>
+            <p>{praticienne.data.role}</p>
+          </div>
+        </article>
+      ))
+    }
+
+    <div class="carte rendez-vous">
+      <p class="libelle">Sur rendez-vous</p>
+      <p>{adresseComplete}</p>
+      <Telephone bouton taille="petite">Prendre rendez-vous</Telephone>
+    </div>
+  </div>
+
+  {
+    autres.length > 0 && (
+      <section class="autres" aria-labelledby="autres-titre">
+        <div class="container">
+          <h2 id="autres-titre">Découvrir aussi</h2>
+          <Grille taille="etroite">
+            {autres.map((autre) => (
+              <li>
+                <CarteTherapie therapie={autre} />
+              </li>
+            ))}
+          </Grille>
+        </div>
+      </section>
+    )
+  }
+</Layout>
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixin" as *;
+
+  // Une seule colonne de cartes, centrée : un seul axe, sur mobile comme sur ordinateur.
+  .therapie {
+    display: grid;
+    gap: var(--espace-m);
+    max-width: calc(46rem + 2 * var(--gouttiere));
+    padding-block: var(--espace-l) var(--espace-section);
+  }
+
+  .carte {
+    border: 1px solid var(--color-border);
+    border-radius: var(--rayon-l);
+    background-color: var(--color-bg-cards);
+  }
+
+  // Petit libellé au-dessus d'une valeur (Praticienne, Sur rendez-vous…).
+  .libelle {
+    font-size: var(--little-text);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+  }
+
+  // ----- Couverture -----
+
+  .couverture {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: flex-end;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border: none;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 40% 0 0;
+      z-index: -1;
+      background: linear-gradient(to top, var(--color-overlay), transparent);
+    }
+  }
+
+  .couverture__photo {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .couverture__texte {
+    display: grid;
+    gap: var(--espace-xs);
+    padding: var(--espace-l);
+    color: var(--color-action-text);
+
+    h1 {
+      font-size: var(--h2);
+    }
+
+    p {
+      font-size: var(--little-text);
+    }
+  }
+
+  // Sans photo : pas de dégradé, texte de couleur normale sur la carte.
+  .couverture--sans-photo {
+    aspect-ratio: auto;
+    border: 1px solid var(--color-border);
+
+    &::after {
+      display: none;
+    }
+
+    .couverture__texte {
+      color: var(--color-text);
+    }
+  }
+
+  // ----- Fiche pratique -----
+
+  .fiche {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    margin: 0;
+    padding-block: var(--espace-m);
+    text-align: center;
+  }
+
+  .fiche__case {
+    display: grid;
+    align-content: start;
+    gap: var(--espace-xs);
+    padding-inline: var(--espace-s);
+
+    & + & {
+      border-inline-start: 1px solid var(--color-border);
+    }
+
+    dt {
+      font-size: var(--little-text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+    }
+
+    dd {
+      margin: 0;
+      font-family: var(--font-title);
+      font-size: var(--h4);
+      color: var(--color-action);
+    }
+  }
+
+  .fiche__detail {
+    display: block;
+    font-family: var(--font-text);
+    font-size: var(--little-text);
+    color: var(--color-text-secondary);
+  }
+
+  // ----- Contenu -----
+
+  .contenu {
+    padding: var(--espace-l);
+  }
+
+  // ----- Praticienne -----
+
+  .praticienne {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--espace-m);
+    padding: var(--espace-m) var(--espace-l);
+
+    h2 {
+      font-size: var(--h4);
+    }
+
+    p:last-child {
+      font-size: var(--little-text);
+      color: var(--color-text-secondary);
+    }
+
+    // Le nom couvre toute la carte : une seule cible, un seul arrêt au clavier.
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: var(--rayon-l);
+      }
+
+      @include survol {
+        color: var(--color-action);
+      }
+    }
+  }
+
+  .praticienne__photo {
+    flex-shrink: 0;
+    width: 4rem;
+    height: 4rem;
+    border-radius: var(--rayon-rond);
+    object-fit: cover;
+  }
+
+  .praticienne__texte {
+    display: grid;
+    gap: var(--espace-xs);
+  }
+
+  // ----- Rendez-vous -----
+
+  .rendez-vous {
+    display: grid;
+    gap: var(--espace-s);
+    justify-items: center;
+    padding: var(--espace-l);
+    text-align: center;
+  }
+
+  // ----- Découvrir aussi -----
+
+  .autres {
+    padding-block: var(--espace-section);
+    background-color: var(--color-bg-secondary);
+
+    h2 {
+      margin-bottom: var(--espace-xl);
+    }
+  }
+
+  @include breakpoint-up($breakpoint-tablet) {
+    .couverture {
+      aspect-ratio: 16 / 9;
+    }
+
+    .couverture__texte {
+      padding: var(--espace-xl);
+    }
+
+    .contenu {
+      padding: var(--espace-xl);
+    }
+  }
+</style>

@@ -1,0 +1,47 @@
+---
+import Calendrier from "@assets/icones/calendrier.svg";
+import Email from "@assets/icones/email.svg";
+import Esprit from "@assets/icones/esprit.svg";
+import Feuille from "@assets/icones/feuille.svg";
+import Fleche from "@assets/icones/fleche.svg";
+import Horloge from "@assets/icones/horloge.svg";
+import LienExterne from "@assets/icones/lien-externe.svg";
+import Localisation from "@assets/icones/localisation.svg";
+import Massage from "@assets/icones/massage.svg";
+import Pied from "@assets/icones/pied.svg";
+import Telephone from "@assets/icones/telephone.svg";
+import Yoga from "@assets/icones/yoga.svg";
+
+const icones = {
+  calendrier: Calendrier,
+  email: Email,
+  esprit: Esprit,
+  feuille: Feuille,
+  fleche: Fleche,
+  horloge: Horloge,
+  "lien-externe": LienExterne,
+  localisation: Localisation,
+  massage: Massage,
+  pied: Pied,
+  telephone: Telephone,
+  yoga: Yoga,
+};
+
+export type NomIcone = keyof typeof icones;
+
+type Props = { nom: NomIcone };
+
+const { nom } = Astro.props;
+const Svg = icones[nom];
+---
+
+<Svg class="icone" aria-hidden="true" />
+
+<style lang="scss">
+  // Taille et couleur héritées du texte : le parent change `font-size` ou `color`.
+  :where(.icone) {
+    flex-shrink: 0;
+    inline-size: 1em;
+    block-size: 1em;
+  }
+</style>

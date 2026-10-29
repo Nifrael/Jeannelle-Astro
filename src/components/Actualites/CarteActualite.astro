@@ -1,0 +1,203 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import Icone from "@components/UI/Icone.astro";
+import {
+  dateAffichee,
+  estPassee,
+  libellesCategorie,
+  lienActualite,
+} from "@lib/actualites";
+
+type Props = { actualite: CollectionEntry<"actualites">; titre?: "h2" | "h3" };
+
+const { actualite, titre: Titre = "h3" } = Astro.props;
+const {
+  title,
+  excerpt,
+  image,
+  poster,
+  category,
+  location,
+  externalUrl,
+  ctaLabel,
+} = actualite.data;
+
+const date = dateAffichee(actualite);
+const passee = estPassee(actualite);
+const externe = Boolean(externalUrl);
+---
+
+<article class:list={["carte", { "carte--passee": passee }]}>
+  <div class:list={["carte__image", { "carte__image--affiche": poster }]}>
+    <Image
+      src={image.src}
+      alt=""
+      widths={[400, 640, 800]}
+      sizes="(width >= 1024px) 22rem, (width >= 768px) 45vw, 100vw"
+    />
+    <span class="carte__categorie">{libellesCategorie[category]}</span>
+  </div>
+  <div class="carte__corps">
+    {
+      date && (
+        <p class="carte__date">
+          <Icone nom="calendrier" />
+          <span>
+            {passee && <span class="carte__passe">Passé · </span>}
+            {date}
+            {location && ` · ${location}`}
+          </span>
+        </p>
+      )
+    }
+    <Titre class="carte__titre">
+      <a
+        href={lienActualite(actualite)}
+        target={externe ? "_blank" : undefined}
+        rel={externe ? "noopener" : undefined}
+      >
+        {title}
+        {externe && <span class="visually-hidden">(nouvel onglet)</span>}
+      </a>
+    </Titre>
+    <p class="carte__texte">{excerpt}</p>
+    <p class="carte__action" aria-hidden="true">
+      {ctaLabel ?? "Lire la suite"}
+      <Icone nom={externe ? "lien-externe" : "fleche"} />
+    </p>
+  </div>
+</article>
+
+<style lang="scss">
+  @use "@styles/config/mixin" as *;
+
+  @mixin mise-en-avant {
+    box-shadow: var(--shadow-m);
+    transform: translateY(-2px);
+  }
+
+  .carte {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--rayon-l);
+    background-color: var(--color-bg-cards);
+    transition:
+      box-shadow var(--transition),
+      transform var(--transition);
+
+    @include survol {
+      @include mise-en-avant;
+    }
+
+    &:has(:focus-visible) {
+      @include mise-en-avant;
+    }
+  }
+
+  .carte__image {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background-color: var(--color-bg-secondary);
+
+    // En absolu : la hauteur naturelle de l'image ne doit pas étirer le cadre 4:3.
+    img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  // Une affiche contient du texte : on la montre en entier plutôt que de la recadrer.
+  .carte__image--affiche img {
+    object-fit: contain;
+    padding: var(--espace-s);
+  }
+
+  .carte__categorie {
+    position: absolute;
+    z-index: 1;
+    top: var(--espace-m);
+    left: var(--espace-m);
+    padding: var(--espace-xs) var(--espace-m);
+    border-radius: var(--rayon-pilule);
+    background-color: var(--color-bg-cards);
+    font-size: var(--little-text);
+    font-weight: 600;
+    color: var(--color-action);
+    box-shadow: var(--shadow-s);
+  }
+
+  .carte__corps {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--espace-s);
+    padding: var(--espace-l);
+  }
+
+  .carte__date {
+    display: flex;
+    align-items: center;
+    gap: var(--espace-s);
+    font-size: var(--little-text);
+    color: var(--color-text-secondary);
+
+    :global(.icone) {
+      color: var(--color-action);
+    }
+  }
+
+  .carte__passe {
+    font-weight: 600;
+  }
+
+  .carte__titre {
+    font-size: var(--h4);
+
+    a {
+      color: var(--color-text);
+      text-decoration: none;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+      }
+
+      &:focus-visible {
+        outline: none;
+
+        &::after {
+          outline: 2px solid var(--color-action);
+          outline-offset: -4px;
+          border-radius: var(--rayon-l);
+        }
+      }
+    }
+  }
+
+  .carte__texte {
+    flex: 1;
+    color: var(--color-text-secondary);
+  }
+
+  .carte__action {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espace-s);
+    margin-top: var(--espace-s);
+    font-weight: 500;
+    color: var(--color-action);
+  }
+
+  .carte--passee .carte__image img {
+    filter: saturate(0.6);
+  }
+</style>

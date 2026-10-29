@@ -1,0 +1,102 @@
+---
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import EnTetePage from "@components/UI/EnTetePage.astro";
+import Prose from "@components/UI/Prose.astro";
+import Pastille from "@components/UI/Pastille.astro";
+import LienFleche from "@components/UI/LienFleche.astro";
+import { dateAffichee, estPassee, libellesCategorie } from "@lib/actualites";
+
+export async function getStaticPaths() {
+  // Les actualités externes (partenaires) n'ont pas de page : leur carte mène au site du partenaire.
+  const actualites = await getCollection(
+    "actualites",
+    ({ data }) => !data.draft && !data.externalUrl,
+  );
+  return actualites.map((actualite) => ({
+    params: { slug: actualite.id },
+    props: { actualite },
+  }));
+}
+
+const { actualite } = Astro.props;
+const { title, excerpt, image, category, location } = actualite.data;
+const { Content } = await render(actualite);
+const date = dateAffichee(actualite);
+---
+
+<Layout titre={title} description={excerpt} type="article" image={image}>
+  <EnTetePage
+    titre={title}
+    surtitre={libellesCategorie[category]}
+    ariane={[{ texte: "Actualités", href: "/actualites/" }, { texte: title }]}
+  >
+    <div class="infos">
+      {
+        date && (
+          <Pastille icone="calendrier">
+            {estPassee(actualite) ? `Passé · ${date}` : date}
+          </Pastille>
+        )
+      }
+      {location && <Pastille icone="localisation">{location}</Pastille>}
+    </div>
+  </EnTetePage>
+
+  <article class="article container">
+    <Image
+      src={image.src}
+      alt={image.alt}
+      widths={[480, 720, 960]}
+      sizes="(width >= 1024px) 26rem, 100vw"
+      class="article__image"
+    />
+    <div class="article__texte">
+      <Prose><Content /></Prose>
+      <LienFleche href="/actualites/">Toutes les actualités</LienFleche>
+    </div>
+  </article>
+</Layout>
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixin" as *;
+
+  .infos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espace-s);
+  }
+
+  .article {
+    display: grid;
+    gap: var(--espace-xl);
+    padding-block: var(--espace-xxl) var(--espace-section);
+  }
+
+  .article__image {
+    width: 100%;
+    border-radius: var(--rayon-l);
+    box-shadow: var(--shadow-m);
+  }
+
+  .article__texte {
+    display: grid;
+    gap: var(--espace-xl);
+    align-content: start;
+  }
+
+  @include breakpoint-up($breakpoint-desktop) {
+    .article {
+      grid-template-columns: 26rem 1fr;
+      gap: var(--espace-xxl);
+      align-items: start;
+    }
+
+    .article__image {
+      position: sticky;
+      top: calc(var(--hauteur-entete) + var(--espace-l));
+    }
+  }
+</style>

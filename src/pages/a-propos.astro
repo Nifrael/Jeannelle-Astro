@@ -1,256 +1,250 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Image from "astro/components/Image.astro";
-import Avatar from "../assets/images/About/KM-avatar.jpg";
-import Candle from "../assets/images/About/candle.svg";
-import About from "@assets/images/About/About.jpg";
+import { getEntry, render } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import EnTetePage from "@components/UI/EnTetePage.astro";
+import Prose from "@components/UI/Prose.astro";
+import AppelRendezVous from "@components/Accueil/AppelRendezVous.astro";
+import interieur from "@assets/images/a-propos/interieur.jpg";
+import portrait from "@assets/images/equipe/karine-maraval-portrait.jpg";
+import bougie from "@assets/images/a-propos/bougie.jpg";
+
+const page = await getEntry("pages", "a-propos");
+const dernierMot = await getEntry("pages", "un-dernier-mot");
+if (!page || !dernierMot)
+  throw new Error("Contenu manquant dans src/content/pages/");
+
+const { Content } = await render(page);
+const { Content: ContenuDernierMot } = await render(dernierMot);
 ---
 
-<Layout>
-  <div class="photo-container">
+<Layout
+  titre="À propos"
+  description={page.data.description}
+  image={{ src: portrait, alt: "Karine Maraval" }}
+>
+  <EnTetePage
+    titre="Karine Maraval, fondatrice de Jeannelle"
+    surtitre="À propos"
+    ariane={[{ texte: "À propos" }]}
+  />
+
+  <figure class="bandeau container">
     <Image
-      src={About}
-      alt="Photo de l'intérieur du cabinet Jeannelle"
-      class="about-photo"
+      src={interieur}
+      alt="Vue plongeante sur la mezzanine de Jeannelle : parquet, fauteuils et suspensions en rotin"
+      widths={[640, 960, 1280, 1600]}
+      sizes="(width >= 1152px) 72rem, 100vw"
+      loading="eager"
     />
-    <h4>"Préparez votre temps, pour vous j'ai tout le mien."</h4>
-  </div>
+    {
+      page.data.citation && (
+        <blockquote>
+          <p>« {page.data.citation} »</p>
+        </blockquote>
+      )
+    }
+  </figure>
 
-  <section class="limited-container">
-    <div class="about-section">
-      <div class="text-content">
-        <h2>Qui suis-je ?</h2>
-        <p>
-          8 ans à me former, à pratiquer, tester, chercher, recommencer,
-          solutionner, recommencer encore, perfectionner... Et ce dans le but de
-          devenir ma propre thérapeute... Pour mon corps, mon mental, et mon
-          énergie.
-        </p>
-        <b>
-          <p>C'est aujourd'hui chose faite.</p>
-        </b>
-        <p>
-          Le corps est une merveilleuse machine, bien orchestrée. Et comme
-          l'esprit, il vient nous parler de manière subtile, parfois maladroite.
-        </p>
-        <p>
-          Écouter, entendre, comprendre... J'ai eu à coeur d'affiner cette
-          sensibilité pour faire alliance avec le corps et l'esprit.
-        </p>
-        <h2>Pourquoi ?</h2>
-        <p>
-          Pour me connaître, me respecter et gérer au mieux ce qui me traverse.
-        </p>
-        <b>
-          <p>Être en paix, en santé, en vitalité.</p>
-        </b>
-        <p>
-          Avec joie, reconnaissance et enthousiasme, Jeannelle est là, depuis
-          l'année 2024, pour celles et ceux qui partagent la même aspiration
-          d'être en pleine possession de leur énergie, de leur stabilité et de
-          leur authenticité.
-        </p>
-        <p>
-          Merci à celles et ceux qui m'ont encouragée, accompagnée pour mener à
-          bien ce projet d'ouverture.
-        </p>
-        <p>
-          Merci à vous d'avoir pris le temps de me lire et peut-être
-          viendrez-vous honorer le lieu de votre présence.
-        </p>
-      </div>
-      <div class="avatar-about">
-        <Image src={Avatar} alt="Karine Maraval" id="km-photo" />
-      </div>
+  <section class="presentation container" aria-labelledby="qui">
+    <div class="presentation__texte">
+      <h2 id="qui">{page.data.title}</h2>
+      <Prose><Content /></Prose>
     </div>
+    <Image
+      src={portrait}
+      alt="Portrait de Karine Maraval devant un mur de pierre, près d'une lampe de sel"
+      widths={[320, 480, 640, 800]}
+      sizes="(width >= 1024px) 26rem, 100vw"
+      class="presentation__portrait"
+    />
+  </section>
 
-    <div class="text-container">
-      <h2>Mon parcours</h2>
-      <ul>
-        <li>Infirmière diplômée d'Etat</li>
-        <li>Infirmière Sapeur-Pompier</li>
-        <li>Naturopathe / Réflexologue</li>
-        <li>
-          Diplôme Universitaire de Nutrition / Micronutrition en sport et santé
-        </li>
-        <li>Formation en maieusthésie (Niveau 4 pro)</li>
-        <li>Stages et perfectionnement en Aromathérapie</li>
-        <li>
-          Stages et perfectionnement en réflexologie (palmaire, viscérale,
-          sensitive, énergétique chinoise)
-        </li>
-        <li>Formations Yin Yoga et Yoga</li>
-      </ul>
+  {
+    page.data.parcours && (
+      <section class="parcours" aria-labelledby="parcours-titre">
+        <div class="container">
+          <h2 id="parcours-titre">Mon parcours</h2>
+          <ol role="list" class="parcours__liste">
+            {page.data.parcours.map((etape) => (
+              <li>{etape}</li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="dernier-mot" aria-labelledby="dernier-mot-titre">
+    <Image
+      src={bougie}
+      alt=""
+      widths={[640, 1280, 1920]}
+      sizes="100vw"
+      class="dernier-mot__fond"
+    />
+    <div class="container">
+      <div class="dernier-mot__carte">
+        <h2 id="dernier-mot-titre">{dernierMot.data.title}</h2>
+        <ContenuDernierMot />
+        {
+          dernierMot.data.citation && (
+            <p class="dernier-mot__signature">{dernierMot.data.citation}</p>
+          )
+        }
+      </div>
     </div>
   </section>
-  <div class="tribute-section">
-    <div class="tribute-text">
-      <h2>Un dernier mot...</h2>
-      <p>
-        Enfin, un clin d'oeil particulier et précieux à celles et ceux avec qui
-        je suis connectée d'âme à âme depuis tant d'années. Vos présences
-        subtiles m'aident...
-      </p>
-      <p>Merci d'être là, à mes côtés, sur mon épaule et dans mon coeur.</p>
-      <p><Image src={Candle} alt="Bougie" /></p>
-      <h2>...Jeannelle, c'est vous.</h2>
-    </div>
-  </div>
+
+  <AppelRendezVous />
 </Layout>
 
 <style lang="scss">
   @use "@styles/config/variables" as *;
-  @use "@styles/config/mixins" as *;
+  @use "@styles/config/mixin" as *;
 
-  .photo-container {
-    width: 90%;
-    height: 80vh;
-    margin: 1rem auto;
+  .bandeau {
     position: relative;
+    margin-top: calc(var(--espace-xl) * -1);
+
     img {
       width: 100%;
-      height: 100%;
+      aspect-ratio: 4 / 3;
       object-fit: cover;
-      border-radius: 20px;
-      z-index: 0;
+      border-radius: var(--rayon-l);
     }
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 20px;
-      background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.3),
-        rgba(0, 0, 0, 0.1)
-      );
-      z-index: 1;
-    }
-    h4 {
-      position: absolute;
-      bottom: 5px;
-      z-index: 2;
-      text-align: center;
-      font-style: italic;
-      margin: 0;
-      padding: 1rem;
-      color: var(--important-color);
-    }
-  }
 
-  .limited-container {
-    width: 95%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-  }
+    blockquote {
+      margin: calc(var(--espace-l) * -1) var(--espace-m) 0;
+      position: relative;
+      padding: var(--espace-l);
+      border-radius: var(--rayon-m);
+      background-color: var(--color-bg-cards);
+      box-shadow: var(--shadow-m);
 
-  .about-section {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    margin-bottom: 3rem;
-    .text-content {
-      text-align: justify;
-    }
-    .avatar-about {
-      width: 100%;
-      max-width: 500px;
-      margin: 0 auto;
-
-      #km-photo {
-        width: 100%;
-        height: auto;
-        border-bottom-left-radius: 25px;
-        border-bottom-right-radius: 50px;
-        border-top-left-radius: 50px;
-        border-top-right-radius: 25px;
+      p {
+        font-family: var(--font-title);
+        font-size: var(--h4);
+        font-style: italic;
+        color: var(--color-action);
       }
     }
   }
 
-  .text-container {
-    li {
-      font-size: var(--p);
-      font-family: var(--text);
-      color: var(--text-primary-color);
-      line-height: 1.75rem;
+  .presentation {
+    display: grid;
+    gap: var(--espace-xl);
+    padding-block: var(--espace-section);
+
+    h2 {
+      margin-bottom: var(--espace-l);
     }
   }
 
-  .tribute-section {
-    background-image: url("../assets/images/About/Bougie.jpg");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    min-height: 80vh;
-    margin: 4rem auto 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .presentation__portrait {
+    width: 100%;
+    max-width: 26rem;
+    border-radius: 999px 999px var(--rayon-l) var(--rayon-l);
   }
 
-  .tribute-text {
-    width: 80%;
-    padding: 1rem;
-    margin: 2rem auto;
-    background-color: rgba(255, 255, 255, 0.6);
-    border-radius: 20px;
+  .parcours {
+    padding-block: var(--espace-section);
+    background-color: var(--color-bg-secondary);
+
+    h2 {
+      margin-bottom: var(--espace-xl);
+    }
+  }
+
+  // Frise : une ligne verticale et une pastille par étape.
+  .parcours__liste {
+    display: grid;
+    gap: var(--espace-l);
+    max-width: var(--largeur-texte);
+    border-inline-start: 2px solid var(--color-accent);
+
+    li {
+      position: relative;
+      padding-inline-start: var(--espace-l);
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0.45em;
+        left: -0.4375rem;
+        width: 0.75rem;
+        height: 0.75rem;
+        border: 2px solid var(--color-accent);
+        border-radius: var(--rayon-rond);
+        background-color: var(--color-bg-cards);
+      }
+    }
+  }
+
+  .dernier-mot {
+    position: relative;
+    isolation: isolate;
+    padding-block: var(--espace-section);
+  }
+
+  .dernier-mot__fond {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .dernier-mot__carte {
+    display: grid;
+    gap: var(--espace-m);
+    max-width: 38rem;
+    margin-inline: auto;
+    padding: var(--espace-xl) var(--espace-l);
+    border-radius: var(--rayon-l);
+    background-color: var(--color-bg-translucent);
     backdrop-filter: blur(20px);
     text-align: center;
-    h2 {
-      color: var(--text-primary-color);
-    }
-    h2:last-child {
-      margin-top: 0;
-    }
-    img {
-      margin: 0.5rem auto;
+  }
+
+  .dernier-mot__signature {
+    font-family: var(--font-title);
+    font-size: var(--h3);
+    font-style: italic;
+    color: var(--color-action);
+  }
+
+  @include breakpoint-up($breakpoint-tablet) {
+    .bandeau {
+      img {
+        aspect-ratio: 21 / 9;
+      }
+
+      blockquote {
+        position: absolute;
+        right: var(--espace-xl);
+        bottom: var(--espace-xl);
+        max-width: 26rem;
+        margin: 0;
+      }
     }
   }
 
   @include breakpoint-up($breakpoint-desktop) {
-    .photo-container {
-      height: 75vh;
-      margin: 3rem auto;
-      img {
-        object-position: bottom;
-      }
-      h4 {
-        right: 10px;
-      }
+    .presentation {
+      grid-template-columns: 1fr 26rem;
+      gap: var(--espace-xxl);
+      align-items: start;
     }
 
-    .about-section {
-      flex-direction: row;
-      align-items: self-end;
-      gap: 4rem;
+    .presentation__portrait {
+      position: sticky;
+      top: calc(var(--hauteur-entete) + var(--espace-l));
     }
 
-    .avatar-about {
-      flex: 0 0 45%;
-      max-width: 45%;
-    }
-
-    .tribute-section {
-      background-attachment: fixed;
-      margin-bottom: 0;
-      min-height: 70vh;
-      .tribute-text {
-        width: 60%;
-      }
-    }
-  }
-
-  @include breakpoint-up($breakpoint-desktop-xl) {
-    .photo-container {
-      margin: 4rem auto;
-    }
-  }
-
-  @include breakpoint-up($breakpoint-desktop-xxl) {
-    .photo-container {
-      margin: 4rem auto 5rem auto;
+    .dernier-mot__carte {
+      padding: var(--espace-xxl);
     }
   }
 </style>
