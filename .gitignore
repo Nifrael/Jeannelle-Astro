@@ -27,3 +27,10 @@ pnpm-debug.log*
 .idea/
 
 .prettierrc.json
+
+#Guides Agents
+AGENTS.md
+CLAUDE.md
+
+# Audits et notes locales
+docs/
