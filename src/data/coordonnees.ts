@@ -1,0 +1,38 @@
+export const nom = "Jeannelle";
+
+export const adresse = {
+  rue: "18 rue Lieutenant Basseras",
+  codePostal: "66170",
+  ville: "Millas",
+  // Coordonnées reprises de l'ancienne carte Google intégrée.
+  latitude: 42.69303,
+  longitude: 2.69733,
+};
+
+export const adresseComplete = `${adresse.rue}, ${adresse.codePostal} ${adresse.ville}`;
+
+export const telephone = {
+  affiche: "07 60 48 48 06",
+  lien: "tel:+33760484806",
+};
+
+// [À COMPLÉTER] : adresse e-mail de contact (demandée aussi par les mentions légales).
+export const email: string | undefined = undefined;
+
+// [À VALIDER] avec Karine.
+export const horaires = "Sur rendez-vous uniquement";
+
+const destination = encodeURIComponent(adresseComplete);
+
+/** Liens d'itinéraire : pas de carte intégrée, donc aucun cookie tiers sur le site. */
+export const itineraires = [
+  {
+    texte: "Google Maps",
+    url: `https://www.google.com/maps/dir/?api=1&destination=${destination}`,
+  },
+  { texte: "Apple Plans", url: `https://maps.apple.com/?daddr=${destination}` },
+  {
+    texte: "Waze",
+    url: `https://waze.com/ul?ll=${adresse.latitude},${adresse.longitude}&navigate=yes`,
+  },
+];
