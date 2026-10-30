@@ -1,7 +1,7 @@
 ---
 // Grille responsive : autant de colonnes que la largeur le permet.
-// « etroite » pour des cartes compactes (thérapies), « large » pour les cartes en ligne (praticiennes).
-type Props = { taille?: "etroite" | "normale" | "large" };
+// « large » pour des cartes plus larges.
+type Props = { taille?: "normale" | "large" };
 
 const { taille = "normale" } = Astro.props;
 ---
@@ -24,10 +24,6 @@ const { taille = "normale" } = Astro.props;
     > :global(li) {
       display: grid;
     }
-  }
-
-  .grille--etroite {
-    --grille-min: 17rem;
   }
 
   .grille--large {
