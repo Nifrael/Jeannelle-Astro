@@ -63,7 +63,8 @@ const ambiance = [
       espaces.map((espace, index) => (
         <section
           class:list={["espace", { "espace--inverse": index % 2 === 1 }]}
-          aria-labelledby={espace.id}
+          id={espace.id}
+          aria-labelledby={`${espace.id}-titre`}
         >
           <div
             class:list={[
@@ -81,7 +82,7 @@ const ambiance = [
             ))}
           </div>
           <div class="espace__texte">
-            <h2 id={espace.id}>{espace.titre}</h2>
+            <h2 id={`${espace.id}-titre`}>{espace.titre}</h2>
             <p>{espace.texte}</p>
             <ul class="espace__details">
               {espace.details.map((detail) => (

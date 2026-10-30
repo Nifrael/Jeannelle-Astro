@@ -3,12 +3,7 @@ import { Image } from "astro:assets";
 import { espaces, introduction } from "@data/espaces";
 import EnTeteSection from "@components/UI/EnTeteSection.astro";
 import Bouton from "@components/UI/Bouton.astro";
-
-// Une photo par espace, dans l'ordre de la page Le lieu.
-const photos = espaces.map((espace) => ({
-  ...espace.photos[0],
-  titre: espace.titre,
-}));
+import Icone from "@components/UI/Icone.astro";
 ---
 
 <section class="apercu" aria-labelledby="apercu-titre">
@@ -21,23 +16,42 @@ const photos = espaces.map((espace) => ({
       >
         {introduction.texte.map((texte) => <p>{texte}</p>)}
       </EnTeteSection>
-      <Bouton href="/espaces/">Voir les espaces à louer</Bouton>
     </div>
-    <ul role="list" class="apercu__photos">
+
+    {/* Mosaïque : la première salle en grand, les deux autres à côté. Chaque carte mène à sa partie de la page Le lieu. */}
+    <ul role="list" class="apercu__mosaique">
       {
-        photos.map((photo) => (
+        espaces.map((espace, index) => (
           <li>
-            <Image
-              src={photo.src}
-              alt={photo.alt}
-              widths={[320, 480, 640]}
-              sizes="(width >= 1024px) 18rem, 33vw"
-            />
-            <span>{photo.titre}</span>
+            <a class="salle" href={`/espaces/#${espace.id}`}>
+              {/* Photo décorative : le nom et l'usage portent le sens du lien. */}
+              <Image
+                src={espace.photos[0].src}
+                alt=""
+                widths={[320, 480, 640, 960]}
+                sizes={
+                  index === 0
+                    ? "(width >= 1024px) 20rem, 100vw"
+                    : "(width >= 1024px) 20rem, 50vw"
+                }
+                class="salle__photo"
+              />
+              <div class="salle__texte">
+                <h3>{espace.titre}</h3>
+                <p class="salle__usage">
+                  {espace.usage}
+                  <Icone nom="fleche" />
+                </p>
+              </div>
+            </a>
           </li>
         ))
       }
     </ul>
+
+    <div class="apercu__action">
+      <Bouton href="/espaces/">Voir les espaces à louer</Bouton>
+    </div>
   </div>
 </section>
 
@@ -50,46 +64,151 @@ const photos = espaces.map((espace) => ({
     background-color: var(--color-bg-cards);
   }
 
+  // Mobile : texte, photos, puis bouton (on montre avant d'inviter à cliquer).
+  // Ordinateur : texte et bouton à gauche, mosaïque à droite.
   .apercu__grille {
     display: grid;
+    grid-template-areas: "texte" "mosaique" "action";
     gap: var(--espace-xl);
-    align-items: center;
   }
 
-  .apercu__photos {
+  .apercu__texte {
+    grid-area: texte;
+
+    // L'espacement vient de la grille : on retire la marge propre à l'en-tête.
+    :global(.en-tete) {
+      margin-bottom: 0;
+    }
+  }
+
+  .apercu__action {
+    grid-area: action;
+  }
+
+  .apercu__mosaique {
+    grid-area: mosaique;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 1fr;
     gap: var(--espace-s);
 
     li {
       display: grid;
-      gap: var(--espace-s);
+      aspect-ratio: 4 / 5;
     }
 
-    img {
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      object-fit: cover;
-      border-radius: var(--rayon-m);
+    li:first-child {
+      grid-column: span 2;
+      aspect-ratio: 3 / 2;
+    }
+  }
+
+  // Même principe que les cartes praticiennes : photo pleine carte, texte posé sur un dégradé.
+  .salle {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    border-radius: var(--rayon-l);
+    color: var(--color-action-text);
+    text-decoration: none;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 40% 0 0;
+      z-index: -1;
+      background: linear-gradient(to top, var(--color-overlay), transparent);
     }
 
-    span {
-      font-size: var(--little-text);
-      color: var(--color-text-secondary);
+    &:focus-visible {
+      @include focus-visible;
+      border-radius: var(--rayon-l);
+    }
+
+    @include survol {
+      :global(.salle__photo) {
+        transform: scale(1.03);
+      }
+
+      :global(.icone) {
+        transform: translateX(3px);
+      }
+    }
+  }
+
+  // La classe est posée sur <Image> (composant enfant) : ciblée via :global sous .salle.
+  .salle :global(.salle__photo) {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 400ms ease-out;
+  }
+
+  .salle__texte {
+    display: grid;
+    gap: var(--espace-xs);
+    padding: var(--espace-m);
+
+    h3 {
+      font-size: var(--h4);
+    }
+  }
+
+  // Flèche en ligne avec le texte : elle suit le dernier mot, même sur plusieurs lignes.
+  .salle__usage {
+    font-size: var(--little-text);
+
+    :global(.icone) {
+      display: inline-block;
+      margin-inline-start: var(--espace-xs);
+      vertical-align: -0.125em;
+      transition: transform var(--transition);
+    }
+  }
+
+  @include breakpoint-up($breakpoint-tablet) {
+    .apercu__mosaique {
+      gap: var(--espace-m);
+    }
+
+    .salle__texte {
+      padding: var(--espace-l);
     }
   }
 
   @include breakpoint-up($breakpoint-desktop) {
     .apercu__grille {
       grid-template-columns: 1fr 1.3fr;
-      gap: var(--espace-xxl);
+      grid-template-areas: "texte mosaique" "action mosaique";
+      column-gap: var(--espace-xxl);
+      row-gap: var(--espace-xl);
     }
 
-    .apercu__photos {
-      gap: var(--espace-m);
+    .apercu__texte {
+      align-self: end;
+    }
 
-      li:nth-child(2) {
-        margin-top: var(--espace-xl);
+    .apercu__action {
+      align-self: start;
+    }
+
+    // Grande carte à gauche sur deux rangées, les deux autres empilées à droite.
+    .apercu__mosaique {
+      grid-template-rows: 1fr 1fr;
+      aspect-ratio: 5 / 4;
+
+      li,
+      li:first-child {
+        aspect-ratio: auto;
+      }
+
+      li:first-child {
+        grid-column: auto;
+        grid-row: span 2;
       }
     }
   }

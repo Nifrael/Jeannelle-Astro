@@ -10,6 +10,8 @@ type Photo = { src: ImageMetadata; alt: string };
 export type Espace = {
   id: string;
   titre: string;
+  // Une ligne : à quoi sert la salle (carte de l'accueil).
+  usage: string;
   texte: string;
   // [À VALIDER] équipements et tarifs à demander à Karine.
   details: string[];
@@ -29,6 +31,7 @@ export const espaces: Espace[] = [
   {
     id: "cabinets",
     titre: "Cabinets de consultation",
+    usage: "Consultations individuelles", // [À VALIDER]
     texte:
       "Deux cabinets lumineux, au calme, pour vos consultations individuelles.",
     details: [
@@ -49,11 +52,12 @@ export const espaces: Espace[] = [
   {
     id: "formation",
     titre: "Salle de formation",
+    usage: "Formations, conférences, ateliers",
     texte:
       "Il vous est possible de réserver le local pour vos formations, vos conférences, vos évènements…",
     details: [
       "Mezzanine lumineuse sous suspensions en rotin",
-      "Idéale pour les petits groupes [À VALIDER]",
+      "Idéale pour les petits groupes",
     ],
     photos: [
       {
@@ -64,13 +68,11 @@ export const espaces: Espace[] = [
   },
   {
     id: "yoga",
-    titre: "Espace yoga",
+    titre: "Espace yoga et yin-yoga",
+    usage: "Cours de yoga et yin-yoga",
     texte:
-      "Si vous êtes professeur de yoga ou de Pilates, l'espace yoga peut être mis à votre disposition.",
-    details: [
-      "Tapis, briques et bolsters sur place [À VALIDER]",
-      "Grande salle aux murs de pierre",
-    ],
+      "Si vous êtes professeur de yoga, cet espace peut être mis à votre disposition.",
+    details: ["Matériel sur place", "Grande salle aux murs de pierre"],
     photos: [
       {
         src: salleYoga,
