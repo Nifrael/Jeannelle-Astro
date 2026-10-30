@@ -37,6 +37,11 @@ const { bouton = false, taille = "normale" } = Astro.props;
 <style lang="scss">
   @use "@styles/config/mixin" as *;
 
+  // Un numéro ne se coupe jamais en fin de ligne.
+  .telephone {
+    white-space: nowrap;
+  }
+
   .telephone__ordinateur {
     display: none;
   }
