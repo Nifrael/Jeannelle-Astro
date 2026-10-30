@@ -8,7 +8,8 @@ import Icone from "@components/UI/Icone.astro";
 import Pastille from "@components/UI/Pastille.astro";
 import LienFleche from "@components/UI/LienFleche.astro";
 import { adresseComplete } from "@data/coordonnees";
-import { trierTherapies } from "@lib/therapies";
+import { descriptionTherapie, trierTherapies } from "@lib/therapies";
+import { filAriane, graphe, service } from "@lib/donnees-structurees";
 
 export async function getStaticPaths() {
   const therapies = trierTherapies(await getCollection("therapies"));
@@ -29,17 +30,21 @@ export async function getStaticPaths() {
 }
 
 const { therapie, praticiennes, autres } = Astro.props;
-const {
-  title,
-  excerpt,
-  duration,
-  price,
-  secondPrice,
-  pack,
-  image,
-  schedule,
-} = therapie.data;
+const { title, excerpt, duration, price, secondPrice, pack, image, schedule } =
+  therapie.data;
 const { Content } = await render(therapie);
+
+const donneesStructurees = graphe(
+  service(therapie, Astro.url, Astro.site!),
+  filAriane(
+    [
+      { nom: "Accueil", chemin: "/" },
+      { nom: "Thérapies", chemin: "/therapies/" },
+      { nom: title, chemin: Astro.url.pathname },
+    ],
+    Astro.site!,
+  ),
+);
 
 // Cases de la fiche pratique : seulement celles qui ont une valeur.
 const infos = [
@@ -49,7 +54,13 @@ const infos = [
 ].filter((info) => info.valeur);
 ---
 
-<Layout titre={title} description={excerpt} type="article" image={image}>
+<Layout
+  titre={therapie.data.seoTitle ?? title}
+  description={descriptionTherapie(therapie)}
+  type="article"
+  image={image}
+  donneesStructurees={donneesStructurees}
+>
   <div class="therapie container">
     <LienFleche href="/therapies/" retour>Toutes les thérapies</LienFleche>
 
@@ -148,7 +159,9 @@ const infos = [
       <Telephone bouton taille="petite">Prendre rendez-vous</Telephone>
     </div>
 
-    {/* Simple invitation vers les autres thérapies : nom et accroche, sans prix ni durée. */}
+    {
+      /* Simple invitation vers les autres thérapies : nom et accroche, sans prix ni durée. */
+    }
     {
       autres.length > 0 && (
         <section class="autres" aria-labelledby="autres-titre">

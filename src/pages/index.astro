@@ -17,15 +17,18 @@ import {
   equipe,
   therapies as texteTherapies,
 } from "@data/accueil";
-import { descriptionParDefaut, nomDuSite, partageParDefaut } from "@data/seo";
-import { etablissementLocal } from "@lib/donnees-structurees";
+import {
+  descriptionParDefaut,
+  titreAccueil,
+  partageParDefaut,
+} from "@data/seo";
+import { etablissementLocal, graphe, urlImage } from "@lib/donnees-structurees";
 import { trierActualites } from "@lib/actualites";
 import {
   coursCollectifs,
   therapiesIndividuelles,
   trierTherapies,
 } from "@lib/therapies";
-import { getImage } from "astro:assets";
 
 const aPropos = await getEntry("pages", "a-propos");
 const citation = aPropos?.data.citation;
@@ -43,19 +46,16 @@ const praticiennes = (await getCollection("praticiennes")).toSorted(
   (a, b) => a.data.order - b.data.order,
 );
 
-const imagePartage = await getImage({
-  src: partageParDefaut.src,
-  width: 1200,
-  format: "jpg",
-});
-const donneesStructurees = etablissementLocal(
-  Astro.site!,
-  new URL(imagePartage.src, Astro.site).href,
+const donneesStructurees = graphe(
+  etablissementLocal(
+    Astro.site!,
+    await urlImage(partageParDefaut.src, Astro.site!),
+  ),
 );
 ---
 
 <Layout
-  titre={nomDuSite}
+  titre={titreAccueil}
   description={descriptionParDefaut}
   donneesStructurees={donneesStructurees}
 >

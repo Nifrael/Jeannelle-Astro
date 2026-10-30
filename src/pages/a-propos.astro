@@ -8,20 +8,33 @@ import AppelRendezVous from "@components/Accueil/AppelRendezVous.astro";
 import interieur from "@assets/images/a-propos/interieur.jpg";
 import portrait from "@assets/images/equipe/karine-maraval-portrait.jpg";
 import bougie from "@assets/images/a-propos/bougie.jpg";
+import { graphe, personne, urlImage } from "@lib/donnees-structurees";
 
 const page = await getEntry("pages", "a-propos");
 const dernierMot = await getEntry("pages", "un-dernier-mot");
-if (!page || !dernierMot)
-  throw new Error("Contenu manquant dans src/content/pages/");
+const fondatrice = await getEntry("praticiennes", "karine-maraval");
+if (!page || !dernierMot || !fondatrice)
+  throw new Error("Contenu manquant dans src/content/pages/ ou praticiennes/");
 
 const { Content } = await render(page);
 const { Content: ContenuDernierMot } = await render(dernierMot);
+
+const donneesStructurees = graphe(
+  personne(
+    fondatrice,
+    page.data.description,
+    Astro.url,
+    await urlImage(portrait, Astro.site!),
+    Astro.site!,
+  ),
+);
 ---
 
 <Layout
-  titre="À propos"
+  titre="Karine Maraval, infirmière et naturopathe à Millas"
   description={page.data.description}
   image={{ src: portrait, alt: "Karine Maraval" }}
+  donneesStructurees={donneesStructurees}
 >
   <EnTetePage
     titre="Karine Maraval, fondatrice de Jeannelle"

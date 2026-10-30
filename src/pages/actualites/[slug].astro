@@ -7,6 +7,12 @@ import Prose from "@components/UI/Prose.astro";
 import Pastille from "@components/UI/Pastille.astro";
 import LienFleche from "@components/UI/LienFleche.astro";
 import { dateAffichee, estPassee, libellesCategorie } from "@lib/actualites";
+import {
+  evenement,
+  filAriane,
+  graphe,
+  urlImage,
+} from "@lib/donnees-structurees";
 
 export async function getStaticPaths() {
   // Les actualités externes (partenaires) n'ont pas de page : leur carte mène au site du partenaire.
@@ -24,9 +30,33 @@ const { actualite } = Astro.props;
 const { title, excerpt, image, category, location } = actualite.data;
 const { Content } = await render(actualite);
 const date = dateAffichee(actualite);
+
+const blocEvenement = evenement(
+  actualite,
+  Astro.url,
+  await urlImage(image.src, Astro.site!),
+  Astro.site!,
+);
+const donneesStructurees = graphe(
+  ...(blocEvenement ? [blocEvenement] : []),
+  filAriane(
+    [
+      { nom: "Accueil", chemin: "/" },
+      { nom: "Actualités", chemin: "/actualites/" },
+      { nom: title, chemin: Astro.url.pathname },
+    ],
+    Astro.site!,
+  ),
+);
 ---
 
-<Layout titre={title} description={excerpt} type="article" image={image}>
+<Layout
+  titre={title}
+  description={excerpt}
+  type="article"
+  image={image}
+  donneesStructurees={donneesStructurees}
+>
   <EnTetePage
     titre={title}
     surtitre={libellesCategorie[category]}
