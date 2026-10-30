@@ -17,7 +17,6 @@ const therapies = trierTherapies(await getCollection("therapies"));
   <EnTetePage
     titre="Nos thérapies"
     surtitre="Prendre soin de soi"
-    ariane={[{ texte: "Thérapies" }]}
   >
     <p>
       Des accompagnements pour prendre soin de son corps, de son esprit et de
@@ -40,6 +39,7 @@ const therapies = trierTherapies(await getCollection("therapies"));
 
 <style lang="scss">
   .liste {
-    padding-block: var(--espace-l) var(--espace-section);
+    // Pas de marge haute : celle du bas de l'en-tête de page sépare déjà.
+    padding-bottom: var(--espace-section);
   }
 </style>

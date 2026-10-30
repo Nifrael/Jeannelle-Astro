@@ -68,6 +68,7 @@ $caramel: #cf9a71;
   --espace-xl: 2.5rem;
   --espace-xxl: 4rem;
   --espace-section: 4.5rem;
+  --espace-carte: var(--espace-l); // marge intérieure des cartes de contenu
 
   // Rayons
   --rayon-s: 6px;
@@ -90,6 +91,7 @@ $caramel: #cf9a71;
   :root {
     --gouttiere: var(--espace-l);
     --espace-section: 6rem;
+    --espace-carte: var(--espace-xl);
   }
 }
 

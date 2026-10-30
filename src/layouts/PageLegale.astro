@@ -12,7 +12,7 @@ const { Content } = await render(page);
 ---
 
 <Layout titre={page.data.title} description={page.data.description}>
-  <EnTetePage titre={page.data.title} ariane={[{ texte: page.data.title }]}>
+  <EnTetePage titre={page.data.title}>
     {
       page.data.updated && (
         <p>Mise à jour le {formaterDate(page.data.updated)}</p>
@@ -26,6 +26,7 @@ const { Content } = await render(page);
 
 <style lang="scss">
   .page-legale {
-    padding-block: var(--espace-xxl);
+    // Pas de marge haute : celle du bas de l'en-tête de page sépare déjà.
+    padding-bottom: var(--espace-section);
   }
 </style>

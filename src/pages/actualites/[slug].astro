@@ -30,7 +30,7 @@ const date = dateAffichee(actualite);
   <EnTetePage
     titre={title}
     surtitre={libellesCategorie[category]}
-    ariane={[{ texte: "Actualités", href: "/actualites/" }, { texte: title }]}
+    retour={{ href: "/actualites/", texte: "Toutes les actualités" }}
   >
     <div class="infos">
       {
@@ -72,7 +72,8 @@ const date = dateAffichee(actualite);
   .article {
     display: grid;
     gap: var(--espace-xl);
-    padding-block: var(--espace-xxl) var(--espace-section);
+    // Pas de marge haute : celle du bas de l'en-tête de page sépare déjà.
+    padding-bottom: var(--espace-section);
   }
 
   .article__image {

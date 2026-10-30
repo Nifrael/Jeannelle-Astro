@@ -36,7 +36,6 @@ const ambiance = [
   <EnTetePage
     titre={introduction.titre}
     surtitre={introduction.surtitre}
-    ariane={[{ texte: "Le lieu" }]}
   >
     {introduction.texte.map((texte) => <p>{texte}</p>)}
   </EnTetePage>
@@ -129,7 +128,8 @@ const ambiance = [
 
   .espaces {
     display: grid;
-    gap: var(--espace-section);
+    // Blocs d'une même section : plus rapprochés qu'entre deux sections.
+    gap: var(--espace-xxl);
     padding-block: var(--espace-section);
   }
 

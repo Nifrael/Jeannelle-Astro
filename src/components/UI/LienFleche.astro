@@ -1,20 +1,22 @@
 ---
 import Icone from "@components/UI/Icone.astro";
 
-type Props = { href: string; externe?: boolean };
+// `retour` : flèche vers la gauche, placée avant le texte (lien vers la page parente).
+type Props = { href: string; externe?: boolean; retour?: boolean };
 
-const { href, externe = false } = Astro.props;
+const { href, externe = false, retour = false } = Astro.props;
 ---
 
 <a
-  class="lien-fleche"
+  class:list={["lien-fleche", { "lien-fleche--retour": retour }]}
   href={href}
   target={externe ? "_blank" : undefined}
   rel={externe ? "noopener" : undefined}
 >
+  {retour && <Icone nom="fleche" />}
   <slot />
   {externe && <span class="visually-hidden">(nouvel onglet)</span>}
-  <Icone nom={externe ? "lien-externe" : "fleche"} />
+  {!retour && <Icone nom={externe ? "lien-externe" : "fleche"} />}
 </a>
 
 <style lang="scss">
@@ -24,6 +26,7 @@ const { href, externe = false } = Astro.props;
     display: inline-flex;
     align-items: center;
     gap: var(--espace-s);
+    width: fit-content;
     font-weight: 500;
     text-decoration: none;
 
@@ -34,6 +37,19 @@ const { href, externe = false } = Astro.props;
     @include survol {
       :global(.icone) {
         transform: translateX(3px);
+      }
+    }
+  }
+
+  // La même icône, retournée : pas de second fichier SVG à maintenir.
+  .lien-fleche--retour {
+    :global(.icone) {
+      transform: scaleX(-1);
+    }
+
+    @include survol {
+      :global(.icone) {
+        transform: scaleX(-1) translateX(3px);
       }
     }
   }

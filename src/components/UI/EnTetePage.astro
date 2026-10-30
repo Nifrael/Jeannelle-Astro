@@ -1,19 +1,26 @@
 ---
 import Surtitre from "@components/UI/Surtitre.astro";
-import FilAriane, { type Etape } from "@components/UI/FilAriane.astro";
+import LienFleche from "@components/UI/LienFleche.astro";
 
 type Props = {
   titre: string;
   surtitre?: string;
-  ariane?: Etape[];
+  // Lien vers la page parente, sur les pages de détail.
+  retour?: { href: string; texte: string };
 };
 
-const { titre, surtitre, ariane } = Astro.props;
+const { titre, surtitre, retour } = Astro.props;
 ---
 
 <header class="en-tete-page">
   <div class="container">
-    {ariane && <FilAriane etapes={ariane} />}
+    {
+      retour && (
+        <LienFleche href={retour.href} retour>
+          {retour.texte}
+        </LienFleche>
+      )
+    }
     {surtitre && <Surtitre>{surtitre}</Surtitre>}
     <h1>{titre}</h1>
     {

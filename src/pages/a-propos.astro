@@ -26,7 +26,6 @@ const { Content: ContenuDernierMot } = await render(dernierMot);
   <EnTetePage
     titre="Karine Maraval, fondatrice de Jeannelle"
     surtitre="À propos"
-    ariane={[{ texte: "À propos" }]}
   />
 
   <figure class="bandeau container">
@@ -147,8 +146,9 @@ const { Content: ContenuDernierMot } = await render(dernierMot);
     border-radius: 999px 999px var(--rayon-l) var(--rayon-l);
   }
 
+  // Même fond que .presentation : sa marge basse suffit, sinon les deux s'additionnent.
   .parcours {
-    padding-block: var(--espace-section);
+    padding-bottom: var(--espace-section);
     background-color: var(--color-bg-secondary);
 
     h2 {

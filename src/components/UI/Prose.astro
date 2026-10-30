@@ -1,14 +1,23 @@
 ---
 // Habille le HTML produit par <Content /> (Markdown), qui n'a pas d'attribut de scope.
+// `justifie` : paragraphes justifiés, avec césure pour éviter les grands blancs sur mobile.
+type Props = { justifie?: boolean };
+
+const { justifie = false } = Astro.props;
 ---
 
-<div class="prose"><slot /></div>
+<div class:list={["prose", { "prose--justifie": justifie }]}><slot /></div>
 
 <style lang="scss">
   .prose {
     display: grid;
     gap: var(--espace-m);
     max-width: var(--largeur-texte);
+
+    // Un intertitre en tête de texte ne doit pas ajouter de marge au-dessus.
+    > :global(:first-child) {
+      margin-top: 0;
+    }
 
     // Intertitres en caramel, comme sur l'ancien site : ils rythment le texte.
     :global(h2) {
@@ -42,6 +51,14 @@
 
     :global(img) {
       border-radius: var(--rayon-m);
+    }
+  }
+
+  .prose--justifie {
+    :global(p),
+    :global(li) {
+      text-align: justify;
+      hyphens: auto;
     }
   }
 </style>

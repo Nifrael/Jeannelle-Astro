@@ -18,7 +18,6 @@ const passees = actualites.filter((actualite) => estPassee(actualite));
   <EnTetePage
     titre="Actualités et événements"
     surtitre="À ne pas manquer"
-    ariane={[{ texte: "Actualités" }]}
   >
     <p>Rendez-vous, ateliers et rencontres chez Jeannelle.</p>
   </EnTetePage>
@@ -64,8 +63,9 @@ const passees = actualites.filter((actualite) => estPassee(actualite));
 <style lang="scss">
   .actualites {
     display: grid;
-    gap: var(--espace-section);
-    padding-block: var(--espace-xxl) var(--espace-section);
+    gap: var(--espace-xxl);
+    // Pas de marge haute : celle du bas de l'en-tête de page sépare déjà.
+    padding-bottom: var(--espace-section);
 
     h2 {
       margin-bottom: var(--espace-xl);

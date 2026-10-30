@@ -2,11 +2,11 @@
 import { getCollection, render } from "astro:content";
 import { Image } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
-import FilAriane from "@components/UI/FilAriane.astro";
 import Prose from "@components/UI/Prose.astro";
 import Telephone from "@components/UI/Telephone.astro";
 import CarteTherapie from "@components/Therapies/CarteTherapie.astro";
 import Grille from "@components/UI/Grille.astro";
+import LienFleche from "@components/UI/LienFleche.astro";
 import { adresseComplete } from "@data/coordonnees";
 import { trierTherapies } from "@lib/therapies";
 
@@ -43,9 +43,7 @@ const infos = [
 
 <Layout titre={title} description={excerpt} type="article" image={image}>
   <div class="therapie container">
-    <FilAriane
-      etapes={[{ texte: "Thérapies", href: "/therapies/" }, { texte: title }]}
-    />
+    <LienFleche href="/therapies/" retour>Toutes les thérapies</LienFleche>
 
     {/* Carte photo : titre et accroche posés en bas, sur un dégradé. */}
     <header
@@ -89,7 +87,7 @@ const infos = [
     }
 
     <section class="carte contenu" aria-label="Présentation de la thérapie">
-      <Prose><Content /></Prose>
+      <Prose justifie><Content /></Prose>
     </section>
 
     {
@@ -150,6 +148,7 @@ const infos = [
   @use "@styles/config/mixin" as *;
 
   // Une seule colonne de cartes, centrée : un seul axe, sur mobile comme sur ordinateur.
+  // Toutes les cartes partagent le même rembourrage (--espace-carte) : bords alignés, rythme régulier.
   .therapie {
     display: grid;
     gap: var(--espace-m);
@@ -203,7 +202,7 @@ const infos = [
   .couverture__texte {
     display: grid;
     gap: var(--espace-xs);
-    padding: var(--espace-l);
+    padding: var(--espace-carte);
     color: var(--color-action-text);
 
     h1 {
@@ -236,7 +235,7 @@ const infos = [
     grid-auto-columns: 1fr;
     grid-auto-flow: column;
     margin: 0;
-    padding-block: var(--espace-m);
+    padding-block: var(--espace-carte);
     text-align: center;
   }
 
@@ -275,7 +274,7 @@ const infos = [
   // ----- Contenu -----
 
   .contenu {
-    padding: var(--espace-l);
+    padding: var(--espace-carte);
   }
 
   // ----- Praticienne -----
@@ -285,7 +284,7 @@ const infos = [
     display: flex;
     align-items: center;
     gap: var(--espace-m);
-    padding: var(--espace-m) var(--espace-l);
+    padding: var(--espace-carte);
 
     h2 {
       font-size: var(--h4);
@@ -333,15 +332,15 @@ const infos = [
     display: grid;
     gap: var(--espace-s);
     justify-items: center;
-    padding: var(--espace-l);
+    padding: var(--espace-carte);
     text-align: center;
   }
 
   // ----- Découvrir aussi -----
 
+  // Pas de marge haute : celle du bas de .therapie sépare déjà les deux blocs (sinon elles s'additionnent).
   .autres {
-    padding-block: var(--espace-section);
-    background-color: var(--color-bg-secondary);
+    padding-bottom: var(--espace-section);
 
     h2 {
       margin-bottom: var(--espace-xl);
@@ -351,14 +350,6 @@ const infos = [
   @include breakpoint-up($breakpoint-tablet) {
     .couverture {
       aspect-ratio: 16 / 9;
-    }
-
-    .couverture__texte {
-      padding: var(--espace-xl);
-    }
-
-    .contenu {
-      padding: var(--espace-xl);
     }
   }
 </style>
