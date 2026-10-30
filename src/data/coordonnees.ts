@@ -22,6 +22,15 @@ export const email: string | undefined = undefined;
 // [À VALIDER] avec Karine.
 export const horaires = "Sur rendez-vous uniquement";
 
+/**
+ * Fiche Google Business de Jeannelle, par son identifiant permanent (kgmid) : déclarée dans
+ * les données structurées pour que Google relie le site et la fiche.
+ */
+export const ficheGoogle = "https://www.google.com/search?kgmid=/g/11wqs9lr25";
+
+// [À VALIDER] zone d'où viennent les clients, déclarée à Google (données structurées).
+export const zoneDesservie = ["Millas", "Perpignan", "Pyrénées-Orientales"];
+
 const destination = encodeURIComponent(adresseComplete);
 
 /**

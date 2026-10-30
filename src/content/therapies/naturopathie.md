@@ -1,6 +1,8 @@
 ---
 title: "Naturopathie & Micro-Nutrition"
 excerpt: "Redonner au corps et aux émonctoires leur plein potentiel de fonctionnement."
+seoTitle: "Naturopathe à Millas, près de Perpignan"
+seoDescription: "Naturopathie et micro-nutrition à Millas (66) avec Karine Maraval, infirmière et naturopathe : alimentation, vitalité et hygiène de vie."
 icon: "feuille"
 duration: "1h"
 price: "65€"

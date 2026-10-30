@@ -1,6 +1,8 @@
 ---
 title: "Réflexologie Plantaire Énergétique Chinoise"
 excerpt: "Agir sur les zones réflexes du pied pour relancer la circulation énergétique."
+seoTitle: "Réflexologie plantaire à Millas, près de Perpignan"
+seoDescription: "Réflexologie plantaire énergétique chinoise à Millas (66) : un soin des pieds pour se détendre en profondeur et relancer l'énergie."
 icon: "pied"
 duration: "45 min"
 price: "50€"

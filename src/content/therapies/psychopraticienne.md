@@ -1,6 +1,8 @@
 ---
 title: "Psychopraticienne"
 excerpt: "Être entendu·e dans sa sensibilité et ses ressentis, au-delà des mots et des faits."
+seoTitle: "Psychopraticienne à Millas, près de Perpignan"
+seoDescription: "Accompagnement psychocorporel à Millas (66) : un espace d'écoute bienveillant pour vos émotions et ressentis."
 icon: "esprit"
 duration: "1h à 1h30"
 price: "65€"

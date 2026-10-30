@@ -2,8 +2,11 @@ import imageParDefaut from "@assets/images/lieu/entree.jpg";
 
 export const nomDuSite = "Jeannelle";
 
+// [À VALIDER] titre de l'accueil dans Google (suivi de « · Jeannelle »).
+export const titreAccueil = "Centre de thérapeutes à Millas, près de Perpignan";
+
 export const descriptionParDefaut =
-  "Jeannelle, centre de thérapeutes au cœur du village de Millas (66) : naturopathie, réflexologie, yin yoga, massage amma, accompagnement psychocorporel.";
+  "Jeannelle, centre de thérapeutes à Millas (66), près de Perpignan : naturopathie, réflexologie plantaire, yin yoga, massage amma, psychopraticienne.";
 
 /** Image de partage quand la page n'a pas la sienne. */
 export const partageParDefaut = {
@@ -18,3 +21,6 @@ export const formatPartage = {
   fit: "cover",
   format: "jpg",
 } as const;
+
+/** Crédit de réalisation, en bas du pied de page. */
+export const realisation = "Julien Marchand — Nifradev";

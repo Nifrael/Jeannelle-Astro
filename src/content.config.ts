@@ -24,6 +24,11 @@ const therapies = defineCollection({
     z.object({
       title: z.string(),
       excerpt: z.string(),
+      // Référencement (facultatif) : titre de l'onglet et texte affiché sous le lien dans
+      // Google. Sans eux, la page reprend `title` et `excerpt`. Durée et tarif sont ajoutés
+      // automatiquement à la description (src/lib/therapies.ts).
+      seoTitle: z.string().optional(),
+      seoDescription: z.string().optional(),
       icon: iconeTherapie,
       duration: z.string().optional(),
       price: z.string().optional(),

@@ -1,6 +1,8 @@
 ---
 title: "Yin Yoga — Cours Collectif"
 excerpt: "Revenir à soi dans des postures douces, sans force ni souplesse particulière."
+seoTitle: "Cours de yin yoga à Millas, près de Perpignan"
+seoDescription: "Cours collectif de yin yoga à Millas (66), deux fois par semaine : des postures douces, accessibles à tous."
 icon: "yoga"
 duration: "1h"
 price: "13€"

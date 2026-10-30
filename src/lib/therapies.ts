@@ -2,6 +2,15 @@ import type { CollectionEntry } from "astro:content";
 
 type Therapie = CollectionEntry<"therapies">;
 
+// Description pour Google : texte de référencement (ou accroche), puis durée et tarif,
+// repris des champs de la fiche pour ne pas les écrire deux fois.
+export function descriptionTherapie({ data }: Therapie): string {
+  const texte = data.seoDescription ?? data.excerpt;
+  const infos = [data.duration, data.price].filter(Boolean).join(", ");
+  if (!infos) return texte;
+  return `${texte} ${data.schedule ? "Cours" : "Séance"} : ${infos}.`;
+}
+
 export function trierTherapies(therapies: Therapie[]): Therapie[] {
   return therapies
     .filter((therapie) => !therapie.data.draft)

@@ -1,6 +1,8 @@
 ---
 title: "Massage Amma"
 excerpt: "Un massage assis, habillé, qui apaise le corps par de nombreuses pressions."
+seoTitle: "Massage amma assis à Millas, près de Perpignan"
+seoDescription: "Massage amma à Millas (66) : un massage assis et habillé, par pressions, pour relâcher les tensions du dos, de la nuque et des épaules."
 icon: "massage"
 duration: "30 min"
 price: "30€"
