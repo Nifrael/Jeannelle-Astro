@@ -60,6 +60,8 @@ $noir: #000000;
   --base-size: 1rem;
   --scale: 1.2;
   --little-text: calc(var(--base-size) * 0.875);
+  // Mentions obligatoires (crédit de carte) : lisibles mais en retrait.
+  --tiny-text: calc(var(--base-size) * 0.75);
   --p: calc(var(--base-size) * 1.0625);
   --h5: calc(var(--base-size) * var(--scale));
   --h4: calc(var(--h5) * var(--scale));

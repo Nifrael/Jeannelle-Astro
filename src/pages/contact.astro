@@ -68,13 +68,16 @@ import carte from "@assets/images/lieu/carte-millas.png";
       </ul>
     </section>
 
+    {/* Hors de la section Accès pour se placer à côté des coordonnées sur ordinateur. */}
+    <Image
+      src={entree}
+      alt="Façade de Jeannelle : entrée voûtée en pierre et brique, numéro 18"
+      widths={[480, 720, 960]}
+      sizes="(width >= 1024px) 36rem, 100vw"
+      class="contact__photo"
+    />
+
     <section class="acces" aria-labelledby="acces">
-      <Image
-        src={entree}
-        alt="Façade de Jeannelle : entrée voûtée en pierre et brique, numéro 18"
-        widths={[480, 720, 960]}
-        sizes="(width >= 1024px) 36rem, 100vw"
-      />
       <h2 id="acces">Venir chez Jeannelle</h2>
       {
         /* [À VALIDER] indications d'accès et stationnement à demander à Karine. */
@@ -122,7 +125,7 @@ import carte from "@assets/images/lieu/carte-millas.png";
             target="_blank"
             rel="noopener"
           >
-            les contributeurs d'OpenStreetMap
+            OpenStreetMap
             <span class="visually-hidden">(nouvel onglet)</span>
           </a>
         </figcaption>
@@ -190,17 +193,18 @@ import carte from "@assets/images/lieu/carte-millas.png";
     font-size: var(--h5);
   }
 
+  // La classe est posée sur <Image> (composant enfant) : ciblée via :global sous .contact.
+  .contact :global(.contact__photo) {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--rayon-l);
+  }
+
   .acces {
     display: grid;
+    align-content: start;
     gap: var(--espace-m);
-
-    > img {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-      border-radius: var(--rayon-l);
-      margin-bottom: var(--espace-s);
-    }
   }
 
   .acces__itineraire {
@@ -220,21 +224,41 @@ import carte from "@assets/images/lieu/carte-millas.png";
       display: grid;
     }
 
+    // Plan sur toute la largeur, puis une ligne : « Ouvrir dans Google Maps » à gauche,
+    // crédit à droite. Le lien partage la grille de la figure (subgrid) pour cela.
+    grid-template-columns: 1fr auto;
+    column-gap: var(--espace-m);
+
     > a {
+      grid-column: 1 / -1;
+      grid-row: 1 / span 2;
       display: grid;
-      gap: var(--espace-s);
+      grid-template-columns: subgrid;
+      grid-template-rows: subgrid;
+      row-gap: var(--espace-s);
       text-decoration: none;
+
+      img {
+        grid-column: 1 / -1;
+      }
     }
 
+    // Recadré en 3:2 (le repère est au centre de la capture, il reste au centre).
     img {
       width: 100%;
       height: auto;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
       border: 1px solid var(--color-border);
       border-radius: var(--rayon-l);
     }
 
+    // Crédit exigé par la licence (forme courte admise par OpenStreetMap), en retrait.
     figcaption {
-      font-size: var(--little-text);
+      grid-column: 2;
+      grid-row: 2;
+      align-self: center;
+      font-size: var(--tiny-text);
       color: var(--color-text-secondary);
 
       a {
@@ -262,10 +286,45 @@ import carte from "@assets/images/lieu/carte-millas.png";
     }
   }
 
+  // Ordinateur : deux rangées sur les mêmes colonnes. Coordonnées | façade, puis accès | plan.
   @include breakpoint-up($breakpoint-desktop) {
     .contact {
       grid-template-columns: 1fr 1.2fr;
       gap: var(--espace-xxl);
+    }
+
+    // La photo prend la hauteur de la carte sans l'imposer : hauteur nulle dans le calcul
+    // de la rangée, puis étirée à 100 % de celle-ci.
+    .contact :global(.contact__photo) {
+      height: 0;
+      min-height: 100%;
+      aspect-ratio: auto;
+      // Recadrage par le bas : l'enseigne, en haut de la photo, reste visible.
+      object-position: center top;
+    }
+
+    // Sans plan (écran tactile), le texte d'accès prend toute la largeur.
+    .acces {
+      grid-column: 1 / -1;
+    }
+
+    // Avec le plan : texte à gauche, plan à droite, alignés sur les colonnes du dessus.
+    @include souris {
+      .acces {
+        grid-template-columns: subgrid;
+        grid-template-rows: auto 1fr;
+        column-gap: var(--espace-xxl);
+
+        > :not(.acces__carte) {
+          grid-column: 1;
+        }
+      }
+
+      .acces__carte {
+        grid-column: 2;
+        grid-row: 1 / -1;
+        margin: 0;
+      }
     }
   }
 </style>
