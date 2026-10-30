@@ -4,6 +4,7 @@ import logo from "@assets/images/logo/jeannelle.png";
 import { adresse, email, horaires, itineraire } from "@data/coordonnees";
 import Icone from "@components/UI/Icone.astro";
 import Telephone from "@components/UI/Telephone.astro";
+import { realisation } from "@data/seo";
 
 type Lien = { href: string; texte: string };
 type Props = { therapies: Lien[] };
@@ -33,7 +34,15 @@ const pages: Lien[] = [
       <ul role="list" class="pied__liste">
         <li>
           <Icone nom="localisation" />
-          <span>{adresse.rue}<br />{adresse.codePostal} {adresse.ville}</span>
+          {
+            /* L'adresse ouvre l'itinéraire : au téléphone, l'application GPS. */
+          }
+          <a href={itineraire.url} target="_blank" rel="noopener">
+            {adresse.rue}<br />{`${adresse.codePostal} ${adresse.ville}`}
+            <span class="visually-hidden">
+              (itinéraire sur {itineraire.texte}, nouvel onglet)
+            </span>
+          </a>
         </li>
         <li>
           <Icone nom="telephone" />
@@ -52,16 +61,6 @@ const pages: Lien[] = [
           <span>{horaires}</span>
         </li>
       </ul>
-      <a
-        class="pied__itineraire"
-        href={itineraire.url}
-        target="_blank"
-        rel="noopener"
-      >
-        Itinéraire<span class="visually-hidden">
-          vers Jeannelle sur {itineraire.texte} (nouvel onglet)</span
-        >
-      </a>
     </section>
 
     <nav aria-labelledby="pied-therapies">
@@ -92,11 +91,14 @@ const pages: Lien[] = [
   </div>
 
   <div class="pied__bas container">
-    <p>&copy; {new Date().getFullYear()} Jeannelle · Karine Maraval</p>
-    <ul role="list">
+    <ul role="list" class="pied__legal">
       <li><a href="/mentions-legales/">Mentions légales</a></li>
       <li><a href="/politique-de-confidentialite/">Confidentialité</a></li>
     </ul>
+    <p class="pied__credits">
+      <span>&copy; {new Date().getFullYear()} Jeannelle</span>
+      <span class="pied__auteur">Site développé par {realisation}</span>
+    </p>
   </div>
 </footer>
 
@@ -105,7 +107,7 @@ const pages: Lien[] = [
   @use "@styles/config/mixin" as *;
 
   .pied {
-    padding-top: var(--espace-xxl);
+    padding-top: var(--espace-xl);
     background-color: var(--color-bg-secondary);
     border-top: 1px solid var(--color-border);
     color: var(--color-text);
@@ -172,39 +174,65 @@ const pages: Lien[] = [
     }
   }
 
-  .pied .pied__itineraire {
-    display: inline-block;
-    margin-top: var(--espace-m);
-    text-decoration: underline;
-  }
-
   .pied__liens {
     display: grid;
     gap: var(--espace-s);
   }
 
+  // Deux lignes centrées : les pages légales, puis les crédits.
   .pied__bas {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: var(--espace-s) var(--espace-l);
+    display: grid;
+    justify-items: center;
+    gap: var(--espace-xs);
+    text-align: center;
     padding-block: var(--espace-l);
     border-top: 1px solid var(--color-border);
     color: var(--color-text-secondary);
+  }
 
-    ul {
-      display: flex;
-      gap: var(--espace-l);
+  // Crédits en plus petit. Mobile : le © et la mention sur deux lignes, chacune d'un bloc
+  // (la phrase entière ne tient pas à 390 px). Tablette et plus : une seule ligne.
+  .pied__bas .pied__credits {
+    display: grid;
+    font-size: var(--tiny-text);
+  }
+
+  .pied__auteur {
+    white-space: nowrap;
+  }
+
+  // Point médian entre les liens (texte alternatif vide : non lu par les lecteurs d'écran).
+  .pied__legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    li + li::before {
+      content: "·" / "";
+      margin-inline: var(--espace-s);
     }
   }
 
   @include breakpoint-up($breakpoint-tablet) {
+    .pied__bas .pied__credits {
+      display: block;
+    }
+
+    .pied__auteur::before {
+      content: "·" / "";
+      margin-inline: var(--espace-xs);
+    }
+
     .pied__grille {
       grid-template-columns: 1fr 1fr;
     }
   }
 
   @include breakpoint-up($breakpoint-desktop) {
+    .pied {
+      padding-top: var(--espace-xxl);
+    }
+
     .pied__grille {
       grid-template-columns: 1.4fr 1fr 1fr 1fr;
     }
