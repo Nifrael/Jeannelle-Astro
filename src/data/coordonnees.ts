@@ -24,15 +24,12 @@ export const horaires = "Sur rendez-vous uniquement";
 
 const destination = encodeURIComponent(adresseComplete);
 
-/** Liens d'itinéraire : pas de carte intégrée, donc aucun cookie tiers sur le site. */
-export const itineraires = [
-  {
-    texte: "Google Maps",
-    url: `https://www.google.com/maps/dir/?api=1&destination=${destination}`,
-  },
-  { texte: "Apple Plans", url: `https://maps.apple.com/?daddr=${destination}` },
-  {
-    texte: "Waze",
-    url: `https://waze.com/ul?ll=${adresse.latitude},${adresse.longitude}&navigate=yes`,
-  },
-];
+/**
+ * Lien d'itinéraire (pas de carte Google intégrée, donc aucun cookie tiers sur le site).
+ * Un seul lien suffit : il ouvre l'application Google Maps si elle est installée
+ * (Android propose de choisir l'application GPS), sinon Google Maps dans le navigateur.
+ */
+export const itineraire = {
+  texte: "Google Maps",
+  url: `https://www.google.com/maps/dir/?api=1&destination=${destination}`,
+};

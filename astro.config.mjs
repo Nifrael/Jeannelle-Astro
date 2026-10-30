@@ -49,6 +49,8 @@ export default defineConfig({
       name: "Figtree",
       cssVariable: "--font-text",
       weights: ["400", "500", "600"],
+      // Italique réel (accroches des thérapies), sinon le navigateur penche le romain.
+      styles: ["normal", "italic"],
     },
   ],
 });

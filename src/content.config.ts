@@ -34,6 +34,8 @@ const therapies = defineCollection({
       schedule: z
         .object({
           slots: z.array(z.string()).min(1),
+          // Condition de réservation (« jusqu'à la veille ») : les composants l'insèrent dans
+          // leur phrase, avec le numéro qui vient de src/data/coordonnees.ts.
           booking: z.string(),
         })
         .optional(),
