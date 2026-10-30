@@ -9,20 +9,18 @@ import {
   adresse,
   email,
   horaires,
-  itineraires,
+  itineraire,
   telephone,
 } from "@data/coordonnees";
 import entree from "@assets/images/lieu/entree.jpg";
+import carte from "@assets/images/lieu/carte-millas.png";
 ---
 
 <Layout
   titre="Contact et accès"
   description={`Prendre rendez-vous chez Jeannelle : ${telephone.affiche}. ${adresse.rue}, ${adresse.codePostal} ${adresse.ville}.`}
 >
-  <EnTetePage
-    titre="Contact et accès"
-    surtitre="Prendre rendez-vous"
-  >
+  <EnTetePage titre="Contact et accès" surtitre="Prendre rendez-vous">
     <p>
       Les séances ont lieu sur rendez-vous. Le plus simple : un appel, nous
       trouverons ensemble un créneau.
@@ -68,7 +66,6 @@ import entree from "@assets/images/lieu/entree.jpg";
           </div>
         </li>
       </ul>
-      <Telephone bouton>Appeler Jeannelle</Telephone>
     </section>
 
     <section class="acces" aria-labelledby="acces">
@@ -86,25 +83,50 @@ import entree from "@assets/images/lieu/entree.jpg";
         Au cœur du village de Millas : repérez la porte vitrée sous la voûte de
         brique, au numéro 18.
       </p>
-      <p class="acces__itineraires-titre">Ouvrir l'itinéraire dans :</p>
-      <ul role="list" class="acces__itineraires">
-        {
-          itineraires.map((itineraire) => (
-            <li>
-              <Bouton
-                href={itineraire.url}
-                target="_blank"
-                rel="noopener"
-                variante="secondaire"
-                icone="localisation"
-              >
-                {itineraire.texte}
-                <span class="visually-hidden">(nouvel onglet)</span>
-              </Bouton>
-            </li>
-          ))
-        }
-      </ul>
+      {/* Itinéraire : utile au téléphone (ouvre l'application GPS), masqué sur ordinateur. */}
+      <div class="acces__itineraire">
+        <Bouton
+          href={itineraire.url}
+          target="_blank"
+          rel="noopener"
+          variante="secondaire"
+          icone="localisation"
+        >
+          Lancer l'itinéraire
+          <span class="visually-hidden">(nouvel onglet)</span>
+        </Bouton>
+      </div>
+
+      {
+        /* Ordinateur : plan statique (aucun script ni cookie tiers) qui ouvre Google Maps.
+           Capture OpenStreetMap désaturée : le crédit est obligatoire (licence ODbL). */
+      }
+      <figure class="acces__carte">
+        <a href={itineraire.url} target="_blank" rel="noopener">
+          <Image
+            src={carte}
+            alt="Plan du centre de Millas : Jeannelle est au 18 rue Lieutenant Basseras, près de la mairie et de l'église"
+            widths={[480, 720, 1080, 1440]}
+            sizes="(width >= 1024px) 36rem, 100vw"
+          />
+          <span class="acces__carte-lien">
+            Ouvrir dans Google Maps
+            <Icone nom="lien-externe" />
+            <span class="visually-hidden">(nouvel onglet)</span>
+          </span>
+        </a>
+        <figcaption>
+          ©{" "}
+          <a
+            href="https://www.openstreetmap.org/copyright"
+            target="_blank"
+            rel="noopener"
+          >
+            les contributeurs d'OpenStreetMap
+            <span class="visually-hidden">(nouvel onglet)</span>
+          </a>
+        </figcaption>
+      </figure>
     </section>
   </div>
 </Layout>
@@ -172,7 +194,7 @@ import entree from "@assets/images/lieu/entree.jpg";
     display: grid;
     gap: var(--espace-m);
 
-    img {
+    > img {
       width: 100%;
       aspect-ratio: 4 / 3;
       object-fit: cover;
@@ -181,14 +203,63 @@ import entree from "@assets/images/lieu/entree.jpg";
     }
   }
 
-  .acces__itineraires-titre {
-    font-weight: 600;
+  .acces__itineraire {
+    @include souris {
+      display: none;
+    }
   }
 
-  .acces__itineraires {
-    display: flex;
-    flex-wrap: wrap;
+  // Plan : seulement sur ordinateur (au téléphone, le bouton d'itinéraire suffit).
+  // display: none empêche aussi le téléchargement de l'image (chargement différé).
+  .acces__carte {
+    display: none;
     gap: var(--espace-s);
+    margin: var(--espace-s) 0 0;
+
+    @include souris {
+      display: grid;
+    }
+
+    > a {
+      display: grid;
+      gap: var(--espace-s);
+      text-decoration: none;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--color-border);
+      border-radius: var(--rayon-l);
+    }
+
+    figcaption {
+      font-size: var(--little-text);
+      color: var(--color-text-secondary);
+
+      a {
+        color: inherit;
+      }
+    }
+  }
+
+  .acces__carte-lien {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espace-s);
+    font-weight: 500;
+
+    :global(.icone) {
+      transition: transform var(--transition);
+    }
+  }
+
+  .acces__carte > a {
+    @include survol {
+      .acces__carte-lien :global(.icone) {
+        transform: translate(2px, -2px);
+      }
+    }
   }
 
   @include breakpoint-up($breakpoint-desktop) {
@@ -196,6 +267,5 @@ import entree from "@assets/images/lieu/entree.jpg";
       grid-template-columns: 1fr 1.2fr;
       gap: var(--espace-xxl);
     }
-
   }
 </style>
