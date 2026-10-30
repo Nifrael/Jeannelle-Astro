@@ -1,5 +1,5 @@
 ---
-title: "Naturopathie & (Micro)Nutrition"
+title: "Naturopathie & Micro-Nutrition"
 excerpt: "Redonner au corps et aux émonctoires leur plein potentiel de fonctionnement."
 icon: "feuille"
 duration: "1h"

@@ -29,6 +29,14 @@ const therapies = defineCollection({
       price: z.string().optional(),
       secondPrice: z.string().optional(),
       pack: z.string().optional(),
+      // Cours collectif à horaires fixes : créneaux et règle de réservation.
+      // Affiché en encart sur l'accueil et dans la carte rendez-vous de la fiche.
+      schedule: z
+        .object({
+          slots: z.array(z.string()).min(1),
+          booking: z.string(),
+        })
+        .optional(),
       image: photo(image).optional(),
       order: z.number().default(0),
       draft: z.boolean().default(false),
