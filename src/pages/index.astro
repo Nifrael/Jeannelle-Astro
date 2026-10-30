@@ -6,6 +6,7 @@ import Presentation from "@components/Accueil/Presentation.astro";
 import ApercuEspaces from "@components/Accueil/ApercuEspaces.astro";
 import AppelRendezVous from "@components/Accueil/AppelRendezVous.astro";
 import CarteTherapie from "@components/Therapies/CarteTherapie.astro";
+import EncartCours from "@components/Therapies/EncartCours.astro";
 import CarteActualite from "@components/Actualites/CarteActualite.astro";
 import CartePraticienne from "@components/Equipe/CartePraticienne.astro";
 import EnTeteSection from "@components/UI/EnTeteSection.astro";
@@ -19,7 +20,11 @@ import {
 import { descriptionParDefaut, nomDuSite, partageParDefaut } from "@data/seo";
 import { etablissementLocal } from "@lib/donnees-structurees";
 import { trierActualites } from "@lib/actualites";
-import { trierTherapies } from "@lib/therapies";
+import {
+  coursCollectifs,
+  therapiesIndividuelles,
+  trierTherapies,
+} from "@lib/therapies";
 import { getImage } from "astro:assets";
 
 const aPropos = await getEntry("pages", "a-propos");
@@ -28,6 +33,8 @@ if (!citation)
   throw new Error("Citation manquante dans src/content/pages/a-propos.md");
 
 const therapies = trierTherapies(await getCollection("therapies"));
+const cours = coursCollectifs(therapies);
+const individuelles = therapiesIndividuelles(therapies);
 const actualites = trierActualites(await getCollection("actualites")).slice(
   0,
   3,
@@ -62,9 +69,10 @@ const donneesStructurees = etablissementLocal(
         surtitre={texteTherapies.surtitre}
         titre={texteTherapies.titre}
       />
+      {cours.map((therapie) => <EncartCours therapie={therapie} />)}
       <Grille taille="etroite">
         {
-          therapies.map((therapie) => (
+          individuelles.map((therapie) => (
             <li>
               <CarteTherapie therapie={therapie} />
             </li>

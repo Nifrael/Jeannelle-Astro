@@ -30,33 +30,53 @@ import Telephone from "@components/UI/Telephone.astro";
   @use "@styles/config/variables" as *;
   @use "@styles/config/mixin" as *;
 
+  // Effet « fenêtre » (comme sur linstant-soleana.fr) : la photo reste immobile à l'écran et
+  // la section glisse par-dessus. Pas de background-attachment: fixed (cassé sur iOS, repeint à
+  // chaque scroll) : la photo est en position: fixed, et clip-path la découpe aux bords de la section.
   .appel {
     position: relative;
     isolation: isolate;
-    padding-block: var(--espace-section);
+    clip-path: inset(0);
+    // Bandeau plus bas qu'une section : c'est une respiration, pas un bloc de contenu.
+    padding-block: var(--espace-xxl);
+
+    // Voile sombre entre la photo et la carte : la section se détache du reste de la page.
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-color: var(--color-voile);
+    }
   }
 
-  .appel__fond {
-    position: absolute;
+  // lvh : hauteur d'écran barre d'adresse repliée, pour que la photo ne saute pas sur mobile.
+  .appel :global(.appel__fond) {
+    position: fixed;
     inset: 0;
-    z-index: -1;
+    z-index: -2;
     width: 100%;
-    height: 100%;
+    height: 100lvh;
     object-fit: cover;
+    object-position: 75% center;
   }
 
   .appel__carte {
     display: grid;
-    gap: var(--espace-m);
+    gap: var(--espace-s);
     justify-items: center;
-    max-width: 36rem;
+    max-width: 24rem;
     margin-inline: auto;
-    padding: var(--espace-xl) var(--espace-l);
+    padding: var(--espace-l);
     border-radius: var(--rayon-l);
-    background-color: var(--color-bg-translucent);
-    backdrop-filter: blur(20px);
-    box-shadow: var(--shadow-m);
+    background-color: var(--color-bg-cards);
+    box-shadow: var(--shadow-s);
     text-align: center;
+
+    // Titre de section, mais à la taille d'un titre de carte : la photo fait déjà l'effet.
+    h2 {
+      font-size: var(--h4);
+    }
 
     > p:first-of-type {
       color: var(--color-text-secondary);
@@ -68,16 +88,10 @@ import Telephone from "@components/UI/Telephone.astro";
     color: var(--color-text-secondary);
   }
 
+  // Plus large dès la tablette : le texte tient sur moins de lignes, la carte est moins haute.
   @include breakpoint-up($breakpoint-tablet) {
     .appel__carte {
-      padding: var(--espace-xxl);
-    }
-  }
-
-  // La pivoine est à droite de la photo : la carte se range à gauche pour la laisser voir.
-  @include breakpoint-up($breakpoint-desktop) {
-    .appel__carte {
-      margin-inline-start: 0;
+      max-width: 36rem;
     }
   }
 </style>

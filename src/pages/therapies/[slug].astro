@@ -5,6 +5,7 @@ import Layout from "@layouts/Layout.astro";
 import Prose from "@components/UI/Prose.astro";
 import Telephone from "@components/UI/Telephone.astro";
 import Icone from "@components/UI/Icone.astro";
+import Pastille from "@components/UI/Pastille.astro";
 import LienFleche from "@components/UI/LienFleche.astro";
 import { adresseComplete } from "@data/coordonnees";
 import { trierTherapies } from "@lib/therapies";
@@ -28,8 +29,16 @@ export async function getStaticPaths() {
 }
 
 const { therapie, praticiennes, autres } = Astro.props;
-const { title, excerpt, duration, price, secondPrice, pack, image } =
-  therapie.data;
+const {
+  title,
+  excerpt,
+  duration,
+  price,
+  secondPrice,
+  pack,
+  image,
+  schedule,
+} = therapie.data;
 const { Content } = await render(therapie);
 
 // Cases de la fiche pratique : seulement celles qui ont une valeur.
@@ -118,7 +127,23 @@ const infos = [
     }
 
     <div class="carte rendez-vous">
-      <p class="libelle">Sur rendez-vous</p>
+      {
+        schedule ? (
+          <>
+            <p class="libelle">Cours collectif</p>
+            <ul role="list" class="rendez-vous__creneaux">
+              {schedule.slots.map((creneau) => (
+                <li>
+                  <Pastille icone="horloge">{creneau}</Pastille>
+                </li>
+              ))}
+            </ul>
+            <p>{schedule.booking}</p>
+          </>
+        ) : (
+          <p class="libelle">Sur rendez-vous</p>
+        )
+      }
       <p>{adresseComplete}</p>
       <Telephone bouton taille="petite">Prendre rendez-vous</Telephone>
     </div>
@@ -341,6 +366,13 @@ const infos = [
     justify-items: center;
     padding: var(--espace-carte);
     text-align: center;
+  }
+
+  .rendez-vous__creneaux {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--espace-s);
   }
 
   // ----- Découvrir aussi -----

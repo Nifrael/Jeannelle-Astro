@@ -9,12 +9,18 @@ $breakpoint-desktop-xxl: 1440px;
 // Elle n'alimente que les tokens :root ci-dessous.
 
 $blanc: #ffffff;
-$rose: rgb(252, 232, 229); // utilisé à 30 % d'opacité, comme avant (--main-color)
+$rose: rgb(
+  252,
+  232,
+  229
+); // utilisé à 30 % d'opacité, comme avant (--main-color)
 $rose-clair: rgb(255, 249, 249); // ancien --main-color-full-opacity
 $gris: #5b5b5b; // ancien --text-primary-color
 // Ancien --important-color. Contraste 2,4:1 sur le fond : insuffisant pour du texte (AA = 4,5:1).
 // Une version foncée est à décider avec Julien : en attendant, c'est la couleur d'action.
 $caramel: #cf9a71;
+// Ajout validé par Julien : uniquement pour assombrir une photo (voile), jamais pour du texte.
+$noir: #000000;
 
 // Fin des couleurs
 
@@ -42,6 +48,8 @@ $caramel: #cf9a71;
   --color-border: #{rgba($caramel, 0.25)};
   // Dégradé sous un texte blanc posé sur une photo (cartes des thérapeutes) : gris de la palette.
   --color-overlay: #{rgba($gris, 0.85)};
+  // Voile sombre sur une photo de fond (section « Prendre rendez-vous »).
+  --color-voile: #{rgba($noir, 0.25)};
 
   // Ombres
   // Reprises de l'ancien site (cartes et carrousel).

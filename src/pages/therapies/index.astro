@@ -4,10 +4,17 @@ import Layout from "@layouts/Layout.astro";
 import EnTetePage from "@components/UI/EnTetePage.astro";
 import Grille from "@components/UI/Grille.astro";
 import CarteTherapie from "@components/Therapies/CarteTherapie.astro";
+import EncartCours from "@components/Therapies/EncartCours.astro";
 import AppelRendezVous from "@components/Accueil/AppelRendezVous.astro";
-import { trierTherapies } from "@lib/therapies";
+import {
+  coursCollectifs,
+  therapiesIndividuelles,
+  trierTherapies,
+} from "@lib/therapies";
 
 const therapies = trierTherapies(await getCollection("therapies"));
+const cours = coursCollectifs(therapies);
+const individuelles = therapiesIndividuelles(therapies);
 ---
 
 <Layout
@@ -24,9 +31,10 @@ const therapies = trierTherapies(await getCollection("therapies"));
     </p>
   </EnTetePage>
   <div class="container liste">
+    {cours.map((therapie) => <EncartCours therapie={therapie} titre="h2" />)}
     <Grille taille="etroite">
       {
-        therapies.map((therapie) => (
+        individuelles.map((therapie) => (
           <li>
             <CarteTherapie therapie={therapie} titre="h2" />
           </li>

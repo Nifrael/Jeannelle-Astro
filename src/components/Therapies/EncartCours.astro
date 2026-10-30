@@ -1,0 +1,136 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Icone from "@components/UI/Icone.astro";
+import Pastille from "@components/UI/Pastille.astro";
+import Telephone from "@components/UI/Telephone.astro";
+import LienFleche from "@components/UI/LienFleche.astro";
+
+// `titre` : h3 sous un titre de section (accueil), h2 directement sous le h1 (page Thérapies).
+type Props = { therapie: CollectionEntry<"therapies">; titre?: "h2" | "h3" };
+
+const { therapie, titre: Titre = "h3" } = Astro.props;
+const { title, icon, schedule, price, duration } = therapie.data;
+---
+
+{
+  schedule && (
+    <aside class="encart" aria-labelledby={`cours-${therapie.id}`}>
+      <div class="encart__entete">
+        <span class="encart__icone">
+          <Icone nom={icon} />
+        </span>
+        <div>
+          <Titre id={`cours-${therapie.id}`}>{title}</Titre>
+          {(price || duration) && (
+            <p class="encart__infos">
+              {price && <span class="encart__prix">{price}</span>}
+              {duration && <span>{duration}</span>}
+            </p>
+          )}
+        </div>
+      </div>
+      <ul role="list" class="encart__creneaux">
+        {schedule.slots.map((creneau) => (
+          <li>
+            <Pastille icone="horloge">{creneau}</Pastille>
+          </li>
+        ))}
+      </ul>
+      <p class="encart__reservation">{schedule.booking}</p>
+      <div class="encart__actions">
+        <Telephone bouton taille="petite" />
+        <LienFleche href={`/therapies/${therapie.id}/`}>En savoir plus</LienFleche>
+      </div>
+    </aside>
+  )
+}
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixin" as *;
+
+  // Information pratique, mise en avant sans animation : fond caramel très léger et filet.
+  .encart {
+    display: grid;
+    gap: var(--espace-m);
+    margin-bottom: var(--espace-l);
+    padding: var(--espace-carte);
+    border: 1px solid var(--color-border);
+    border-radius: var(--rayon-l);
+    background-color: var(--color-action-soft);
+  }
+
+  .encart__entete {
+    display: flex;
+    align-items: center;
+    gap: var(--espace-m);
+
+    h2,
+    h3 {
+      font-size: var(--h4);
+    }
+  }
+
+  // Même présentation que le bas des cartes thérapies : prix en avant, durée à côté.
+  .encart__infos {
+    display: flex;
+    align-items: center;
+    gap: var(--espace-s);
+    margin-top: var(--espace-xs);
+    font-size: var(--little-text);
+    color: var(--color-text-secondary);
+
+    span + span::before {
+      content: "·";
+      margin-inline-end: var(--espace-s);
+    }
+  }
+
+  .encart__prix {
+    font-size: var(--h5);
+    font-weight: 700;
+    color: var(--color-action);
+  }
+
+  .encart__icone {
+    color: var(--color-action);
+    font-size: var(--h3);
+    line-height: 0;
+  }
+
+  .encart__creneaux {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espace-s);
+  }
+
+  .encart__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--espace-m) var(--espace-l);
+  }
+
+  // Ordinateur : titre et créneaux à gauche, réservation et actions à droite.
+  @include breakpoint-up($breakpoint-desktop) {
+    .encart {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      column-gap: var(--espace-xl);
+    }
+
+    .encart__creneaux {
+      grid-row: 2;
+    }
+
+    .encart__reservation {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .encart__actions {
+      grid-column: 2;
+      grid-row: 2;
+    }
+  }
+</style>
