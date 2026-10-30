@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import logo from "@assets/images/logo/jeannelle.png";
-import { adresse, email, horaires, itineraires } from "@data/coordonnees";
+import { adresse, email, horaires, itineraire } from "@data/coordonnees";
 import Icone from "@components/UI/Icone.astro";
 import Telephone from "@components/UI/Telephone.astro";
 
@@ -54,12 +54,12 @@ const pages: Lien[] = [
       </ul>
       <a
         class="pied__itineraire"
-        href={itineraires[0].url}
+        href={itineraire.url}
         target="_blank"
         rel="noopener"
       >
         Itinéraire<span class="visually-hidden">
-          vers Jeannelle sur {itineraires[0].texte} (nouvel onglet)</span
+          vers Jeannelle sur {itineraire.texte} (nouvel onglet)</span
         >
       </a>
     </section>
