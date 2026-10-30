@@ -1,0 +1,171 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Icone from "@components/UI/Icone.astro";
+import LienFleche from "@components/UI/LienFleche.astro";
+
+// Liste des thérapies, façon carte de soins : une seule carte, une ligne par thérapie.
+// `titre` : h3 sous un titre de section (accueil), h2 directement sous le h1 (page Thérapies).
+type Props = { therapies: CollectionEntry<"therapies">[]; titre?: "h2" | "h3" };
+
+const { therapies, titre: Titre = "h3" } = Astro.props;
+---
+
+<ul role="list" class="soins">
+  {
+    therapies.map((therapie) => {
+      const { title, excerpt, icon, price, duration } = therapie.data;
+      return (
+        <li class="soin">
+          <span class="soin__icone">
+            <Icone nom={icon} />
+          </span>
+          <Titre class="soin__titre">{title}</Titre>
+          <p class="soin__texte">{excerpt}</p>
+          <div class="soin__pied">
+            <p class="soin__infos">
+              {price && <span class="soin__prix">{price}</span>}
+              {duration && <span>{duration}</span>}
+            </p>
+            {/* Seul élément cliquable : le nom complète « Découvrir » pour les lecteurs d'écran. */}
+            <LienFleche href={`/therapies/${therapie.id}/`}>
+              Découvrir<span class="visually-hidden"> : {title}</span>
+            </LienFleche>
+          </div>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixin" as *;
+
+  .soins {
+    border: 1px solid var(--color-border);
+    border-radius: var(--rayon-l);
+    background-color: var(--color-bg-cards);
+  }
+
+  // Mobile : titre sur toute la largeur et pastille en haut à droite, pour que tout le texte
+  // parte du même bord gauche. Puis l'accroche, puis prix et « Découvrir ».
+  .soin {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "titre icone"
+      "texte texte"
+      "pied pied";
+    align-items: start;
+    gap: var(--espace-s) var(--espace-m);
+    padding: var(--espace-l);
+
+    & + & {
+      border-top: 1px solid var(--color-border);
+    }
+  }
+
+  .soin__icone {
+    grid-area: icone;
+    display: grid;
+    place-items: center;
+    padding: var(--espace-s);
+    border-radius: var(--rayon-rond);
+    background-color: var(--color-action-soft);
+    color: var(--color-action);
+    font-size: var(--h4);
+    transition:
+      background-color var(--transition),
+      color var(--transition);
+  }
+
+  .soin__titre {
+    grid-area: titre;
+    font-size: var(--h4);
+  }
+
+  // Accroche en retrait du titre : un cran plus petite, en italique.
+  .soin__texte {
+    grid-area: texte;
+    font-size: var(--base-size);
+    font-style: italic;
+    color: var(--color-text-secondary);
+  }
+
+  .soin__pied {
+    grid-area: pied;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espace-s) var(--espace-m);
+  }
+
+  .soin__infos {
+    display: flex;
+    align-items: center;
+    gap: var(--espace-s);
+    font-size: var(--little-text);
+    color: var(--color-text-secondary);
+
+    span + span::before {
+      content: "·";
+      margin-inline-end: var(--espace-s);
+    }
+  }
+
+  // Le prix ressort : caramel et gras, un cran au-dessus du texte.
+  .soin__prix {
+    font-size: var(--h5);
+    font-weight: 700;
+    color: var(--color-action);
+  }
+
+  // Seul effet : quand on vise « Découvrir » (souris ou clavier), la pastille se remplit.
+  @mixin icone-active {
+    .soin__icone {
+      background-color: var(--color-action);
+      color: var(--color-action-text);
+    }
+  }
+
+  @include souris {
+    .soin:has(:global(.lien-fleche):hover) {
+      @include icone-active;
+    }
+  }
+
+  .soin:has(:focus-visible) {
+    @include icone-active;
+  }
+
+  // Tablette et plus : prix et « Découvrir » dans une colonne à droite. Les lignes partagent
+  // la grille de la liste (subgrid), donc cette colonne est alignée d'une thérapie à l'autre.
+  @include breakpoint-up($breakpoint-tablet) {
+    .soins {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+    }
+
+    .soin {
+      grid-column: 1 / -1;
+      grid-template-columns: subgrid;
+      grid-template-areas:
+        "icone titre pied"
+        "icone texte pied";
+      column-gap: var(--espace-l);
+      padding: var(--espace-l) var(--espace-xl);
+    }
+
+    .soin__texte {
+      align-self: start;
+    }
+
+    .soin__pied {
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      padding-inline-start: var(--espace-l);
+    }
+  }
+</style>

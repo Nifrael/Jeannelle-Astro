@@ -2,8 +2,7 @@
 import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import EnTetePage from "@components/UI/EnTetePage.astro";
-import Grille from "@components/UI/Grille.astro";
-import CarteTherapie from "@components/Therapies/CarteTherapie.astro";
+import ListeTherapies from "@components/Therapies/ListeTherapies.astro";
 import EncartCours from "@components/Therapies/EncartCours.astro";
 import AppelRendezVous from "@components/Accueil/AppelRendezVous.astro";
 import {
@@ -32,15 +31,7 @@ const individuelles = therapiesIndividuelles(therapies);
   </EnTetePage>
   <div class="container liste">
     {cours.map((therapie) => <EncartCours therapie={therapie} titre="h2" />)}
-    <Grille taille="etroite">
-      {
-        individuelles.map((therapie) => (
-          <li>
-            <CarteTherapie therapie={therapie} titre="h2" />
-          </li>
-        ))
-      }
-    </Grille>
+    <ListeTherapies therapies={individuelles} titre="h2" />
   </div>
   <AppelRendezVous />
 </Layout>

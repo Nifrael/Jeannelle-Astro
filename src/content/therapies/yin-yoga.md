@@ -6,7 +6,7 @@ duration: "1h"
 price: "13€"
 schedule:
   slots: ["Mercredi · 14h30", "Vendredi · 18h"]
-  booking: "Réservation par téléphone, jusqu'à la veille."
+  booking: "jusqu'à la veille"
 image:
   src: "../../assets/images/lieu/salle-yoga-bougies.jpg"
   alt: "Salle de yoga aux murs de pierre, tapis et coussins disposés à la lumière des bougies"

@@ -5,7 +5,7 @@ import Hero from "@components/Accueil/Hero.astro";
 import Presentation from "@components/Accueil/Presentation.astro";
 import ApercuEspaces from "@components/Accueil/ApercuEspaces.astro";
 import AppelRendezVous from "@components/Accueil/AppelRendezVous.astro";
-import CarteTherapie from "@components/Therapies/CarteTherapie.astro";
+import ListeTherapies from "@components/Therapies/ListeTherapies.astro";
 import EncartCours from "@components/Therapies/EncartCours.astro";
 import CarteActualite from "@components/Actualites/CarteActualite.astro";
 import CartePraticienne from "@components/Equipe/CartePraticienne.astro";
@@ -70,15 +70,7 @@ const donneesStructurees = etablissementLocal(
         titre={texteTherapies.titre}
       />
       {cours.map((therapie) => <EncartCours therapie={therapie} />)}
-      <Grille taille="etroite">
-        {
-          individuelles.map((therapie) => (
-            <li>
-              <CarteTherapie therapie={therapie} />
-            </li>
-          ))
-        }
-      </Grille>
+      <ListeTherapies therapies={individuelles} />
     </div>
   </section>
 
@@ -99,7 +91,7 @@ const donneesStructurees = etablissementLocal(
     </div>
   </section>
 
-  <section class="section section--teinte" aria-labelledby="actualites-titre">
+  <section class="section" aria-labelledby="actualites-titre">
     <div class="container">
       <div class="section__entete">
         <EnTeteSection
@@ -125,9 +117,13 @@ const donneesStructurees = etablissementLocal(
 </Layout>
 
 <style lang="scss">
-
   .section {
     padding-block: var(--espace-section);
+  }
+
+  // Deux sections de suite sur le même fond : un seul espacement entre elles, pas deux.
+  .section:not(.section--teinte) + .section:not(.section--teinte) {
+    padding-top: 0;
   }
 
   .section--teinte {
