@@ -1,8 +1,11 @@
 ---
-# [À VALIDER] rôle, thérapies, photo et lien : informations à demander à Soledad.
 name: "Soledad Barranco"
-role: "Massages bien-être · Yoga du visage"
+role: "Partenaire · Massages bien-être · Yoga du visage"
+photo:
+  src: "../../assets/images/equipe/Soledad.jpg"
+  alt: "Portrait de Soledad Barranco, partenaire de Jeannelle"
 therapies: []
+link: "https://linstant-soleana.fr"
 order: 2
 ---
 

@@ -4,7 +4,14 @@ role: "Fondatrice · Naturopathe, réflexologue, psychopraticienne"
 photo:
   src: "../../assets/images/equipe/karine-maraval-portrait.jpg"
   alt: "Portrait de Karine Maraval, fondatrice de Jeannelle"
-therapies: ["naturopathie", "reflexologie-plantaire", "psychopraticienne", "yin-yoga", "massage-amma"]
+therapies:
+  [
+    "naturopathie",
+    "reflexologie-plantaire",
+    "psychopraticienne",
+    "yin-yoga",
+    "massage-amma",
+  ]
 link: "/a-propos/"
 order: 1
 ---

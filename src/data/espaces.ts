@@ -31,11 +31,11 @@ export const espaces: Espace[] = [
   {
     id: "cabinets",
     titre: "Cabinets de consultation",
-    usage: "Consultations individuelles", // [À VALIDER]
+    usage: "Consultations individuelles",
     texte:
       "Deux cabinets lumineux, au calme, pour vos consultations individuelles.",
     details: [
-      "Location à l'heure, à la demi-journée ou à la journée [À VALIDER]",
+      "Location à discuter, ponctuelle, régulière, hebdomadaire, etc...",
       "Salle d'attente partagée",
     ],
     photos: [
