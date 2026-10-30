@@ -39,7 +39,7 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.google(),
-      name: "Fraunces",
+      name: "Lora",
       cssVariable: "--font-title",
       weights: ["400", "500", "600"],
       styles: ["normal", "italic"],

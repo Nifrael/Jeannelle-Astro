@@ -4,8 +4,7 @@ import { Image } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
 import Prose from "@components/UI/Prose.astro";
 import Telephone from "@components/UI/Telephone.astro";
-import CarteTherapie from "@components/Therapies/CarteTherapie.astro";
-import Grille from "@components/UI/Grille.astro";
+import Icone from "@components/UI/Icone.astro";
 import LienFleche from "@components/UI/LienFleche.astro";
 import { adresseComplete } from "@data/coordonnees";
 import { trierTherapies } from "@lib/therapies";
@@ -123,24 +122,32 @@ const infos = [
       <p>{adresseComplete}</p>
       <Telephone bouton taille="petite">Prendre rendez-vous</Telephone>
     </div>
-  </div>
 
-  {
-    autres.length > 0 && (
-      <section class="autres" aria-labelledby="autres-titre">
-        <div class="container">
+    {/* Simple invitation vers les autres thérapies : nom et accroche, sans prix ni durée. */}
+    {
+      autres.length > 0 && (
+        <section class="autres" aria-labelledby="autres-titre">
           <h2 id="autres-titre">Découvrir aussi</h2>
-          <Grille taille="etroite">
+          <ul role="list">
             {autres.map((autre) => (
               <li>
-                <CarteTherapie therapie={autre} />
+                <a class="autre" href={`/therapies/${autre.id}/`}>
+                  <span class="autre__icone">
+                    <Icone nom={autre.data.icon} />
+                  </span>
+                  <span class="autre__texte">
+                    <span class="autre__titre">{autre.data.title}</span>
+                    <span class="autre__accroche">{autre.data.excerpt}</span>
+                  </span>
+                  <Icone nom="fleche" />
+                </a>
               </li>
             ))}
-          </Grille>
-        </div>
-      </section>
-    )
-  }
+          </ul>
+        </section>
+      )
+    }
+  </div>
 </Layout>
 
 <style lang="scss">
@@ -338,13 +345,70 @@ const infos = [
 
   // ----- Découvrir aussi -----
 
-  // Pas de marge haute : celle du bas de .therapie sépare déjà les deux blocs (sinon elles s'additionnent).
+  // Liste légère, sans cadre : des lignes séparées par un filet, pour attirer sans alourdir.
   .autres {
-    padding-bottom: var(--espace-section);
+    margin-top: var(--espace-xl);
 
     h2 {
-      margin-bottom: var(--espace-xl);
+      margin-bottom: var(--espace-m);
+      font-size: var(--h4);
     }
+
+    li + li {
+      border-top: 1px solid var(--color-border);
+    }
+  }
+
+  .autre {
+    display: flex;
+    align-items: center;
+    gap: var(--espace-m);
+    padding-block: var(--espace-m);
+    color: var(--color-text);
+    text-decoration: none;
+
+    > :global(.icone) {
+      color: var(--color-action);
+      transition: transform var(--transition);
+    }
+
+    &:focus-visible {
+      @include focus-visible;
+    }
+
+    @include survol {
+      .autre__titre {
+        color: var(--color-action);
+      }
+
+      > :global(.icone) {
+        transform: translateX(3px);
+      }
+    }
+  }
+
+  .autre__icone {
+    color: var(--color-action);
+    font-size: var(--h4);
+    line-height: 0;
+  }
+
+  .autre__texte {
+    display: grid;
+    flex: 1;
+    gap: var(--espace-xs);
+  }
+
+  .autre__titre {
+    font-family: var(--font-title);
+    font-size: var(--h5);
+    line-height: 1.25;
+    transition: color var(--transition);
+  }
+
+  .autre__accroche {
+    font-size: var(--little-text);
+    color: var(--color-text-secondary);
   }
 
   @include breakpoint-up($breakpoint-tablet) {

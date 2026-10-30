@@ -1,6 +1,6 @@
 ---
 name: "Karine Maraval"
-role: "Fondatrice · Naturopathe, réflexologue, psychopraticienne"
+role: "Fondatrice"
 photo:
   src: "../../assets/images/equipe/karine-maraval-portrait.jpg"
   alt: "Portrait de Karine Maraval, fondatrice de Jeannelle"

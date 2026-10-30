@@ -26,5 +26,5 @@ sommeil, soulage les douleurs et ramène clarté et apaisement à l'esprit.
 Un cours collectif accessible à tous les niveaux. Prévoyez une tenue
 confortable et votre petite serviette.
 
-**Rendez-vous chaque vendredi à 18h.** Réservation par téléphone jusqu'à la
+**Rendez-vous chaque mercredi à 14h30 et vendredi à 18h.** Réservation par téléphone jusqu'à la
 veille.
