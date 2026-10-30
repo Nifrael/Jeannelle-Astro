@@ -79,16 +79,16 @@ const donneesStructurees = etablissementLocal(
   <section class="section" aria-labelledby="equipe-titre">
     <div class="container">
       <EnTeteSection id="equipe-titre" titre={equipe.titre} centre />
+      <ul role="list" class="equipe">
+        {
+          praticiennes.map((praticienne) => (
+            <li>
+              <CartePraticienne praticienne={praticienne} />
+            </li>
+          ))
+        }
+      </ul>
     </div>
-    <ul role="list" class="equipe">
-      {
-        praticiennes.map((praticienne) => (
-          <li>
-            <CartePraticienne praticienne={praticienne} />
-          </li>
-        ))
-      }
-    </ul>
   </section>
 
   <section class="section section--teinte" aria-labelledby="actualites-titre">
@@ -117,8 +117,6 @@ const donneesStructurees = etablissementLocal(
 </Layout>
 
 <style lang="scss">
-  @use "@styles/config/variables" as *;
-  @use "@styles/config/mixin" as *;
 
   .section {
     padding-block: var(--espace-section);
@@ -128,30 +126,13 @@ const donneesStructurees = etablissementLocal(
     background-color: var(--color-bg-secondary);
   }
 
-  // Mobile : les cartes défilent à l'horizontale, la suivante dépasse pour inviter à glisser.
-  // Grand écran : elles se rangent côte à côte, centrées.
+  // Cartes de 20rem au plus : empilées sur mobile, côte à côte et centrées dès que la place le permet.
+  // Rien ne dépasse de l'écran (pas de défilement horizontal).
   .equipe {
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: min(80%, 20rem);
-    gap: var(--espace-m);
-    overflow-x: auto;
-    padding-inline: var(--gouttiere);
-    padding-bottom: var(--espace-s);
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--gouttiere);
-    scrollbar-width: none;
-
-    li {
-      scroll-snap-align: start;
-    }
-  }
-
-  @include breakpoint-up($breakpoint-tablet) {
-    .equipe {
-      justify-content: center;
-      gap: var(--espace-l);
-    }
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 20rem));
+    justify-content: center;
+    gap: var(--espace-l);
   }
 
   .section__entete {
