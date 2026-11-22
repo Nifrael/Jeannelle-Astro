@@ -26,6 +26,6 @@ potentiel et à relancer la circulation dans les méridiens selon l'approche
 
 ## Le déroulé d'une séance
 
-Confortablement installé·e, vous vous laissez porter pendant que Jeannelle
+Confortablement installé·e, vous vous laissez porter pendant que Karine
 travaille les zones réflexes du pied par pressions et mobilisations. Un moment
 de détente profonde, à l'écoute des signaux du corps.

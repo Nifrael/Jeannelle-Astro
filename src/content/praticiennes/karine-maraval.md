@@ -13,6 +13,8 @@ therapies:
     "massage-amma",
   ]
 link: "/a-propos/"
+booking:
+  condition: "jusqu'à la veille"
 order: 1
 ---
 

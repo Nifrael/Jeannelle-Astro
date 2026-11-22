@@ -34,15 +34,17 @@ const therapies = defineCollection({
       price: z.string().optional(),
       secondPrice: z.string().optional(),
       pack: z.string().optional(),
-      // Cours collectif à horaires fixes : créneaux et règle de réservation.
+      // Cours collectif à horaires fixes : créneaux regroupés par enseignante, car chacune
+      // prend ses inscriptions à sa façon (champ `booking` de sa fiche praticienne).
       // Affiché en encart sur l'accueil et dans la carte rendez-vous de la fiche.
       schedule: z
-        .object({
-          slots: z.array(z.string()).min(1),
-          // Condition de réservation (« jusqu'à la veille ») : les composants l'insèrent dans
-          // leur phrase, avec le numéro qui vient de src/data/coordonnees.ts.
-          booking: z.string(),
-        })
+        .array(
+          z.object({
+            teacher: reference("praticiennes"),
+            slots: z.array(z.string()).min(1),
+          }),
+        )
+        .min(1)
         .optional(),
       image: photo(image).optional(),
       order: z.number().default(0),
@@ -80,6 +82,20 @@ const praticiennes = defineCollection({
       therapies: z.array(reference("therapies")).default([]),
       // Page interne (« /a-propos/ ») ou site personnel de la praticienne.
       link: z.string().optional(),
+      // Inscription aux cours collectifs. Sans `url` : téléphone du centre
+      // (src/data/coordonnees.ts). Avec `url` : lien propre à l'enseignante (Instagram…).
+      booking: z
+        .object({
+          url: z.url().optional(),
+          // Texte du lien, obligatoire avec `url` (« Instagram (@cassanayoga) »).
+          label: z.string().optional(),
+          // Condition ajoutée à la phrase (« jusqu'à la veille »).
+          condition: z.string().optional(),
+        })
+        .refine((booking) => !booking.url || booking.label, {
+          message: "`label` est obligatoire quand `url` est renseignée",
+        })
+        .optional(),
       order: z.number().default(0),
     }),
 });

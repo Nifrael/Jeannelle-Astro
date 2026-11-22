@@ -56,22 +56,22 @@ export const espaces: Espace[] = [
     texte:
       "Il vous est possible de réserver le local pour vos formations, vos conférences, vos évènements…",
     details: [
-      "Mezzanine lumineuse sous suspensions en rotin",
+      "Espace tisanerie",
       "Idéale pour les petits groupes",
     ],
     photos: [
       {
         src: salleFormation,
-        alt: "Vue plongeante sur la mezzanine, fauteuils, plantes et suspensions en rotin",
+        alt: "Vue plongeante sur la salle de formation : parquet, fauteuils, plantes et suspensions en rotin",
       },
     ],
   },
   {
     id: "yoga",
     titre: "Espace yoga et yin-yoga",
-    usage: "Cours de yoga et yin-yoga",
+    usage: "Cours de yoga, yin-yoga et Pilates",
     texte:
-      "Si vous êtes professeur de yoga, cet espace peut être mis à votre disposition.",
+      "Si vous êtes professeur de yoga ou de Pilates, cet espace peut être mis à votre disposition.",
     details: ["Matériel sur place", "Grande salle aux murs de pierre"],
     photos: [
       {

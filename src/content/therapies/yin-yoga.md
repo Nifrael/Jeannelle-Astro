@@ -2,13 +2,15 @@
 title: "Yin Yoga — Cours Collectif"
 excerpt: "Revenir à soi dans des postures douces, sans force ni souplesse particulière."
 seoTitle: "Cours de yin yoga à Millas, près de Perpignan"
-seoDescription: "Cours collectif de yin yoga à Millas (66), deux fois par semaine : des postures douces, accessibles à tous."
+seoDescription: "Cours collectif de yin yoga à Millas (66), plusieurs fois par semaine : des postures douces, accessibles à tous."
 icon: "yoga"
 duration: "1h"
 price: "13€"
 schedule:
-  slots: ["Mercredi · 14h30", "Vendredi · 18h"]
-  booking: "jusqu'à la veille"
+  - teacher: "karine-maraval"
+    slots: ["Mercredi · 14h30", "Vendredi · 18h"]
+  - teacher: "cassandra"
+    slots: ["Vendredi · 9h30"]
 image:
   src: "../../assets/images/lieu/salle-yoga-bougies.jpg"
   alt: "Salle de yoga aux murs de pierre, tapis et coussins disposés à la lumière des bougies"
@@ -31,5 +33,7 @@ sommeil, soulage les douleurs et ramène clarté et apaisement à l'esprit.
 Un cours collectif accessible à tous les niveaux. Prévoyez une tenue
 confortable et votre petite serviette.
 
-**Rendez-vous chaque mercredi à 14h30 et vendredi à 18h.** Réservation par téléphone jusqu'à la
-veille.
+<!-- À VALIDER PAR LA CLIENTE : les horaires ne sont plus écrits ici mais affichés sous
+le texte, avec la façon de s'inscrire auprès de chaque enseignante. -->
+Les cours ont lieu le mercredi et le vendredi : retrouvez les horaires et la
+façon de vous inscrire ci-dessous.

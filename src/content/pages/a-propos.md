@@ -11,6 +11,7 @@ parcours:
   - "Stages et perfectionnement en aromathérapie"
   - "Stages et perfectionnement en réflexologie (palmaire, viscérale, sensitive, énergétique chinoise)"
   - "Formations Yin Yoga et Yoga"
+  - "Formation au massage Amma" # [À VALIDER] intitulé exact de la formation
 ---
 
 8 ans à me former, à pratiquer, tester, chercher, recommencer, solutionner,

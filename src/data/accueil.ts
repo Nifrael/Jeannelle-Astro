@@ -33,6 +33,13 @@ export const therapies = {
   titre: "Prendre soin de son corps, de son esprit et de son énergie",
 };
 
+// Encart unique qui résume les cours collectifs (le détail est sur la page Thérapies).
+// [À VALIDER]
+export const cours = {
+  titre: "Cours collectifs de yoga",
+  texte: "Chaque semaine, chez Jeannelle :",
+};
+
 export const equipe = {
   titre: "Nos thérapeutes",
 };
