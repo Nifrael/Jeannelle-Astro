@@ -10,6 +10,7 @@ image:
   alt: "Affiche du planning des cours de yoga chez Jeannelle : yin yoga, stretching doux et yoga core flow, du mardi au vendredi, 13 € le cours"
 poster: true
 ctaLabel: "Voir le planning"
+order: 1
 ---
 
 <!-- À VALIDER PAR LA CLIENTE -->

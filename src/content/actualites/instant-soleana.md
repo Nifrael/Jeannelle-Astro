@@ -7,6 +7,7 @@ image:
   alt: "Mains posées sur un dos lors d'un massage"
 externalUrl: "https://linstant-soleana.fr"
 ctaLabel: "Faire connaissance"
+order: 2
 ---
 
 Jeannelle a le plaisir d'accueillir **L'Instant Soleana**, pour des massages et

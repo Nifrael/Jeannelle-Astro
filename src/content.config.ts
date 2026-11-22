@@ -67,6 +67,9 @@ const actualites = defineCollection({
       poster: z.boolean().default(false),
       externalUrl: z.url().optional(),
       ctaLabel: z.string().optional(),
+      // Ordre des actualités permanentes (sans date), du plus petit au plus grand.
+      // Les actualités datées sont triées par date, ce champ ne les concerne pas.
+      order: z.number().default(0),
       draft: z.boolean().default(false),
     }),
 });

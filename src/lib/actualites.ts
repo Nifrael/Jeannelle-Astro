@@ -31,8 +31,8 @@ export function lienActualite(actualite: Actualite): string {
   return actualite.data.externalUrl ?? `/actualites/${actualite.id}/`;
 }
 
-// Ordre d'affichage : à venir (la plus proche d'abord), puis permanentes (sans date),
-// puis passées (la plus récente d'abord).
+// Ordre d'affichage : à venir (la plus proche d'abord), puis permanentes (sans date, selon
+// leur champ `order`), puis passées (la plus récente d'abord).
 function rang(actualite: Actualite, maintenant: Date): number {
   if (!actualite.data.date) return 1;
   return estPassee(actualite, maintenant) ? 2 : 0;
@@ -47,6 +47,7 @@ export function trierActualites(
     .toSorted((a, b) => {
       const ecart = rang(a, maintenant) - rang(b, maintenant);
       if (ecart !== 0) return ecart;
+      if (rang(a, maintenant) === 1) return a.data.order - b.data.order;
       const da = a.data.date?.getTime() ?? 0;
       const db = b.data.date?.getTime() ?? 0;
       return rang(a, maintenant) === 0 ? da - db : db - da;
