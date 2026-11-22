@@ -1,0 +1,168 @@
+---
+// Encart unique de l'accueil : résume les cours collectifs. Chaque pastille mène à la fiche
+// du cours (créneaux, inscription) ; le lien du pied, à la page Thérapies (tous les cours et
+// l'affiche du planning).
+// Même apparence que EncartCours, en plus court.
+import type { CollectionEntry } from "astro:content";
+import Icone from "@components/UI/Icone.astro";
+import Pastille from "@components/UI/Pastille.astro";
+import LienFleche from "@components/UI/LienFleche.astro";
+import { nomCours, tarifCommun } from "@lib/therapies";
+
+type Props = {
+  cours: CollectionEntry<"therapies">[];
+  titre: string;
+  texte: string;
+};
+
+const { cours, titre, texte } = Astro.props;
+const tarif = tarifCommun(cours);
+---
+
+{
+  cours.length > 0 && (
+    <aside class="encart" aria-labelledby="resume-cours-titre">
+      <span class="encart__icone">
+        <Icone nom="yoga" />
+      </span>
+      <h3 class="encart__titre" id="resume-cours-titre">
+        {titre}
+      </h3>
+      <div class="encart__cours">
+        <p class="encart__texte">{texte}</p>
+        <ul role="list" class="encart__pastilles">
+          {cours.map((un) => (
+            <li>
+              <Pastille href={`/therapies/${un.id}/`}>{nomCours(un)}</Pastille>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="encart__pied">
+        {tarif && (
+          <p class="encart__infos">
+            <span class="encart__prix">{tarif}</span> le cours
+          </p>
+        )}
+        <LienFleche href="/therapies/">Horaires et inscriptions</LienFleche>
+      </div>
+    </aside>
+  )
+}
+
+<style lang="scss">
+  @use "@styles/config/variables" as *;
+  @use "@styles/config/mixin" as *;
+
+  // Reprend la construction de EncartCours : fond caramel très léger, pastille d'icône,
+  // pied avec le prix et le lien (à droite à partir de la tablette).
+  .encart {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "titre icone"
+      "cours cours"
+      "pied pied";
+    align-items: start;
+    gap: var(--espace-s) var(--espace-m);
+    margin-bottom: var(--espace-l);
+    padding: var(--espace-l);
+    border: 1px solid var(--color-border);
+    border-radius: var(--rayon-l);
+    background-color: var(--color-action-soft);
+  }
+
+  .encart__icone {
+    grid-area: icone;
+    display: grid;
+    place-items: center;
+    padding: var(--espace-s);
+    border-radius: var(--rayon-rond);
+    background-color: var(--color-bg-cards);
+    color: var(--color-action);
+    font-size: var(--h4);
+    transition:
+      background-color var(--transition),
+      color var(--transition);
+  }
+
+  .encart__titre {
+    grid-area: titre;
+    font-size: var(--h4);
+  }
+
+  .encart__cours {
+    grid-area: cours;
+    display: grid;
+    gap: var(--espace-s);
+  }
+
+  .encart__texte {
+    font-style: italic;
+    color: var(--color-text-secondary);
+  }
+
+  .encart__pastilles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espace-s);
+  }
+
+  .encart__pied {
+    grid-area: pied;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espace-s) var(--espace-m);
+    margin-top: var(--espace-s);
+  }
+
+  .encart__infos {
+    font-size: var(--little-text);
+    color: var(--color-text-secondary);
+  }
+
+  .encart__prix {
+    font-size: var(--h5);
+    font-weight: 700;
+    color: var(--color-action);
+  }
+
+  // Viser le lien remplit la pastille d'icône, comme dans EncartCours.
+  @mixin icone-active {
+    .encart__icone {
+      background-color: var(--color-action);
+      color: var(--color-action-text);
+    }
+  }
+
+  @include souris {
+    .encart:has(:global(.lien-fleche):hover) {
+      @include icone-active;
+    }
+  }
+
+  .encart:has(:global(.lien-fleche):focus-visible) {
+    @include icone-active;
+  }
+
+  @include breakpoint-up($breakpoint-tablet) {
+    .encart {
+      grid-template-columns: auto 1fr auto;
+      grid-template-areas:
+        "icone titre pied"
+        "icone cours pied";
+      column-gap: var(--espace-l);
+      padding: var(--espace-l) var(--espace-xl);
+    }
+
+    .encart__pied {
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      margin-top: 0;
+      padding-inline-start: var(--espace-l);
+    }
+  }
+</style>

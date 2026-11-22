@@ -1,17 +1,23 @@
 ---
 import Icone, { type NomIcone } from "@components/UI/Icone.astro";
 
-type Props = { icone?: NomIcone };
+// Avec `href`, la pastille devient un lien : une flèche à droite le signale, et la zone
+// à toucher est un peu plus haute.
+type Props = { icone?: NomIcone; href?: string };
 
-const { icone } = Astro.props;
+const { icone, href } = Astro.props;
+const Balise = href ? "a" : "span";
 ---
 
-<span class="pastille">
+<Balise href={href} class:list={["pastille", { "pastille--lien": href }]}>
   {icone && <Icone nom={icone} />}
   <slot />
-</span>
+  {href && <Icone nom="fleche" />}
+</Balise>
 
 <style lang="scss">
+  @use "@styles/config/mixin" as *;
+
   .pastille {
     display: inline-flex;
     align-items: center;
@@ -26,6 +32,24 @@ const { icone } = Astro.props;
 
     :global(.icone) {
       color: var(--color-action);
+    }
+  }
+
+  .pastille--lien {
+    padding-block: var(--espace-s);
+    text-decoration: none;
+    transition:
+      border-color var(--transition),
+      color var(--transition);
+
+    @include survol {
+      border-color: var(--color-action);
+      color: var(--color-action);
+    }
+
+    &:focus-visible {
+      @include focus-visible;
+      border-radius: var(--rayon-pilule);
     }
   }
 </style>

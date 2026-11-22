@@ -6,7 +6,7 @@ import Presentation from "@components/Accueil/Presentation.astro";
 import ApercuEspaces from "@components/Accueil/ApercuEspaces.astro";
 import AppelRendezVous from "@components/Accueil/AppelRendezVous.astro";
 import ListeTherapies from "@components/Therapies/ListeTherapies.astro";
-import EncartCours from "@components/Therapies/EncartCours.astro";
+import ResumeCours from "@components/Therapies/ResumeCours.astro";
 import CarteActualite from "@components/Actualites/CarteActualite.astro";
 import CartePraticienne from "@components/Equipe/CartePraticienne.astro";
 import EnTeteSection from "@components/UI/EnTeteSection.astro";
@@ -16,6 +16,7 @@ import {
   actualites as texteActualites,
   equipe,
   therapies as texteTherapies,
+  cours as texteCours,
 } from "@data/accueil";
 import {
   descriptionParDefaut,
@@ -69,7 +70,11 @@ const donneesStructurees = graphe(
         surtitre={texteTherapies.surtitre}
         titre={texteTherapies.titre}
       />
-      {cours.map((therapie) => <EncartCours therapie={therapie} />)}
+      <ResumeCours
+        cours={cours}
+        titre={texteCours.titre}
+        texte={texteCours.texte}
+      />
       <ListeTherapies therapies={individuelles} />
     </div>
   </section>

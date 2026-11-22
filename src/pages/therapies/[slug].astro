@@ -5,10 +5,14 @@ import Layout from "@layouts/Layout.astro";
 import Prose from "@components/UI/Prose.astro";
 import Telephone from "@components/UI/Telephone.astro";
 import Icone from "@components/UI/Icone.astro";
-import Pastille from "@components/UI/Pastille.astro";
+import CreneauxCours from "@components/Therapies/CreneauxCours.astro";
 import LienFleche from "@components/UI/LienFleche.astro";
 import { adresseComplete } from "@data/coordonnees";
-import { descriptionTherapie, trierTherapies } from "@lib/therapies";
+import {
+  creneauxParEnseignante,
+  descriptionTherapie,
+  trierTherapies,
+} from "@lib/therapies";
 import { filAriane, graphe, service } from "@lib/donnees-structurees";
 
 export async function getStaticPaths() {
@@ -24,12 +28,13 @@ export async function getStaticPaths() {
           praticienne.data.therapies.some(({ id }) => id === therapie.id),
         )
         .toSorted((a, b) => a.data.order - b.data.order),
+      creneaux: creneauxParEnseignante(therapie, praticiennes),
       autres: therapies.filter((autre) => autre.id !== therapie.id).slice(0, 3),
     },
   }));
 }
 
-const { therapie, praticiennes, autres } = Astro.props;
+const { therapie, praticiennes, creneaux, autres } = Astro.props;
 const { title, excerpt, duration, price, secondPrice, pack, image, schedule } =
   therapie.data;
 const { Content } = await render(therapie);
@@ -142,21 +147,20 @@ const infos = [
         schedule ? (
           <>
             <p class="libelle">Cours collectif</p>
-            <ul role="list" class="rendez-vous__creneaux">
-              {schedule.slots.map((creneau) => (
-                <li>
-                  <Pastille icone="horloge">{creneau}</Pastille>
-                </li>
-              ))}
-            </ul>
-            <p>Réservation par téléphone, {schedule.booking}.</p>
+            {/* Pas de bouton « Prendre rendez-vous » : l'inscription dépend de l'enseignante. */}
+            <CreneauxCours groupes={creneaux} centre />
+            <p>{adresseComplete}</p>
           </>
         ) : (
-          <p class="libelle">Sur rendez-vous</p>
+          <>
+            <p class="libelle">Sur rendez-vous</p>
+            <p>{adresseComplete}</p>
+            <Telephone bouton taille="petite">
+              Prendre rendez-vous
+            </Telephone>
+          </>
         )
       }
-      <p>{adresseComplete}</p>
-      <Telephone bouton taille="petite">Prendre rendez-vous</Telephone>
     </div>
 
     {
@@ -379,13 +383,6 @@ const infos = [
     justify-items: center;
     padding: var(--espace-carte);
     text-align: center;
-  }
-
-  .rendez-vous__creneaux {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--espace-s);
   }
 
   // ----- Découvrir aussi -----

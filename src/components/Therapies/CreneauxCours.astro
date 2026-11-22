@@ -1,0 +1,90 @@
+---
+// Créneaux d'un cours collectif, regroupés par enseignante, chacun avec sa façon de
+// s'inscrire : téléphone du centre (lien d'appel sur mobile) ou lien de l'enseignante.
+// Utilisé dans l'encart des cours et dans la carte rendez-vous de la fiche thérapie.
+import Pastille from "@components/UI/Pastille.astro";
+import Telephone from "@components/UI/Telephone.astro";
+import type { GroupeCreneaux } from "@lib/therapies";
+
+// `centre` : contenu centré (carte rendez-vous de la fiche).
+type Props = { groupes: GroupeCreneaux[]; centre?: boolean };
+
+const { groupes, centre = false } = Astro.props;
+---
+
+<ul role="list" class:list={["creneaux", { "creneaux--centre": centre }]}>
+  {
+    groupes.map(({ praticienne, slots }) => {
+      const { name, booking } = praticienne.data;
+      const fin = booking?.condition ? `, ${booking.condition}.` : ".";
+      return (
+        <li class="creneaux__groupe">
+          <p class="creneaux__enseignante">Avec {name}</p>
+          <ul role="list" class="creneaux__pastilles">
+            {slots.map((creneau) => (
+              <li>
+                <Pastille icone="horloge">{creneau}</Pastille>
+              </li>
+            ))}
+          </ul>
+          {/* `fin` collée au lien ou au numéro : un retour à la ligne y ajouterait une espace. */}
+          <p class="creneaux__inscription">
+            {booking?.url ? (
+              <>
+                Inscription sur{" "}
+                <a href={booking.url} target="_blank" rel="noopener">
+                  {booking.label}
+                  <span class="visually-hidden"> (nouvel onglet)</span>
+                </a>
+                {fin}
+              </>
+            ) : (
+              <>
+                Inscription au <Telephone />
+                {fin}
+              </>
+            )}
+          </p>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style lang="scss">
+  .creneaux {
+    display: grid;
+    gap: var(--espace-m);
+  }
+
+  .creneaux__groupe {
+    display: grid;
+    gap: var(--espace-s);
+  }
+
+  .creneaux__enseignante {
+    font-size: var(--little-text);
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .creneaux__pastilles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espace-s);
+  }
+
+  .creneaux__inscription {
+    font-size: var(--little-text);
+    font-style: italic;
+    color: var(--color-text-secondary);
+  }
+
+  .creneaux--centre {
+    text-align: center;
+
+    .creneaux__pastilles {
+      justify-content: center;
+    }
+  }
+</style>

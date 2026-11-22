@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
 import EnTetePage from "@components/UI/EnTetePage.astro";
 import ListeTherapies from "@components/Therapies/ListeTherapies.astro";
@@ -10,27 +11,46 @@ import {
   therapiesIndividuelles,
   trierTherapies,
 } from "@lib/therapies";
+import planning from "@assets/images/cours/planning-yoga.jpg";
 
 const therapies = trierTherapies(await getCollection("therapies"));
 const cours = coursCollectifs(therapies);
 const individuelles = therapiesIndividuelles(therapies);
+const praticiennes = await getCollection("praticiennes");
 ---
 
 <Layout
   titre="Thérapies et soins à Millas (66)"
   description="Naturopathie, réflexologie plantaire, yin yoga, massage amma et accompagnement psychocorporel chez Jeannelle à Millas : déroulé, durée et tarifs."
 >
-  <EnTetePage
-    titre="Nos thérapies"
-    surtitre="Prendre soin de soi"
-  >
+  <EnTetePage titre="Nos thérapies" surtitre="Prendre soin de soi">
     <p>
       Des accompagnements pour prendre soin de son corps, de son esprit et de
       son énergie.
     </p>
   </EnTetePage>
   <div class="container liste">
-    {cours.map((therapie) => <EncartCours therapie={therapie} titre="h2" />)}
+    {
+      cours.map((therapie) => (
+        <EncartCours
+          therapie={therapie}
+          praticiennes={praticiennes}
+          titre="h2"
+        />
+      ))
+    }
+    {
+      /* Affiche voulue par les enseignantes ; les horaires restent écrits dans les encarts. */
+    }
+    <figure class="planning">
+      <Image
+        src={planning}
+        alt="Affiche du planning des cours de yoga chez Jeannelle : yin yoga, stretching doux et yoga core flow, du mardi au vendredi, 13 € le cours"
+        widths={[400, 600, 800, 1080]}
+        sizes="(width >= 30rem) 28rem, 100vw"
+      />
+      <figcaption>Le planning des cours de yoga de la semaine</figcaption>
+    </figure>
     <ListeTherapies therapies={individuelles} titre="h2" />
   </div>
   <AppelRendezVous />
@@ -40,5 +60,25 @@ const individuelles = therapiesIndividuelles(therapies);
   .liste {
     // Pas de marge haute : celle du bas de l'en-tête de page sépare déjà.
     padding-bottom: var(--espace-section);
+  }
+
+  // Affiche entière, jamais recadrée, assez étroite pour rester lisible d'un coup d'œil.
+  .planning {
+    display: grid;
+    gap: var(--espace-s);
+    max-width: 28rem;
+    margin: 0 auto var(--espace-xl);
+
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--rayon-l);
+    }
+
+    figcaption {
+      font-size: var(--little-text);
+      color: var(--color-text-secondary);
+      text-align: center;
+    }
   }
 </style>

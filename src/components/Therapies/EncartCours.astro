@@ -1,15 +1,21 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import Icone from "@components/UI/Icone.astro";
-import Pastille from "@components/UI/Pastille.astro";
 import LienFleche from "@components/UI/LienFleche.astro";
-import Telephone from "@components/UI/Telephone.astro";
+import CreneauxCours from "@components/Therapies/CreneauxCours.astro";
+import { creneauxParEnseignante } from "@lib/therapies";
 
 // `titre` : h3 sous un titre de section (accueil), h2 directement sous le h1 (page Thérapies).
-type Props = { therapie: CollectionEntry<"therapies">; titre?: "h2" | "h3" };
+// `praticiennes` : toutes les fiches, pour retrouver l'enseignante de chaque créneau.
+type Props = {
+  therapie: CollectionEntry<"therapies">;
+  praticiennes: CollectionEntry<"praticiennes">[];
+  titre?: "h2" | "h3";
+};
 
-const { therapie, titre: Titre = "h3" } = Astro.props;
+const { therapie, praticiennes, titre: Titre = "h3" } = Astro.props;
 const { title, icon, schedule, price, duration } = therapie.data;
+const groupes = creneauxParEnseignante(therapie, praticiennes);
 ---
 
 {
@@ -21,17 +27,9 @@ const { title, icon, schedule, price, duration } = therapie.data;
       <Titre class="encart__titre" id={`cours-${therapie.id}`}>
         {title}
       </Titre>
-      {/* Numéro en lien discret : appel sur mobile, simple texte sur ordinateur. */}
-      <p class="encart__reservation">
-        Réservation au <Telephone />, {schedule.booking}.
-      </p>
-      <ul role="list" class="encart__creneaux">
-        {schedule.slots.map((creneau) => (
-          <li>
-            <Pastille icone="horloge">{creneau}</Pastille>
-          </li>
-        ))}
-      </ul>
+      <div class="encart__creneaux">
+        <CreneauxCours groupes={groupes} />
+      </div>
       <div class="encart__pied">
         {(price || duration) && (
           <p class="encart__infos">
@@ -54,13 +52,12 @@ const { title, icon, schedule, price, duration } = therapie.data;
   // Même construction que les lignes de ListeTherapies (titre, accroche en italique, prix à
   // droite), sur un fond caramel très léger qui signale le cours collectif.
   // Mobile : titre sur toute la largeur et pastille en haut à droite (comme la liste),
-  // puis réservation, créneaux, prix et « Découvrir ».
+  // puis créneaux et inscription par enseignante, prix et « Découvrir ».
   .encart {
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-areas:
       "titre icone"
-      "texte texte"
       "creneaux creneaux"
       "pied pied";
     align-items: start;
@@ -92,18 +89,8 @@ const { title, icon, schedule, price, duration } = therapie.data;
     font-size: var(--h4);
   }
 
-  .encart__reservation {
-    grid-area: texte;
-    font-size: var(--base-size);
-    font-style: italic;
-    color: var(--color-text-secondary);
-  }
-
   .encart__creneaux {
     grid-area: creneaux;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--espace-s);
     margin-top: var(--espace-xs);
   }
 
@@ -160,7 +147,6 @@ const { title, icon, schedule, price, duration } = therapie.data;
       grid-template-columns: auto 1fr auto;
       grid-template-areas:
         "icone titre pied"
-        "icone texte pied"
         "icone creneaux pied";
       column-gap: var(--espace-l);
       padding: var(--espace-l) var(--espace-xl);
